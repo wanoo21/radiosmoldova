@@ -6,7 +6,7 @@
 	"author": "IP",
 	"homepage_url": "https://github.com/wanoo21/radiosmoldova",
 	"offline_enabled": false,
-	"content_security_policy": "script-src 'self' https://ajax.googleapis.com object-src 'self'",
+	"content_security_policy": "script-src 'self' https://ajax.googleapis.com https://maxcdn.bootstrapcdn.com; object-src 'self'",
 	"browser_action": {
 	  "default_icon": {
 		   "16": "icons/icon-16.png"
@@ -18,6 +18,10 @@
 		"128": "icons/icon-128.png",
 		"48": "icons/icon-48.png",
 		"16": "icons/icon-16.png"
+	},
+	"background": {
+		// "scripts": ["background.js"],
+		"page": "background.html"
 	},
 	"update_url": "https://clients2.google.com/service/update2/crx"
 }
