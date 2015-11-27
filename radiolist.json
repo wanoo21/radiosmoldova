@@ -1,0 +1,122 @@
+[
+	{
+		"name": "Sputnik Radio",
+		"url": "http://nfw.video.ria.ru/flv/audio.aspx?ID=68862011&type=mp3"
+	},
+	{
+		"name": "Radio Noroc",
+		"url": "http://live.noroc.tv:8000/radionoroc.mp3"
+	},
+	{
+		"name": "Jurnal FM",
+		"url": "http://188.40.64.232:8000/;stream.nsv"
+	},
+	{
+		"name": "HIT FM",
+		"url": "http://air-online2.hitfm.md/hitfm.mp3"
+	},
+	{
+		"name": "Radio Plai",
+		"url": "http://stream.radioplai.md:8000/live"
+	},
+	{
+		"name": "Retro FM",
+		"url": "http://mail.retrofm.md:8000/retro&type=sound"
+	},
+	{
+		"name": "Muz FM Moldova",
+		"url": "http://live.muzfm.md:8000/muzfm"
+	},
+	{
+		"name": "Maestro FM",
+		"url": "http://live.maestrofm.md:8000/maestro"
+	},
+	{
+		"name": "Radio Nunta",
+		"url": "http://live.radionunta.com:9098/;stream.nsv"
+	},
+	{
+		"name": "Radio Alla",
+		"url": "http://air-online2.radioalla.md/radioalla.mp3"
+	},
+	{
+		"name": "Micul Samaritean",
+		"url": "http://162.251.160.26:80/;stream.nsv"
+	},
+	{
+		"name": "Megapolis FM",
+		"url": "http://89.28.22.181:8000/;stream.nsv"
+	},
+	{
+		"name": "Radio Moldova",
+		"url": "http://radiolive.trm.md:8000/PGM1_128kb"
+	},
+	{
+		"name": "Aquarelle FM",
+		"url": "http://aquarelle.md:8000/aquarellefm.mp3"
+	},
+	{
+		"name": "Radio Stil",
+		"url": "http://air-online2.radiostil.md/radiostil.mp3"
+	},
+	{
+		"name": "Radio ZUM",
+		"url": "http://89.33.1.83/radiozum"
+	},
+	{
+		"name": "Radio 7",
+		"url": "http://87.255.90.94:8000/128"
+	},
+	{
+		"name": "Kiss FM",
+		"url": "http://89.28.66.205:8000/;stream.nsv"
+	},
+	{
+		"name": "Radio Sanatatea",
+		"url": "http://radiosanatatea.dyndns.org:8000/;stream.nsv"
+	},
+	{
+		"name": "Pro FM Chisinau",
+		"url": "http://m.protv.md:8000/profm-128.mp3"
+	},
+	{
+		"name": "Radio Prim Glodeni",
+		"url": "http://109.185.124.238:8000/;stream.nsv"
+	},
+	{
+		"name": "Europa Plus",
+		"url": "http://95.65.87.127/broadwave.mp3"
+	},
+	{
+		"name": "Radio 21",
+		"url": "http://astreaming.radio21.ro:8000/radio21_mp3_64k"
+	},
+	{
+		"name": "Radio Sport Moldova",
+		"url": "http://95.65.87.128/broadwave.mp3"
+	},
+	{
+		"name": "Discovey FM",
+		"url": "http://178.168.18.200:8080/;stream.nsv"
+	},
+	{
+		"name": "Radio Moldova Muzical",
+		"url": "http://radiolive.trm.md:8000/RM-muzical"
+	},
+	{
+		"name": "Publika FM",
+		"url": "http://live.maestrofm.md:8000/publikafm"
+	},
+	{
+		"name": "Radio Chisinau",
+		"url": "http://mail.arena.md:8001/;stream.nsv"
+	},
+	{
+		"name": "Radio LoLo",
+		"url": "http://live.lolo.md:9999/;stream.nsv"
+	},
+	{
+		"name": "Radio Moldova Tineret",
+		"url": "http://radiolive.trm.md:8000/RM-tineret-128"
+	}
+]
