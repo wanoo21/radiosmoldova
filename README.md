@@ -1,6 +1,6 @@
 # Radio's Moldova
 Asculta online toate posturile Radio din republica Moldova.
-Aplicatie pentru Google Chrome.
+Aplicatie pentru Google Chrome, o poti instala de [aici](https://chrome.google.com/webstore/detail/radios-moldova/hhepcbepkfgppibjhlncbinbkmigjjbf)
 
 ## Lista posturilor pe care le poti asculta acum online
 * Sputnik Radio
@@ -33,7 +33,5 @@ Aplicatie pentru Google Chrome.
 * Radio Chisinau
 * Radio LoLo
 * Radio Moldova Tineret
-
-### Instaleaza extensia de [aici](https://chrome.google.com/webstore/detail/radios-moldova/hhepcbepkfgppibjhlncbinbkmigjjbf)
 
 > Te astept [aici](https://github.com/wanoo21/radiosmoldova/issues) cu propuneri si sugestii.
