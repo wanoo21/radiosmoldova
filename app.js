@@ -93,6 +93,14 @@
 		// Start when video is buffering
 		$(self.video).on('waiting', self.videoBuffering)
 	}
+	// Filter listener
+	filter.on('keyup', function(){
+		var regex = new RegExp(this.value, 'ig');
+		radioContainer.find('a').hide()
+		radioContainer.find('a').filter(function() {
+			return regex.test(this.text);
+		}).show()
+	})
 	// Basic log message
 	self.log = function(txt, type) {
 		return console[type || 'info'](txt)
@@ -151,7 +159,7 @@
 				// Call video listeners
 				self.videoListeners()
 				// Make current radio active
-				if(self.background.currentRadio) {
+				if(!!self.background.currentRadio) {
 					radioContainer.find('a[data-id=' + self.background.currentRadio.id + ']').addClass('active');
 				}
 				// Change radio
