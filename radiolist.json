@@ -9,7 +9,7 @@
 	},
 	{
 		"name": "Jurnal FM",
-		"url": "http://188.40.64.232:8000/;stream.nsv"
+		"url": "http://live.jurnalfm.md:8000/;"
 	},
 	{
 		"name": "HIT FM",
@@ -21,7 +21,7 @@
 	},
 	{
 		"name": "Retro FM",
-		"url": "http://mail.retrofm.md:8000/retro&type=sound"
+		"url": "http://retroserver.streamr.ru:8043/retro128"
 	},
 	{
 		"name": "Muz FM Moldova",
@@ -33,7 +33,7 @@
 	},
 	{
 		"name": "Radio Nunta",
-		"url": "http://live.radionunta.com:9098/;stream.nsv"
+		"url": "http://live.radionunta.com:9098/;"
 	},
 	{
 		"name": "Radio Alla",
@@ -41,11 +41,11 @@
 	},
 	{
 		"name": "Micul Samaritean",
-		"url": "http://162.251.160.26:80/;stream.nsv"
+		"url": "http://162.251.160.26:80/;"
 	},
 	{
 		"name": "Megapolis FM",
-		"url": "http://89.28.22.181:8000/;stream.nsv"
+		"url": "http://89.28.22.181:8000/;"
 	},
 	{
 		"name": "Radio Moldova",
@@ -53,7 +53,7 @@
 	},
 	{
 		"name": "Aquarelle FM",
-		"url": "http://aquarelle.md:8000/aquarellefm.mp3"
+		"url": "http://93.115.137.75:8000/aquarellefm.mp3"
 	},
 	{
 		"name": "Radio Stil",
@@ -69,23 +69,19 @@
 	},
 	{
 		"name": "Kiss FM",
-		"url": "http://89.28.66.205:8000/;stream.nsv"
+		"url": "http://89.28.66.205:8000/;"
 	},
 	{
 		"name": "Radio Sanatatea",
-		"url": "http://radiosanatatea.dyndns.org:8000/;stream.nsv"
+		"url": "http://radiosanatatea.dyndns.org:8000/;"
 	},
 	{
 		"name": "Pro FM Chisinau",
 		"url": "http://m.protv.md:8000/profm-128.mp3"
 	},
 	{
-		"name": "Radio Prim Glodeni",
-		"url": "http://109.185.124.238:8000/;stream.nsv"
-	},
-	{
 		"name": "Europa Plus",
-		"url": "http://95.65.87.127/broadwave.mp3"
+		"url": "http://95.65.21.154:8081/broadwave.mp3?src=1&kbps=128"
 	},
 	{
 		"name": "Radio 21",
@@ -93,11 +89,15 @@
 	},
 	{
 		"name": "Radio Sport Moldova",
-		"url": "http://95.65.87.128/broadwave.mp3"
+		"url": "http://95.65.21.154:8082/broadwave.mp3?src=1&kbps=128"
 	},
 	{
 		"name": "Discovery FM",
-		"url": "http://178.168.18.200:8080/;stream.nsv"
+		"url": "http://178.168.18.200:8080/;"
+	},
+	{
+		"name": "Русское Радио",
+		"url": "http://89.28.86.142:7030/live"
 	},
 	{
 		"name": "Radio Moldova Muzical",
@@ -109,11 +109,7 @@
 	},
 	{
 		"name": "Radio Chisinau",
-		"url": "http://mail.arena.md:8001/;stream.nsv"
-	},
-	{
-		"name": "Radio LoLo",
-		"url": "http://live.lolo.md:9999/;stream.nsv"
+		"url": "http://95.65.9.170:8001/"
 	},
 	{
 		"name": "Radio Moldova Tineret",
