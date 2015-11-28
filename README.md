@@ -34,4 +34,6 @@ Aplicatie pentru Google Chrome.
 * Radio LoLo
 * Radio Moldova Tineret
 
+### Instaleaza extensia de [aici](https://chrome.google.com/webstore/detail/radios-moldova/hhepcbepkfgppibjhlncbinbkmigjjbf)
+
 > Te astept [aici](https://github.com/wanoo21/radiosmoldova/issues) cu propuneri si sugestii.

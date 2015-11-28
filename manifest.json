@@ -20,7 +20,6 @@
 		"16": "icons/icon-16.png"
 	},
 	"background": {
-		// "scripts": ["background.js"],
 		"page": "background.html"
 	},
 	"update_url": "https://clients2.google.com/service/update2/crx"
