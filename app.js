@@ -72,30 +72,6 @@
 		panelBody.removeClass('playing')
 		radioTitle.text('Buffering ...')
 	}
-	
-	// Add class playing if radio is active on document is loaded
-	if(self.video.played.length === 1 && !self.video.paused) {
-		self.videoPlay()
-	}
-	
-	// Make changes if video is paused on document is loaded
-	if(self.video.paused && !!self.background.currentRadio) {
-		self.videoPause()
-		self.videoTimeUpdate()
-		radioTitle.text(self.background.currentRadio.name)
-	}
-	
-	// Disable play/pause button if video is loading
-	if(!!self.background.currentRadio && self.background.currentRadio.loading) {
-		self.videoStartLoading()
-	}
-	
-	// Player listeners
-	playPauseButton.click(function() {
-		self.video[self.video.paused ? 'play' : 'pause']()
-		$(this).text(self.video.paused ? 'play_arrow' : 'pause')
-	})
-	
 	// Operation for video, volume, pause, play, stop, etc.
 	self.videoListeners = function() {
 		// Alert if isset error
@@ -117,12 +93,10 @@
 		// Start when video is buffering
 		$(self.video).on('waiting', self.videoBuffering)
 	}
-	
 	// Basic log message
 	self.log = function(txt, type) {
 		return console[type || 'info'](txt)
 	}
-	
 	// Change dynamically title of icon
 	self.setActionTitle = function(title) {
 		chrome.browserAction.setTitle({
@@ -130,16 +104,38 @@
 		})
 		return self;
 	}
-	
 	// Get radio list function
 	self.getRadioList = function() {
 		return $.getJSON('radiolist.json');
 	}
-	
 	// Get all info from manifest
 	self.getManifestInfo = function() {
 		return chrome.runtime.getManifest()
 	}
+	
+	
+	// Add class playing if radio is active on document is loaded
+	if(!!self.background.currentRadio && !self.video.paused) {
+		self.videoPlay()
+	}
+	
+	// Make changes if video is paused on document is loaded
+	if(self.video.paused && !!self.background.currentRadio) {
+		self.videoPause()
+		self.videoTimeUpdate()
+		radioTitle.text(self.background.currentRadio.name)
+	}
+	
+	// Disable play/pause button if video is loading
+	if(!!self.background.currentRadio && self.background.currentRadio.loading) {
+		self.videoStartLoading()
+	}
+	
+	// Player play/pause
+	playPauseButton.click(function() {
+		self.video[self.video.paused ? 'play' : 'pause']()
+		$(this).text(self.video.paused ? 'play_arrow' : 'pause')
+	})
 	
 	// Get all radio and put into document
 	self.getRadioList().then(function(list) {
