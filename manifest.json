@@ -1,7 +1,8 @@
 {
 	"manifest_version": 2,
-	"version": "1.0",
-	"name": "MD radio stations",
+	"version": "1.1",
+	"name": "Radio Moldova",
+	"short_name": "MD radio stations",
 	"description": "Asculta online toate posturile Radio din Republica Moldova",
 	"author": "IP",
 	"homepage_url": "https://github.com/wanoo21/radiosmoldova",
