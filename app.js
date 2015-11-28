@@ -70,7 +70,7 @@
 	// Default buffering function
 	self.videoBuffering = function() {
 		panelBody.removeClass('playing')
-		radioTitle.text('Buffering ...')
+		radioTitle.text('Buffering... ' + self.background.currentRadio.name)
 	}
 	// Operation for video, volume, pause, play, stop, etc.
 	self.videoListeners = function() {
