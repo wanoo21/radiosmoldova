@@ -57,7 +57,7 @@
 	// Default loading end function
 	self.videoEndLoading = function() {
 		playPauseButton.prop('disabled', false)
-		self.log("Browser has loaded the current frame");
+		// self.log("Browser has loaded the current frame");
 		self.background.currentRadio.loading = false;
 		self.video.play();
 	}
@@ -96,8 +96,7 @@
 	// Filter listener
 	filter.on('keyup', function(){
 		var regex = new RegExp(this.value, 'ig');
-		radioContainer.find('a').hide()
-		radioContainer.find('a').filter(function() {
+		radioContainer.find('a').hide().filter(function() {
 			return regex.test(this.text);
 		}).show()
 	})
@@ -122,40 +121,40 @@
 	}
 	
 	
-	// Add class playing if radio is active on document is loaded
+	// Make changes if radio play on loading DOM
 	if(!!self.background.currentRadio && !self.video.paused) {
 		self.videoPlay()
 	}
 	
-	// Make changes if video is paused on document is loaded
+	// Make changes if video is paused on loading DOM
 	if(self.video.paused && !!self.background.currentRadio) {
 		self.videoPause()
 		self.videoTimeUpdate()
 		radioTitle.text(self.background.currentRadio.name)
 	}
 	
-	// Disable play/pause button if video is loading
+	// Disable play/pause button if video is loading, DOM
 	if(!!self.background.currentRadio && self.background.currentRadio.loading) {
 		self.videoStartLoading()
 	}
 	
-	// Player play/pause
+	// Player play/pause actions
 	playPauseButton.click(function() {
 		self.video[self.video.paused ? 'play' : 'pause']()
-		$(this).text(self.video.paused ? 'play_arrow' : 'pause')
+		// $(this).text(self.video.paused ? 'play_arrow' : 'pause')
 	})
 	
 	// Get all radio and put into document
-	self.getRadioList().then(function(list) {
+	self.getRadioList().then(function(radioList) {
 		// Put list into global variable
-		self.radioList = list;
-		var li = '';
+		self.radioList = radioList;
+		var list = '';
 		// Generate dynamically list on html
 		$.when($.each(list, function(k, v) {
-			li += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '</a>'
+			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '</a>'
 		})).then(function(){
 			// Put generated html on list container
-			radioContainer.html(li).promise().done(function(){
+			radioContainer.html(list).promise().done(function(){
 				// Call video listeners
 				self.videoListeners()
 				// Make current radio active
