@@ -121,10 +121,6 @@
 	self.getRadioList = function() {
 		return $.getJSON('radiolist.json');
 	}
-	// Get all info from manifest
-	self.getManifestInfo = function() {
-		return chrome.runtime.getManifest()
-	}
 	
 	
 	// Make changes if radio play on loading DOM

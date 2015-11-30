@@ -21,6 +21,10 @@ chrome.browserAction.setBadgeBackgroundColor({ color: '#337ab7' })
 
 // get Radio
 var video = document.getElementsByTagName('video')[0];
+// Manifest info
+var info = chrome.runtime.getManifest()
+
+chrome.browserAction.setTitle({ title: info.name + ' v.' + info.version })
 
 // Change badge 
 video.onplay = function() {
