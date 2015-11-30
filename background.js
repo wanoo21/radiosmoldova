@@ -19,10 +19,16 @@ chrome.runtime.onUpdateAvailable.addListener(function(manifest) {
 // Default badge color
 chrome.browserAction.setBadgeBackgroundColor({ color: '#337ab7' })
 
-// Badge status
-document.getElementsByTagName('video')[0].onplay = function() {
+// get Radio
+var video = document.getElementsByTagName('video')[0];
+
+// Change badge 
+video.onplay = function() {
 	chrome.browserAction.setBadgeText({ text: 'play' })
 }
-document.getElementsByTagName('video')[0].onpause = function() {
+video.onpause = function() {
 	chrome.browserAction.setBadgeText({ text: 'stop' })
+}
+video.onload = function() {
+	chrome.browserAction.setBadgeText({ text: '...' })
 }
