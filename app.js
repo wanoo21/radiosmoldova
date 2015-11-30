@@ -1,6 +1,6 @@
 /* global chrome */
 // Default Chrome Extension script
-(function(window) {
+(function(global) {
 	// Verify if jQuery is defined
 	if(!window.jQuery) throw "jQuery is undefined. Please include jQuery framework.";
 	
@@ -14,7 +14,7 @@
 	}
 	
 	// Default variables
-	var $ = window.jQuery,
+	var $ = global.jQuery,
 		self = this,
 		panelBody = $('.panel-body'),
 		filter = $('input[type=search]'),
@@ -40,6 +40,12 @@
 		panelBody.addClass('playing')
 		playPauseButton.text('pause')
 		radioTitle.text(self.background.currentRadio.name)
+		// Reload radio 
+		if(self.reloadRadio) {
+			self.video.load();
+			delete self.reloadRadio;
+			clearTimeout(self.reloadVideo)
+		}
 	}
 	// Default pause function
 	self.videoPause = function() {
@@ -141,7 +147,13 @@
 	// Player play/pause actions
 	playPauseButton.click(function() {
 		self.video[self.video.paused ? 'play' : 'pause']()
-		// $(this).text(self.video.paused ? 'play_arrow' : 'pause')
+		
+		// Reload radio if is paused more than 30 sec.
+		if(self.video.paused) {
+			self.reloadVideo = setTimeout(function(){
+				self.reloadRadio = true;
+			}, 30 * 1000)	
+		}
 	})
 	
 	// Get all radio and put into document
@@ -150,7 +162,7 @@
 		self.radioList = radioList;
 		var list = '';
 		// Generate dynamically list on html
-		$.when($.each(list, function(k, v) {
+		$.when($.each(radioList, function(k, v) {
 			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '</a>'
 		})).then(function(){
 			// Put generated html on list container
