@@ -27,7 +27,7 @@
 	self.background = chrome.extension.getBackgroundPage();
 	// Get background video
 	self.video = $(self.background.document).find('video')[0]
-	
+
 	// Initial function
 	if(!self.background.currentRadio) {
 		playPauseButton.prop('disabled', true).text('play_arrow')
@@ -40,12 +40,6 @@
 		panelBody.addClass('playing')
 		playPauseButton.text('pause')
 		radioTitle.text(self.background.currentRadio.name)
-		// Reload radio 
-		if(self.reloadRadio) {
-			self.video.load();
-			delete self.reloadRadio;
-			clearTimeout(self.reloadVideo)
-		}
 	}
 	// Default pause function
 	self.videoPause = function() {
@@ -142,14 +136,7 @@
 	
 	// Player play/pause actions
 	playPauseButton.click(function() {
-		self.video[self.video.paused ? 'play' : 'pause']()
-		
-		// Reload radio if is paused more than 30 sec.
-		if(self.video.paused) {
-			self.reloadVideo = setTimeout(function(){
-				self.reloadRadio = true;
-			}, 30 * 1000)	
-		}
+		self.video[self.video.paused ? 'play' : 'pause']();
 	})
 	
 	// Get all radio and put into document

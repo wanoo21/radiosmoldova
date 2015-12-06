@@ -29,9 +29,17 @@ chrome.browserAction.setTitle({ title: info.name + ' v.' + info.version })
 // Change badge 
 video.onplay = function() {
 	chrome.browserAction.setBadgeText({ text: 'play' })
+	if(video.reload) {
+		video.load();
+		video.reload = false;
+		clearTimeout(info.reloadRadio);
+	}
 }
 video.onpause = function() {
 	chrome.browserAction.setBadgeText({ text: 'stop' })
+	return info.reloadRadio = setTimeout(function(){
+		video.reload = true;
+	}, 30 * 1000)
 }
 video.onload = function() {
 	chrome.browserAction.setBadgeText({ text: '...' })
