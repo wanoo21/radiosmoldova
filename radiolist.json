@@ -114,5 +114,25 @@
 	{
 		"name": "Radio Moldova Tineret",
 		"url": "http://radiolive.trm.md:8000/RM-tineret-128"
+	},
+	{
+		"name": "Univers FM",
+		"url": "http://188.94.87.202:8000/;stream.mp3"
+	},
+	{
+		"name": "Vocea Basarabiei",
+		"url": "http://arhiva.voceabasarabiei.net:8000/vb_radio"
+	},
+	{
+		"name": "Radio Logos",
+		"url": "http://asculta.logos.md:10000/live"
+	},
+	{
+		"name": "Radio BEAT",
+		"url": "http://radiobeat.md:9998/;stream.mp3"
+	},
+	{
+		"name": "Radio Stil",
+		"url": "http://air-online2.radiostil.md/radiostil.mp3"
 	}
 ]

@@ -33,5 +33,10 @@ Aplicatie pentru Google Chrome, o poti instala de [aici](https://chrome.google.c
 * Radio Chisinau
 * Radio LoLo
 * Radio Moldova Tineret
+* Univers FM
+* Vocea Basarabiei
+* Radio Logos
+* Radio BEAT
+* Radio Stil
 
 > Te astept [aici](https://github.com/wanoo21/radiosmoldova/issues) cu propuneri si sugestii.
