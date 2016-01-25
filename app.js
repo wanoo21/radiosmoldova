@@ -3,6 +3,7 @@
 (function(global) {
 	// Verify if jQuery is defined
 	if(!window.jQuery) throw "jQuery is undefined. Please include jQuery framework.";
+    if(!window.Firebase) throw "Firebase is not undefined!";
 	
 	// Number prototype for adding zero to time
 	Number.prototype.pad = function(size) {
@@ -21,100 +22,147 @@
 		playPauseButton = $('button.play_pause'),
 		radioTitle = $('h5 > .radio-title'),
 		showTime = $('h5 > small'),
-		radioContainer = $('#radio-list');
-	
+		radioContainer = $('#radio-list'),
+        firebase = new Firebase('https://radio-moldova.firebaseio.com/'),
+        radioStat = firebase.child('radio'),
+		radioErrors = firebase.child('errors');
+
+    self.listenRadios = [];
+
+    self.startListenForebase = function() {
+        return radioStat.on('child_added', function (currentRadio, prevRadio) {
+            currentRadio = currentRadio.val();
+            if(!currentRadio.action) return;
+
+            if (currentRadio.action == 'play' || currentRadio.action == 'choosed') {
+                if(self.listenRadios.filter(function(radio) { return radio.id === currentRadio.id }).length) {
+                    self.listenRadios.map(function(radio){
+                        if (radio.id == currentRadio.id)
+                            radio.listeners += 1
+                    });
+                } else {
+                    currentRadio.listeners = 1;
+                    self.listenRadios.push(currentRadio)
+                }
+            }
+
+            else if (currentRadio.action == 'pause' || currentRadio.action == 'changed') {
+                self.listenRadios.map(function(radio) { if( radio.id == currentRadio.id ) radio.listeners -= 1 });
+            }
+            return self.addBadgeInfo();
+        });
+    };
+
 	// Window from background.html
 	self.background = chrome.extension.getBackgroundPage();
 	// Get background video
-	self.video = $(self.background.document).find('video')[0]
+	self.video = $(self.background.document).find('video')[0];
 
 	// Initial function
 	if(!self.background.currentRadio) {
-		playPauseButton.prop('disabled', true).text('play_arrow')
-		radioTitle.text('Alege un radio din lista')
+		playPauseButton.prop('disabled', true).text('play_arrow');
+		radioTitle.text('Alege un radio din lista');
 		showTime.text('')
 	}
-	
+
+    self.addBadgeInfo = function () {
+        // Autoclean listeners
+        //self.listenRadios = self.listenRadios.filter(function(radio) { return radio.listeners > 0 });
+        console.dir(self.listenRadios)
+        self.listenRadios.forEach(function(radio) {
+            radioContainer.find('a[data-id=' + radio.id + ']').find('span.badge')[radio.listeners > 0 ? 'show' : 'hide']().text(radio.listeners)
+        })
+    };
+
+    // Set stats on firebase
+    self.setStat = function(obj) {
+        obj = obj || {};
+        obj.date = new Date().getTime();
+        obj.id = self.background.currentRadio.id || null;
+        radioStat.push(obj)
+    };
+    
 	// Default play functions
 	self.videoPlay = function() {
-		panelBody.addClass('playing')
-		playPauseButton.text('pause')
-		radioTitle.text(self.background.currentRadio.name)
-	}
+		panelBody.addClass('playing');
+		playPauseButton.text('pause');
+		radioTitle.text(self.background.currentRadio.name);
+	};
 	// Default pause function
 	self.videoPause = function() {
-		panelBody.removeClass('playing')
-		playPauseButton.text('play_arrow')
-	} 
+		panelBody.removeClass('playing');
+		playPauseButton.text('play_arrow');
+	};
 	// Default loading start function
 	self.videoStartLoading = function() {
-		panelBody.removeClass('playing')
-		radioTitle.text('Se incarca... ' + self.background.currentRadio.name)
-		playPauseButton.prop('disabled', true)
-		showTime.text('')
+		panelBody.removeClass('playing');
+		radioTitle.text('Se incarca... ' + self.background.currentRadio.name);
+		playPauseButton.prop('disabled', true);
+		showTime.text('');
 		self.background.currentRadio.loading = true;
-	}
+	};
 	// Default loading end function
 	self.videoEndLoading = function() {
-		playPauseButton.prop('disabled', false)
-		// self.log("Browser has loaded the current frame");
+		playPauseButton.prop('disabled', false);
 		self.background.currentRadio.loading = false;
 		self.video.play();
-	}
+	};
 	// Default timeupdate function
 	self.videoTimeUpdate = function() {
 		self.video.minutes = Math.floor(self.video.currentTime / 60).pad();
 		self.video.seconds = (Math.floor(self.video.currentTime) - self.video.minutes * 60).pad();
 		showTime.text(self.video.minutes + ' : ' + self.video.seconds)
-	}
+	};
 	// Default buffering function
 	self.videoBuffering = function() {
-		panelBody.removeClass('playing')
+		panelBody.removeClass('playing');
 		radioTitle.text('Buffering... ' + self.background.currentRadio.name)
-	}
+	};
 	// Operation for video, volume, pause, play, stop, etc.
 	self.videoListeners = function() {
 		// Alert if isset error
-		self.video.onerror = function() {
-			self.log("Error! Something went wrong", 'error');
-			// Load again
-			this.load();
-		};
+        $(self.video).on('error', function(ev) {
+            self.log("Error! Something went wrong", 'error', ev);
+            // Load again
+            this.load();
+        });
 		// Start loading video
-		$(self.video).on('loadstart', self.videoStartLoading)
+		$(self.video).on('loadstart', self.videoStartLoading);
 		// Start when data is loaded
-		$(self.video).on('loadeddata', self.videoEndLoading)
+		$(self.video).on('loadeddata', self.videoEndLoading);
 		// Make changes when player begin play
 		$(self.video).on('play', self.videoPlay);
 		// Make changes when player is paused
-		$(self.video).on('pause', self.videoPause)
+		$(self.video).on('pause', self.videoPause);
 		// Progress video
-		$(self.video).on('timeupdate', self.videoTimeUpdate)
+		$(self.video).on('timeupdate', self.videoTimeUpdate);
 		// Start when video is buffering
 		$(self.video).on('waiting', self.videoBuffering)
-	}
+	};
 	// Filter listener
 	filter.on('keyup', function(){
 		var regex = new RegExp(this.value, 'ig');
 		radioContainer.find('a').hide().filter(function() {
 			return regex.test(this.text);
 		}).show()
-	})
+	});
 	// Basic log message
-	self.log = function(txt, type) {
+	self.log = function(txt, type, data) {
+        if(type == 'error')
+            radioErrors.push({ radio: self.background.currentRadio, error: data });
 		return console[type || 'info'](txt)
-	}
+	};
 	// Change dynamically title of icon
 	self.setActionTitle = function(title) {
 		chrome.browserAction.setTitle({
 			title: title
-		})
+		});
 		return self;
-	}
+	};
 	// Get radio list function
 	self.getRadioList = function() {
 		return $.getJSON('radiolist.json');
-	}
+	};
 	
 	
 	// Make changes if radio play on loading DOM
@@ -124,8 +172,8 @@
 	
 	// Make changes if video is paused on loading DOM
 	if(self.video.paused && !!self.background.currentRadio) {
-		self.videoPause()
-		self.videoTimeUpdate()
+		self.videoPause();
+		self.videoTimeUpdate();
 		radioTitle.text(self.background.currentRadio.name)
 	}
 	
@@ -136,8 +184,10 @@
 	
 	// Player play/pause actions
 	playPauseButton.click(function() {
-		self.video[self.video.paused ? 'play' : 'pause']();
-	})
+        var action = self.video.paused ? 'play' : 'pause';
+		self.video[action]();
+        self.setStat({ name: self.background.currentRadio.name, action: action, timeListen: self.video.currentTime })
+	});
 	
 	// Get all radio and put into document
 	self.getRadioList().then(function(radioList) {
@@ -146,12 +196,14 @@
 		var list = '';
 		// Generate dynamically list on html
 		$.when($.each(radioList, function(k, v) {
-			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '</a>'
+			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none" title="Ascultatori acum"></span></a>'
 		})).then(function(){
 			// Put generated html on list container
 			radioContainer.html(list).promise().done(function(){
 				// Call video listeners
-				self.videoListeners()
+				self.videoListeners();
+                // Start listen firebase actions
+                self.startListenForebase();
 				// Make current radio active
 				if(!!self.background.currentRadio) {
 					radioContainer.find('a[data-id=' + self.background.currentRadio.id + ']').addClass('active');
@@ -161,6 +213,7 @@
 					e.preventDefault();
 					// Verify if channel is not the same
 					if(!$(this).hasClass('active')) {
+                        self.setStat({ name: self.background.currentRadio.name, action: 'changed' });
 						// Make this channel active
 						$(this).parent().find('a').removeClass('active');
 						$(this).addClass('active');
@@ -168,16 +221,18 @@
 						self.background.currentRadio = self.radioList[$(this).data('id')];
 						self.background.currentRadio.id = $(this).data('id');
 						// Stop video for change channel
-						if(self.video.src) self.video.pause()
+						if(self.video.src) self.video.pause();
 						// Make current url in background url
 						$(self.video).find('source')[0].src = self.background.currentRadio.url;
 						// Load video after src is changed
 						self.video.load();
+                        // Set loading in firebase
+                        self.setStat({ name: self.background.currentRadio.name, action: 'choosed' })
 					}
 				})
 			});
 		})
-	})
+	});
 	
 	// For reload extension
 	self.reload = function() {

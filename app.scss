@@ -22,6 +22,9 @@ body {
 			&:not(.playing) {
 				background-image: none;
 			}
+            input.search {
+                margin-bottom: 5px;
+            }
 		}
 		.list-group {
 			overflow-y: scroll;

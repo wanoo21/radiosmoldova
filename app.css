@@ -14,9 +14,13 @@ body {
       background-size: 113%; }
     body .panel .panel-body:not(.playing) {
       background-image: none; }
+    body .panel .panel-body input.search {
+      margin-bottom: 5px; }
     body .panel .list-group {
       overflow-y: scroll;
       overflow-x: hidden;
       height: 287px; }
       body .panel .list-group a:not(.active) {
         background-color: #f5f5f5; }
+
+/*# sourceMappingURL=app.css.map */
