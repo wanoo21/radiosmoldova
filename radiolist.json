@@ -130,9 +130,5 @@
 	{
 		"name": "Radio BEAT",
 		"url": "http://radiobeat.md:9998/;stream.mp3"
-	},
-	{
-		"name": "Radio Stil",
-		"url": "http://air-online2.radiostil.md/radiostil.mp3"
 	}
 ]
