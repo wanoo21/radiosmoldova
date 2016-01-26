@@ -1,27 +1,32 @@
 // All listeners
-var firebase = new Firebase('https://radio-moldova.firebaseio.com/'),
-    runtime = firebase.child('runtime'),
-    errors = firebase.child('errors'),
-    listeners = firebase.child('listeners');
+var firebase = new Firebase('https://radio-moldova.firebaseio.com/');
+self.runtime = firebase.child('runtime');
+self.errors = firebase.child('errors');
+self.listeners = firebase.child('listeners');
 
 
-// Get id when extension is installed, updated, and chrome is updated
-chrome.runtime.onInstalled.addListener(function(details) {
-	// TODO
-    runtime.push({ action: 'installed', date: Firebase.ServerValue.TIMESTAMP })
+// Listen for errors
+self.onerror = function(err){
+    return self.errors.push(err)
+};
+
+// Get id when extension is first installed
+chrome.runtime.onStartup.addListener(function() {
+    self.runtime.push({ action: 'installed', date: Firebase.ServerValue.TIMESTAMP })
 });
 
 // Listen on suspend 
 chrome.runtime.onSuspend.addListener(function(){
-	// TODO
-    runtime.push({ action: 'suspended', date: Firebase.ServerValue.TIMESTAMP })
+    // Remove listen from data
+    if(self.currentRadio)
+        self.listeners.child(self.radioKeys[self.currentRadio.nameId]).update({ listeners: self.currentRadio.listeners > 0 ? self.currentRadio.listeners -= 1 : 0 }, function(err) {
+            if(err) errors.push(err);
+        });
+    self.runtime.push({ action: 'suspended', dateAt: Firebase.ServerValue.TIMESTAMP })
 });
 
 // Listen for updates
-chrome.runtime.onUpdateAvailable.addListener(function(manifest) {
-    listeners.child(radioKeys[currentRadio.nameId]).update({ listeners: currentRadio.listeners > 0 ? currentRadio.listeners -= 1 : 0 }, function(err) {
-        if(err) errors.push(err);
-    });
+chrome.runtime.onUpdateAvailable.addListener(function() {
 	// Return auto update
 	return chrome.runtime.reload();
 });
@@ -39,6 +44,7 @@ chrome.browserAction.setTitle({ title: info.name + ' v.' + info.version });
 // Change badge 
 video.onplay = function() {
 	chrome.browserAction.setBadgeText({ text: 'play' });
+    //self.startedAt = Date.now();
 	if(video.reload) {
 		video.load();
 		video.reload = false;
@@ -47,8 +53,10 @@ video.onplay = function() {
 };
 video.onpause = function() {
 	chrome.browserAction.setBadgeText({ text: 'stop' });
+    //self.endAt = Date.now();
 	return info.reloadRadio = setTimeout(function(){
 		video.reload = true;
+        chrome.browserAction.setBadgeText({ text: '' });
 	}, 30 * 1000)
 };
 video.onload = function() {

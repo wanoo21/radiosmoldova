@@ -19,14 +19,11 @@
 		self = this,
 		panelBody = $('.panel-body'),
 		filter = $('input[type=search]'),
+		range = $('input[type=range]'),
 		playPauseButton = $('button.play_pause'),
 		radioTitle = $('h5 > .radio-title'),
 		showTime = $('h5 > small'),
-		radioContainer = $('#radio-list'),
-        firebase = new Firebase('https://radio-moldova.firebaseio.com/'),
-        radioErrors = firebase.child('errors');
-
-    self.listeners = firebase.child('listeners');
+		radioContainer = $('#radio-list');
 
     // Window from background.html
     self.background = chrome.extension.getBackgroundPage();
@@ -35,11 +32,11 @@
 
     // Start listen firebase
     self.startListenForebase = function() {
-        self.radioKeys = {};
-        self.listeners.on('child_added', function (currentRadio) {
-            self.radioKeys[currentRadio.val().nameId] = currentRadio.key();
+        self.background.radioKeys = {};
+        self.background.listeners.on('child_added', function (currentRadio) {
+            self.background.radioKeys[currentRadio.val().nameId] = currentRadio.key();
         });
-        self.listeners.on('child_changed', function(changedRadio) {
+        self.background.listeners.on('child_changed', function(changedRadio) {
             return self.addBadgeInfo(changedRadio.val())
         });
         self.getFirebaseData()
@@ -47,10 +44,10 @@
 
     // Get data from firebase and make changes
     self.getFirebaseData = function(obj) {
-        self.listeners.once('value', function(snapshot) {
+        self.background.listeners.once('value', function(snapshot) {
             var currentData = snapshot.val();
             if(obj) {
-                var thisRadio = currentData[self.radioKeys[obj.nameId]];
+                var thisRadio = currentData[self.background.radioKeys[obj.nameId]];
 
                 if (obj.action == 'play' || obj.action == 'choosed')
                     thisRadio.listeners += 1;
@@ -58,12 +55,11 @@
                 else if(thisRadio.listeners > 0)
                     thisRadio.listeners -= 1;
 
-                self.listeners.child(self.radioKeys[obj.nameId]).update(thisRadio, function(err) {
+                self.background.listeners.child(self.background.radioKeys[obj.nameId]).update(thisRadio, function(err) {
                     if(err) return self.log(err, 'error');
                 })
             } else {
                 Object.keys(currentData).forEach(function (key) {
-                    self.background.radioKeys = self.radioKeys;
                     return self.addBadgeInfo(currentData[key]);
                 })
             }
@@ -72,14 +68,15 @@
 
     // Save errors
     $(window).on('error', function(err){
-        radioErrors.push(err);
+        self.background.errors.push(err);
     });
 
 	// Initial function
 	if(!self.background.currentRadio) {
 		playPauseButton.prop('disabled', true).text('play_arrow');
 		radioTitle.text('Alege un radio din lista');
-		showTime.text('')
+		showTime.text('');
+        range.attr('data-volume', range.val());
 	}
 
     // Add info on radio list
@@ -102,6 +99,8 @@
 		panelBody.addClass('playing');
 		playPauseButton.text('pause');
 		radioTitle.text(self.background.currentRadio.name);
+        range.val(self.background.video.volume * 100);
+        range.attr('data-volume', range.val());
 	};
 	// Default pause function
 	self.videoPause = function() {
@@ -160,11 +159,18 @@
 		radioContainer.find('a').hide().filter(function() {
 			return regex.test(this.text);
 		}).show()
-	});
+	}).dblclick(function(){
+        this.select()
+    });
+    // Listen range and change volume
+    range.on('input', function(){
+        range.attr('data-volume', this.value);
+        return self.background.video.volume = this.value / 100;
+    });
 	// Basic log message
 	self.log = function(txt, type) {
         if(type == 'error')
-            radioErrors.push({ radio: self.background.currentRadio || null, error: txt });
+            self.background.errors.push({ radio: self.background.currentRadio || null, error: txt });
 		return console[type || 'info'](txt)
 	};
 	// Change dynamically title of icon
@@ -210,7 +216,7 @@
 		var list = '';
 		// Generate dynamically list on html
 		$.when($.each(radioList, function(k, v) {
-            self.listeners.push({ id: k, name: v.name, listeners: 0, nameId: v.name.replace(' ', '-').toLowerCase() });
+            //self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: v.name.replace(' ', '-').toLowerCase() });
             self.radioList[k].nameId = v.name.replace(' ', '-').toLowerCase();
             self.radioList[k].id = k;
 			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none" title="Ascultatori acum"></span></a>'

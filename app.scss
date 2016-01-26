@@ -15,9 +15,8 @@ body {
 		}
 		.panel-body {
 			&.playing {
-				background-image: url('imgs/equalizer.gif');
-				background-position: -24px -12px;
-				background-size: 113%;	
+				background: url('imgs/equalizer.gif') -24px 22px no-repeat;
+				background-size: 113%;
 			}
 			&:not(.playing) {
 				background-image: none;
@@ -25,6 +24,34 @@ body {
             input.search {
                 margin-bottom: 5px;
             }
+			input[type=range] {
+                &:before {
+                  content: attr(data-volume);
+                  position: absolute;
+                  right: -29px;
+                  color: #337ab7;
+                  margin-top: -3px;
+                }
+                margin-bottom: 0;
+                -webkit-appearance: none;
+                position: relative;
+                width: 89%!important;
+				&:focus {
+					outline: none;
+				}
+              &::-webkit-slider-runnable-track {
+                cursor: pointer;
+                width: 90%;
+              }
+              &::-webkit-slider-thumb {
+                background: #337ab7;
+                height: 15px;
+                width: 15px;
+                border-radius: 50%;
+                -webkit-appearance: none;
+                cursor: pointer;
+              }
+			}
 		}
 		.list-group {
 			overflow-y: scroll;

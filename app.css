@@ -9,13 +9,35 @@ body {
       float: right;
       margin-top: 4px; }
     body .panel .panel-body.playing {
-      background-image: url("imgs/equalizer.gif");
-      background-position: -24px -12px;
+      background: url("imgs/equalizer.gif") -24px 22px no-repeat;
       background-size: 113%; }
     body .panel .panel-body:not(.playing) {
       background-image: none; }
     body .panel .panel-body input.search {
       margin-bottom: 5px; }
+    body .panel .panel-body input[type=range] {
+      margin-bottom: 0;
+      -webkit-appearance: none;
+      position: relative;
+      width: 89% !important; }
+      body .panel .panel-body input[type=range]:before {
+        content: attr(data-volume);
+        position: absolute;
+        right: -29px;
+        color: #337ab7;
+        margin-top: -3px; }
+      body .panel .panel-body input[type=range]:focus {
+        outline: none; }
+      body .panel .panel-body input[type=range]::-webkit-slider-runnable-track {
+        cursor: pointer;
+        width: 90%; }
+      body .panel .panel-body input[type=range]::-webkit-slider-thumb {
+        background: #337ab7;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        -webkit-appearance: none;
+        cursor: pointer; }
     body .panel .list-group {
       overflow-y: scroll;
       overflow-x: hidden;
