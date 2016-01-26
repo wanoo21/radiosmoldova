@@ -90,7 +90,7 @@
         obj = obj || {};
         obj.date = new Date().getTime();
         obj.id = self.background.currentRadio.id || null;
-        obj.nameId = (obj.name || self.background.currentRadio.name).replace(' ', '-').toLowerCase();
+        obj.nameId = (obj.name || self.background.currentRadio.name).split(' ').join('-').toLowerCase();
         return self.getFirebaseData(obj)
     };
     
@@ -217,7 +217,7 @@
 		// Generate dynamically list on html
 		$.when($.each(radioList, function(k, v) {
             //self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: v.name.replace(' ', '-').toLowerCase() });
-            self.radioList[k].nameId = v.name.replace(' ', '-').toLowerCase();
+            self.radioList[k].nameId = v.name.split(' ').join('-').toLowerCase();
             self.radioList[k].id = k;
 			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none" title="Ascultatori acum"></span></a>'
 		})).then(function(){
