@@ -39,7 +39,6 @@
         self.background.listeners.on('child_changed', function(changedRadio) {
             return self.addBadgeInfo(changedRadio.val())
         });
-        self.getFirebaseData()
     };
 
     // Get data from firebase and make changes
@@ -77,6 +76,7 @@
 		radioTitle.text('Alege un radio din lista');
 		showTime.text('');
         range.attr('data-volume', range.val());
+        self.getFirebaseData()
 	}
 
     // Add info on radio list
@@ -187,6 +187,7 @@
 
 	// Make changes if radio play on loading DOM
 	if(!!self.background.currentRadio && !self.video.paused) {
+        self.getFirebaseData();
 		self.videoPlay()
 	}
 	
@@ -216,7 +217,7 @@
 		var list = '';
 		// Generate dynamically list on html
 		$.when($.each(radioList, function(k, v) {
-            //self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: v.name.replace(' ', '-').toLowerCase() });
+            //self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: v.name.split(' ').join('-').toLowerCase() });
             self.radioList[k].nameId = v.name.split(' ').join('-').toLowerCase();
             self.radioList[k].id = k;
 			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none" title="Ascultatori acum"></span></a>'
