@@ -1,10 +1,6 @@
 /* global chrome */
 // Default Chrome Extension script
 (function(global) {
-	// Verify if jQuery is defined
-	if(!window.jQuery) throw "jQuery is undefined. Please include jQuery framework.";
-    if(!window.Firebase) throw "Firebase is not undefined!";
-	
 	// Number prototype for adding zero to time
 	Number.prototype.pad = function(size) {
 		var s = String(this);
@@ -76,13 +72,14 @@
 		radioTitle.text('Alege un radio din lista');
 		showTime.text('');
         range.attr('data-volume', range.val());
-        self.getFirebaseData()
 	}
 
     // Add info on radio list
     self.addBadgeInfo = function (radio) {
-        self.background.currentRadio.listeners = radio.listeners;
-        return radioContainer.find('a[data-id=' + radio.id + ']').find('span.badge')[radio.listeners > 0 ? 'fadeIn' : 'fadeOut']().text(radio.listeners)
+        if(self.background.currentRadio && radio.nameId === self.background.currentRadio.nameId)
+            self.background.currentRadio.listeners = radio.listeners;
+        var badge = radioContainer.find('a[data-id=' + radio.id + ']').find('span.badge');
+        return radio.listeners > 0 ? badge.fadeIn().text(radio.listeners) : badge.fadeOut();
     };
 
     // Set stats on firebase
@@ -90,7 +87,7 @@
         obj = obj || {};
         obj.date = new Date().getTime();
         obj.id = self.background.currentRadio.id || null;
-        obj.nameId = (obj.name || self.background.currentRadio.name).split(' ').join('-').toLowerCase();
+        obj.nameId = self.getNameId(obj.name || self.background.currentRadio.name);
         return self.getFirebaseData(obj)
     };
     
@@ -185,9 +182,12 @@
 		return $.getJSON('radiolist.json');
 	};
 
+    self.getNameId = function(name) {
+        return name.split(' ').join('-').toLowerCase();
+    };
+
 	// Make changes if radio play on loading DOM
 	if(!!self.background.currentRadio && !self.video.paused) {
-        self.getFirebaseData();
 		self.videoPlay()
 	}
 	
@@ -195,12 +195,12 @@
 	if(self.video.paused && !!self.background.currentRadio) {
 		self.videoPause();
 		self.videoTimeUpdate();
-		radioTitle.text(self.background.currentRadio.name)
+		radioTitle.text(self.background.currentRadio.name);
 	}
 	
 	// Disable play/pause button if video is loading, DOM
 	if(!!self.background.currentRadio && self.background.currentRadio.loading) {
-		self.videoStartLoading()
+		self.videoStartLoading();
 	}
 	
 	// Player play/pause actions
@@ -217,8 +217,9 @@
 		var list = '';
 		// Generate dynamically list on html
 		$.when($.each(radioList, function(k, v) {
-            //self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: v.name.split(' ').join('-').toLowerCase() });
-            self.radioList[k].nameId = v.name.split(' ').join('-').toLowerCase();
+            //if (!self.background.radioKeys)
+            //    self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
+            self.radioList[k].nameId = self.getNameId(v.name);
             self.radioList[k].id = k;
 			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none" title="Ascultatori acum"></span></a>'
 		})).then(function(){
@@ -228,6 +229,8 @@
 				self.videoListeners();
                 // Start listen firebase actions
                 self.startListenForebase();
+                // Put firebase data in DOM
+                self.getFirebaseData();
 				// Make current radio active
 				if(!!self.background.currentRadio) {
 					radioContainer.find('a[data-id=' + self.background.currentRadio.id + ']').addClass('active');
