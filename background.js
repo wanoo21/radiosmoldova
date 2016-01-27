@@ -4,10 +4,6 @@ self.runtime = firebase.child('runtime');
 self.errors = firebase.child('errors');
 self.listeners = firebase.child('listeners');
 
-if (self.currentRadio)
-    self.listeners.onDisconnect().child(self.radioKeys[self.currentRadio.nameId]).update({ listeners: self.currentRadio.listeners > 0 ? self.currentRadio.listeners -= 1 : 0 }, function(err) {
-        if(err) errors.push(err);
-    });
 
 // Listen for errors
 self.onerror = function(err){
@@ -22,6 +18,10 @@ chrome.runtime.onStartup.addListener(function() {
 // Listen on suspend 
 chrome.runtime.onSuspend.addListener(function(){
     // Remove listen from data
+    if(self.currentRadio)
+        self.listeners.child(self.radioKeys[self.currentRadio.nameId]).update({ listeners: self.currentRadio.listeners > 0 ? self.currentRadio.listeners -= 1 : 0 }, function(err) {
+            if(err) errors.push(err);
+        });
     self.runtime.push({ action: 'suspended', dateAt: Firebase.ServerValue.TIMESTAMP })
 });
 
