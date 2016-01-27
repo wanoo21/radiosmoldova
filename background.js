@@ -6,9 +6,9 @@ self.listeners = firebase.child('listeners');
 
 
 // Listen for errors
-self.onerror = function(err){
-    return self.errors.push(err)
-};
+//self.onerror = function(err){
+//    return self.errors.push(err)
+//};
 
 // Get id when extension is first installed
 chrome.runtime.onStartup.addListener(function() {

@@ -70,9 +70,9 @@
     };
 
     // Save errors
-    $(window).on('error', function(err){
-        self.background.errors.push(err);
-    });
+    //$(window).on('error', function(err){
+    //    self.background.errors.push(err);
+    //});
 
 	// Initial function
 	if(!self.background.currentRadio) {
