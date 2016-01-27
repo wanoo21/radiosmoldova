@@ -87,8 +87,8 @@
         if(self.background.currentRadio && radio.nameId === self.background.currentRadio.nameId)
             self.background.currentRadio.listeners = radio.listeners;
         var badge = radioContainer.find('a[data-id=' + radio.id + ']').find('span.badge');
-        return (radio.listeners > 0 ? badge.fadeIn().text(radio.listeners) : badge.fadeOut()).promise().done(function(){
-			var badges = radioContainer.find('span.badge:visible'), _totalListeners = 0,  _totalposts = 0;
+        return (radio.listeners > 0 ? badge.fadeIn().text(radio.listeners) : badge.fadeOut().text('')).promise().done(function(){
+			var badges = radioContainer.find('span.badge:not(:empty)'), _totalListeners = 0,  _totalposts = 0;
 			$(badges).each(function (k, badge) {
 				_totalListeners += Number(badge.innerText);
 				_totalposts++
@@ -135,9 +135,10 @@
 	};
 	// Default timeupdate function
 	self.videoTimeUpdate = function() {
+		self.video.hours = (Math.floor(self.video.currentTime / 60) * 60).pad();
 		self.video.minutes = Math.floor(self.video.currentTime / 60).pad();
 		self.video.seconds = (Math.floor(self.video.currentTime) - self.video.minutes * 60).pad();
-		showTime.text(self.video.minutes + ' : ' + self.video.seconds)
+		showTime.text(self.video.hours + ' : ' +self.video.minutes + ' : ' + self.video.seconds)
 	};
 	// Default buffering function
 	self.videoBuffering = function() {
@@ -271,7 +272,7 @@
 						// Load video after src is changed
 						self.video.load();
                         // Choosed event
-                        self.setStat({ name: self.background.currentRadio.name, action: 'choosed' })
+                        self.setStat({ name: self.background.currentRadio.name, action: 'choosed' });
 					}
 				})
 			});
