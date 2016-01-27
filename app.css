@@ -19,7 +19,8 @@ body {
       margin-bottom: 0;
       -webkit-appearance: none;
       position: relative;
-      width: 89% !important; }
+      width: 89% !important;
+      background: transparent; }
       body .panel .panel-body input[type=range]:before {
         content: attr(data-volume);
         position: absolute;

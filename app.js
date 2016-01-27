@@ -14,6 +14,8 @@
 	var $ = global.jQuery,
 		self = this,
 		panelBody = $('.panel-body'),
+		listeners = panelBody.find('span.listeners'),
+		posts = panelBody.find('span.posts'),
 		filter = $('input[type=search]'),
 		range = $('input[type=range]'),
 		playPauseButton = $('button.play_pause'),
@@ -26,6 +28,12 @@
     // Get background video
     self.video = $(self.background.document).find('video')[0];
 
+	Object.defineProperty(self, 'setTotalListeners', {
+		set(data){
+			listeners.text(data.listeners);
+			posts.text(data.posts)
+		}
+	});
     // Start listen firebase
     self.startListenForebase = function() {
         self.background.radioKeys = {};
@@ -44,11 +52,11 @@
             if(obj) {
                 var thisRadio = currentData[self.background.radioKeys[obj.nameId]];
 
-                if (obj.action == 'play' || obj.action == 'choosed')
-                    thisRadio.listeners += 1;
-
-                else if(thisRadio.listeners > 0)
-                    thisRadio.listeners -= 1;
+                if (obj.action == 'play' || obj.action == 'choosed') {
+					thisRadio.listeners += 1;
+				} else if(thisRadio.listeners > 0) {
+					thisRadio.listeners -= 1;
+				}
 
                 self.background.listeners.child(self.background.radioKeys[obj.nameId]).update(thisRadio, function(err) {
                     if(err) return self.log(err, 'error');
@@ -79,7 +87,14 @@
         if(self.background.currentRadio && radio.nameId === self.background.currentRadio.nameId)
             self.background.currentRadio.listeners = radio.listeners;
         var badge = radioContainer.find('a[data-id=' + radio.id + ']').find('span.badge');
-        return radio.listeners > 0 ? badge.fadeIn().text(radio.listeners) : badge.fadeOut();
+        return (radio.listeners > 0 ? badge.fadeIn().text(radio.listeners) : badge.fadeOut()).promise().done(function(){
+			var badges = radioContainer.find('span.badge:visible'), _totalListeners = 0,  _totalposts = 0;
+			$(badges).each(function (k, badge) {
+				_totalListeners += Number(badge.innerText);
+				_totalposts++
+			});
+			self.setTotalListeners = { listeners: _totalListeners, posts: _totalposts };
+		});
     };
 
     // Set stats on firebase
@@ -221,7 +236,7 @@
             //    self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
             self.radioList[k].nameId = self.getNameId(v.name);
             self.radioList[k].id = k;
-			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none" title="Ascultatori acum"></span></a>'
+			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none" title="Asculta acum acest post"></span></a>'
 		})).then(function(){
 			// Put generated html on list container
 			radioContainer.html(list).promise().done(function(){
