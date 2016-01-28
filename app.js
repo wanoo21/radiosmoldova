@@ -79,7 +79,7 @@
 		playPauseButton.prop('disabled', true).text('play_arrow');
 		radioTitle.text('Alege un radio din lista');
 		showTime.text('');
-        	range.attr('data-volume', range.val());
+		range.attr('data-volume', range.val());
 	}
 
     // Add info on radio list
@@ -87,7 +87,9 @@
         if(self.background.currentRadio && radio.nameId === self.background.currentRadio.nameId)
             self.background.currentRadio.listeners = radio.listeners;
         var badge = radioContainer.find('a[data-id=' + radio.id + ']').find('span.badge');
-        return (radio.listeners > 0 ? badge.fadeIn().text(radio.listeners) : badge.fadeOut().text('')).promise().done(function(){
+        return (radio.listeners > 0 ? badge.text(radio.listeners).fadeIn() : badge.fadeOut(function () {
+			badge.text('');
+		})).promise().done(function(){
 			var badges = radioContainer.find('span.badge:not(:empty)'), _totalListeners = 0,  _totalposts = 0;
 			$(badges).each(function (k, badge) {
 				_totalListeners += Number(badge.innerText);
