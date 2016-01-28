@@ -79,7 +79,7 @@
 		playPauseButton.prop('disabled', true).text('play_arrow');
 		radioTitle.text('Alege un radio din lista');
 		showTime.text('');
-        range.attr('data-volume', range.val());
+        	range.attr('data-volume', range.val());
 	}
 
     // Add info on radio list
@@ -111,8 +111,8 @@
 		panelBody.addClass('playing');
 		playPauseButton.text('pause');
 		radioTitle.text(self.background.currentRadio.name);
-        range.val(self.background.video.volume * 100);
-        range.attr('data-volume', range.val());
+        	range.val(self.background.video.volume * 100);
+        	range.attr('data-volume', range.val());
 	};
 	// Default pause function
 	self.videoPause = function() {
@@ -135,10 +135,10 @@
 	};
 	// Default timeupdate function
 	self.videoTimeUpdate = function() {
-		self.video.hours = (Math.floor(self.video.currentTime / 60) * 60).pad();
 		self.video.minutes = Math.floor(self.video.currentTime / 60).pad();
+		//self.video.hours = (self.video.minutes / 60).pad();
 		self.video.seconds = (Math.floor(self.video.currentTime) - self.video.minutes * 60).pad();
-		showTime.text(self.video.hours + ' : ' +self.video.minutes + ' : ' + self.video.seconds)
+		showTime.text(self.video.minutes + ' : ' + self.video.seconds)
 	};
 	// Default buffering function
 	self.videoBuffering = function() {
