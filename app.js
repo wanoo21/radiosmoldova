@@ -9,7 +9,7 @@
 		}
 		return s;
 	};
-	
+
 	// Default variables
 	var $ = global.jQuery,
 		self = this,
@@ -107,7 +107,7 @@
         obj.nameId = self.getNameId(obj.name || self.background.currentRadio.name);
         return self.getFirebaseData(obj)
     };
-    
+
 	// Default play functions
 	self.videoPlay = function() {
 		panelBody.addClass('playing');
@@ -208,26 +208,26 @@
 	if(!!self.background.currentRadio && !self.video.paused) {
 		self.videoPlay()
 	}
-	
+
 	// Make changes if video is paused on loading DOM
 	if(self.video.paused && !!self.background.currentRadio) {
 		self.videoPause();
 		self.videoTimeUpdate();
 		radioTitle.text(self.background.currentRadio.name);
 	}
-	
+
 	// Disable play/pause button if video is loading, DOM
 	if(!!self.background.currentRadio && self.background.currentRadio.loading) {
 		self.videoStartLoading();
 	}
-	
+
 	// Player play/pause actions
 	playPauseButton.click(function() {
         var action = self.video.paused ? 'play' : 'pause';
 		self.video[action]();
         self.setStat({ name: self.background.currentRadio.name, action: action, timeListen: self.video.currentTime })
 	});
-	
+
 	// Get all radio and put into document
 	self.getRadioList().then(function(radioList) {
 		// Put list into global variable
@@ -236,7 +236,7 @@
 		// Generate dynamically list on html
 		$.when($.each(radioList, function(k, v) {
             //if (!self.background.radioKeys)
-            //    self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
+                //self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
             self.radioList[k].nameId = self.getNameId(v.name);
             self.radioList[k].id = k;
 			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none" title="Asculta acum acest post"></span></a>'
@@ -280,10 +280,10 @@
 			});
 		})
 	});
-	
+
 	// For reload extension
 	self.reload = function() {
 		return chrome.runtime.reload();
 	}
-	
+
 }(window));

@@ -16,7 +16,7 @@ chrome.runtime.onStartup.addListener(function() {
     self.runtime.push({ action: 'installed', date: Firebase.ServerValue.TIMESTAMP })
 });
 
-// Listen on suspend 
+// Listen on suspend
 chrome.runtime.onSuspend.addListener(function(){
 	self.removeListeners();
     self.runtime.push({ action: 'suspended', dateAt: Firebase.ServerValue.TIMESTAMP });
@@ -38,7 +38,7 @@ var info = chrome.runtime.getManifest();
 
 chrome.browserAction.setTitle({ title: info.name + ' v.' + info.version });
 
-// Change badge 
+// Change badge
 video.onplay = function() {
 	chrome.browserAction.setBadgeText({ text: 'play' });
     //self.startedAt = Date.now();
