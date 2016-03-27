@@ -21,6 +21,7 @@
 		playPauseButton = $('button.play_pause'),
 		radioTitle = $('h5 > .radio-title'),
 		showTime = $('h5 > small'),
+		btnRegion = $('.btn-region').find('button'),
 		radioContainer = $('#radio-list');
 
     // Window from background.html
@@ -63,6 +64,8 @@
                 })
             } else {
                 Object.keys(currentData).forEach(function (key) {
+					if (!currentData[key].id || currentData[key].nameId.indexOf('-' + self.background.region) == -1) return;
+					//console.dir(currentData[key])
                     return self.addBadgeInfo(currentData[key]);
                 })
             }
@@ -86,7 +89,7 @@
     self.addBadgeInfo = function (radio) {
         if(self.background.currentRadio && radio.nameId === self.background.currentRadio.nameId)
             self.background.currentRadio.listeners = radio.listeners;
-        var badge = radioContainer.find('a[data-id=' + radio.id + ']').find('span.badge');
+        var badge = radioContainer.find('a[data-name=' + radio.nameId + ']').find('span.badge');
         return (radio.listeners > 0 ? badge.text(radio.listeners).fadeIn() : badge.fadeOut(function () {
 			badge.text('');
 		})).promise().done(function(){
@@ -104,7 +107,7 @@
         obj = obj || {};
         obj.date = new Date().getTime();
         obj.id = self.background.currentRadio.id || null;
-        obj.nameId = self.getNameId(obj.name || self.background.currentRadio.name);
+        obj.nameId = self.background.currentRadio.nameId;
         return self.getFirebaseData(obj)
     };
 
@@ -196,12 +199,13 @@
 		return self;
 	};
 	// Get radio list function
-	self.getRadioList = function() {
-		return $.getJSON('radiolist.json');
+	self.getRadioList = function(region) {
+		self.background.region = region;
+		return $.getJSON('radiolist-' + region + '.json');
 	};
 
     self.getNameId = function(name) {
-        return name.split(' ').join('-').toLowerCase();
+        return name.split(' ').join('-').toLowerCase() + '-' + self.background.region;
     };
 
 	// Make changes if radio play on loading DOM
@@ -229,56 +233,66 @@
 	});
 
 	// Get all radio and put into document
-	self.getRadioList().then(function(radioList) {
-		// Put list into global variable
-		self.radioList = radioList;
-		var list = '';
-		// Generate dynamically list on html
-		$.when($.each(radioList, function(k, v) {
-            //if (!self.background.radioKeys)
-                //self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
-            self.radioList[k].nameId = self.getNameId(v.name);
-            self.radioList[k].id = k;
-			list += '<a href=# class="list-group-item" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none" title="Asculta acum acest post"></span></a>'
-		})).then(function(){
-			// Put generated html on list container
-			radioContainer.html(list).promise().done(function(){
-				// Call video listeners
-				self.videoListeners();
-                // Start listen firebase actions
-                self.startListenForebase();
-                // Put firebase data in DOM
-                self.getFirebaseData();
-				// Make current radio active
-				if(!!self.background.currentRadio) {
-					radioContainer.find('a[data-id=' + self.background.currentRadio.id + ']').addClass('active');
-				}
-				// Change radio
-				radioContainer.on('click', 'a', function(e) {
-					e.preventDefault();
-					// Verify if channel is not the same
-					if(!$(this).hasClass('active')) {
-                        // Changed event
-                        if(!!self.background.currentRadio)
-                            self.setStat({ name: self.background.currentRadio.name, action: 'changed' });
-						// Make this channel active
-						$(this).parent().find('a').removeClass('active');
-						$(this).addClass('active');
-						// Change background global current radio
-						self.background.currentRadio = self.radioList[$(this).data('id')];
-						//self.background.currentRadio.id = $(this).data('id');
-						// Stop video for change channel
-						if(self.video.src) self.video.pause();
-						// Make current url in background url
-						$(self.video).find('source')[0].src = self.background.currentRadio.url;
-						// Load video after src is changed
-						self.video.load();
-                        // Choosed event
-                        self.setStat({ name: self.background.currentRadio.name, action: 'choosed' });
+	self.setRadio = function(region) {
+		region = region || self.background.region || 'md';
+		btnRegion.removeClass('active').filter(function(){ return $(this).hasClass(region) }).addClass('active');
+		return self.getRadioList(region).then(function(radioList) {
+			// Put list into global variable
+			self.radioList = radioList;
+			var list = '';
+			// Generate dynamically list on html
+			$.when($.each(radioList, function(k, v) {
+				//if (!self.background.radioKeys)
+				// self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
+				self.radioList[k].nameId = self.getNameId(v.name);
+				self.radioList[k].id = k;
+				list += '<a href=# class="list-group-item" data-name="' + self.getNameId(v.name) + '" data-id=' + k + '>' + v.name + '<span class="badge" style="display: none"></span></a>'
+			})).then(function(){
+				// Put generated html on list container
+				radioContainer.html(list).promise().done(function(){
+					// Call video listeners
+					self.videoListeners();
+					// Start listen firebase actions
+					self.startListenForebase();
+					// Put firebase data in DOM
+					self.getFirebaseData();
+					// Make current radio active
+					if(!!self.background.currentRadio) {
+						radioContainer.find('a[data-name=' + self.background.currentRadio.nameId + ']').addClass('active');
 					}
-				})
-			});
-		})
+					// Change radio
+					radioContainer.on('click', 'a', function(e) {
+						e.preventDefault();
+						// Verify if channel is not the same
+						if(!$(this).hasClass('active')) {
+							// Changed event
+							if(!!self.background.currentRadio)
+								self.setStat({ name: self.background.currentRadio.name, action: 'changed' });
+							// Make this channel active
+							$(this).parent().find('a').removeClass('active');
+							$(this).addClass('active');
+							// Change background global current radio
+							self.background.currentRadio = self.radioList[$(this).data('id')];
+							//self.background.currentRadio.id = $(this).data('id');
+							// Stop video for change channel
+							if(self.video.src) self.video.pause();
+							// Make current url in background url
+							$(self.video).find('source')[0].src = self.background.currentRadio.url;
+							// Load video after src is changed
+							self.video.load();
+							// Choosed event
+							self.setStat({ name: self.background.currentRadio.name, action: 'choosed' });
+						}
+					})
+				});
+			})
+		});
+	};
+
+	self.setRadio();
+	btnRegion.on('click', function () {
+		console.info($(this).parent().index());
+		return self.setRadio($(this).parent().index() == 0 ? 'md' : 'ro')
 	});
 
 	// For reload extension

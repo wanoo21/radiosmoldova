@@ -54,6 +54,11 @@ body {
               }
 			}
 		}
+		.btn-region {
+			button.btn-primary {
+				border-radius: 0;
+			}
+		}
 		.list-group {
 			overflow-y: scroll;
 			overflow-x: hidden;
