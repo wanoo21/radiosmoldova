@@ -4,6 +4,7 @@ self.firebase = new Firebase(self._FIREBASE_URL);
 self.runtime = self.firebase.child('runtime');
 self.errors = self.firebase.child('errors');
 self.listeners = self.firebase.child('listeners');
+self.feedbacks = self.firebase.child('feedbacks');
 
 self.removeListeners = function () {
 	if(self.currentRadio)
