@@ -50,7 +50,7 @@ gulp.task('prod', ['scss', 'js_uglify', 'html_min', 'icons', 'imgs'], () => {
 });
 
 gulp.task('default', ['prod'], () => {
-    gulp.src(buildFolder)
+    gulp.src(buildFolder + '/**/*')
         .pipe(zip('radiosmoldova.zip'))
         .pipe(gulp.dest('../'));
 });
