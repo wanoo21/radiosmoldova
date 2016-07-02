@@ -17,5 +17,14 @@
     "url": "https://github.com/wanoo21/radiosmoldova/issues"
   },
   "homepage": "https://github.com/wanoo21/radiosmoldova#readme",
-  "devDependencies": {}
+  "devDependencies": {
+    "gulp-jsmin": "^0.1.5",
+    "gulp-zip": "^3.2.0"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglifyjs": "^0.6.2"
+  }
 }

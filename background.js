@@ -13,15 +13,15 @@ self.removeListeners = function () {
 		})
 };
 // Get id when extension is first installed
-chrome.runtime.onStartup.addListener(function() {
-    self.runtime.push({ action: 'installed', date: Firebase.ServerValue.TIMESTAMP })
-});
+// chrome.runtime.onStartup.addListener(function() {
+//     self.runtime.push({ action: 'installed', date: Firebase.ServerValue.TIMESTAMP })
+// });
 
 // Listen on suspend
-chrome.runtime.onSuspend.addListener(function(){
-	self.removeListeners();
-    return self.runtime.push({ action: 'suspended', dateAt: Firebase.ServerValue.TIMESTAMP });
-});
+// chrome.runtime.onSuspend.addListener(function(){
+// 	self.removeListeners();
+//     return self.runtime.push({ action: 'suspended', dateAt: Firebase.ServerValue.TIMESTAMP });
+// });
 
 // Listen for updates
 chrome.runtime.onUpdateAvailable.addListener(function() {
