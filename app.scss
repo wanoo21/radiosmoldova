@@ -1,3 +1,15 @@
+//$likedColor: #ccc;
+//
+@keyframes heart {
+  0%, 50%, 100% {
+    transform: scale(1);
+  }
+  25%, 85% {
+    transform: scale(.9);
+  }
+}
+
+
 body {
   width: 300px;
   .panel {
@@ -70,6 +82,10 @@ body {
         flex: 1;
         .list-group-item {
           border-radius: 0;
+          .badge i.glyphicon-heart.liked {
+            animation: heart .8s ease-in;
+            transform-origin: center;
+          }
         }
       }
     }

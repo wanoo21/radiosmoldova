@@ -1,3 +1,8 @@
+@keyframes heart {
+  0%, 50%, 100% {
+    transform: scale(1); }
+  25%, 85% {
+    transform: scale(0.9); } }
 body {
   width: 300px; }
   body .panel {
@@ -51,6 +56,9 @@ body {
         flex: 1; }
         body .panel .radios-feedbacks .list-group .list-group-item {
           border-radius: 0; }
+          body .panel .radios-feedbacks .list-group .list-group-item .badge i.glyphicon-heart.liked {
+            animation: heart .8s ease-in;
+            transform-origin: center; }
     body .panel .list-group {
       overflow-y: auto;
       overflow-x: hidden;
