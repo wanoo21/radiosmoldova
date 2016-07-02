@@ -1,0 +1,154 @@
+[
+	{
+		"name": "Antena Satelor",
+		"url": "http://stream2.srr.ro:8042/;"
+	},
+	{
+		"name": "Digi FM",
+		"url": "http://edge76.rdsnet.ro:84/digifm"
+	},
+	{
+		"name": "Europa FM",
+		"url": "http://82.208.137.144:8026/;"
+	},
+	{
+		"name": "Pro FM",
+		"url": "http://stream.profm.ro:8012/profm.mp3"
+	},
+	{
+		"name": "Kiss FM",
+		"url": "http://80.86.106.136:8090/;*.mp3"
+	},
+	{
+		"name": "Radio ZU",
+		"url": "http://stream.radiozu.ro:8020/;*.mp3"
+	},
+	{
+		"name": "Radio Prahova",
+		"url": "http://193.238.59.94:8100/;*.mp3"
+	},
+	{
+		"name": "Radio Funky",
+		"url": "http://live.radiofunky.ro:8888/;*.mp3"
+	},
+	{
+		"name": "Radio Popular",
+		"url": "http://live.radiopopular.ro:8888/;*.mp3"
+	},
+	{
+		"name": "Radio Romania Actualitati",
+		"url": "http://89.238.227.6:8002/;*.mp3"
+	},
+	{
+		"name": "Itsy Bitsy",
+		"url": "http://live.itsybitsy.ro:8000/itsybitsy"
+	},
+	{
+		"name": "Dance Station",
+		"url": "http://80.86.106.35:80/;*.mp3"
+	},
+	{
+		"name": "Radio X Net",
+		"url": "http://asculta.radioxnet.ro:8888/;*.mp3"
+	},
+	{
+		"name": "Radio Voces Campi",
+		"url": "http://89.41.177.55:8000/;*.mp3"
+	},
+	{
+		"name": "RFI Romania",
+		"url": "http://85.204.231.219:7300/;*.mp3"
+	},
+	{
+		"name": "Radio Traditional",
+		"url": "http://asculta.radiotraditional.ro:7000/;*.mp3"
+	},
+	{
+		"name": "Super FM",
+		"url": "http://82.77.45.227:8102/;*.mp3"
+	},
+	{
+		"name": "ROCK FM",
+		"url": "http://80.86.106.35:800/;*.mp3"
+	},
+	{
+		"name": "Radio Petrecaretzu",
+		"url": "http://radiopetrecaretzu.zapto.org:8383/;*.mp3"
+	},
+	{
+		"name": "Magic FM",
+		"url": "http://80.86.106.35:9000/;*.mp3"
+	},
+	{
+		"name": "Radio 21",
+		"url": "http://astreaming.vibefm.ro:8000/radio21_mp3_64k"
+	},
+	{
+		"name": "Romantic FM",
+		"url": "http://live.romanticfm.ro:8002/;*.mp3"
+	},
+	{
+		"name": "Dance FM",
+		"url": "http://stream.profm.ro:8032/dancefm.mp3"
+	},
+	{
+		"name": "Radio Ideea",
+		"url": "http://live.radiodeea.ro:8090/;*.mp3"
+	},
+	{
+		"name": "Radio Taraf",
+		"url": "http://asculta.radiotaraf.com:7100/;*.mp3"
+	},
+	{
+		"name": "Radio Crazy",
+		"url": "http://live.crazyradio.ro:8024/stream/;*.mp3"
+	},
+	{
+		"name": "Radio Romania Muzical",
+		"url": "http://stream2.srr.ro:8022/;*.mp3"
+	},
+	{
+		"name": "West City Radio",
+		"url": "http://live.westcityradio.ro:8000/mp3"
+	},
+	{
+		"name": "Radio Hot",
+		"url": "http://mp3.radiohot.ro:8000/;*.mp3"
+	},
+	{
+		"name": "Impact FM",
+		"url": "http://live.radioimpactfm.ro:8010/;stream.mp3"
+	},
+	{
+		"name": "C FM",
+		"url": "http://playradio.longmusic.com:9090/CFM"
+	},
+	{
+		"name": "KPTV",
+		"url": "http://s3.viastreaming.net:7180/;*.mp3"
+	},
+	{
+		"name": "HIT Radio",
+		"url": "http://live02.radiohit.ro:8000/hit.mp3"
+	},
+	{
+		"name": "Radio Bandit",
+		"url": "http://radiobandit.mine.nu:8000/;*.mp3"
+	},
+	{
+		"name": "Radio Teer",
+		"url": "http://RadioTeen.RoStreaMinG.CoM:9990/;*.mp3"
+	},
+	{
+		"name": "Radio Zuper",
+		"url": "http://live.radiozuper.ro:8080/;*.mp3"
+	},
+	{
+		"name": "Radio Mega",
+		"url": "http://asculta.radiomega.ro:8000/;*.mp3"
+	},
+	{
+		"name": "Vibe FM",
+		"url": "http://astreaming.vibefm.ro:8000/vibefm_mp3_64k"
+	}
+]

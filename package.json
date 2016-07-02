@@ -1,0 +1,21 @@
+{
+  "name": "radiosmoldova",
+  "version": "1.6.0",
+  "description": "Asculta online toate posturile Radio din republica Moldova. Aplicatie pentru Google Chrome, o poti instala de [aici](https://chrome.google.com/webstore/detail/radios-moldova/hhepcbepkfgppibjhlncbinbkmigjjbf).",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wanoo21/radiosmoldova.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wanoo21/radiosmoldova/issues"
+  },
+  "homepage": "https://github.com/wanoo21/radiosmoldova#readme",
+  "devDependencies": {}
+}
