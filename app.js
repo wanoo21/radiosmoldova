@@ -55,7 +55,7 @@
         self.background.feedbacks.on('child_added', function (feedback) {
             if (feedback.val().text == '') return;
             if (self.feedbacks.some((f) => { return f.key === feedback.key()})) return;
-            self.feedbacks.push($.extend({}, feedback.val(), { key: feedback.key() }));
+            self.feedbacks.push($.extend(feedback.val(), { key: feedback.key() }));
             return self.addFeedbacksInHtml();
         });
         // Listen changed feedbacks
@@ -111,7 +111,7 @@
     self.addBadgeInfo = function (radio) {
         if(self.background.currentRadio && radio.nameId === self.background.currentRadio.nameId)
             self.background.currentRadio.listeners = radio.listeners;
-        var badge = radioContainer.find('a[data-name=' + radio.nameId + ']').find('span.badge');
+        var badge = radioContainer.find(`a[data-name=${radio.nameId}]`).find('span.badge');
         return (radio.listeners > 0 ? badge.text(radio.listeners).fadeIn() : badge.fadeOut(function () {
             badge.text('');
         })).promise().done(function(){

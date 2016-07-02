@@ -20,8 +20,7 @@ chrome.runtime.onStartup.addListener(function() {
 // Listen on suspend
 chrome.runtime.onSuspend.addListener(function(){
 	self.removeListeners();
-    self.runtime.push({ action: 'suspended', dateAt: Firebase.ServerValue.TIMESTAMP });
-
+    return self.runtime.push({ action: 'suspended', dateAt: Firebase.ServerValue.TIMESTAMP });
 });
 
 // Listen for updates
