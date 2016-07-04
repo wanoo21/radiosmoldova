@@ -36,7 +36,7 @@ _gaq.push(['_trackPageview']);
         showTime = $('h5 > small'),
         btnRegion = $('.btn-region').find('button'),
         radioContainer = $('#radio-list'),
-        feedbackMaxTextLength = 20;
+        feedbackMaxTextLength = 30;
 
     // Window from background.html
     self.background = chrome.extension.getBackgroundPage();
