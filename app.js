@@ -418,5 +418,15 @@ _gaq.push(['_trackPageview']);
     self.reload = function() {
         return chrome.runtime.reload();
     }
+    
+    self.refreshListeners = () => {
+        return self.radioList.forEach((radio) => {
+            self.background.listeners.child(self.background.radioKeys[radio.nameId]).update({
+                listeners: 0
+            }, err => {
+                console.log(err || 'success')
+            }) 
+        })
+    }
 
 }(window));
