@@ -26,7 +26,7 @@
         showTime = $('h5 > small'),
         btnRegion = $('.btn-region').find('button'),
         radioContainer = $('#radio-list'),
-        feedbackMaxTextLength = 20,
+        feedbackMaxTextLength = 30,
         configs = {
             serverName: './server',
             trackEvents: !!global._gaq
@@ -414,6 +414,16 @@
     // For reload extension
     self.reload = function() {
         return chrome.runtime.reload();
+    }
+    
+    self.refreshListeners = () => {
+        return self.radioList.forEach((radio) => {
+            self.background.listeners.child(self.background.radioKeys[radio.nameId]).update({
+                listeners: 0
+            }, err => {
+                console.log(err || 'success')
+            }) 
+        })
     }
 
 }(window));
