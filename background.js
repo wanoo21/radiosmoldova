@@ -42,7 +42,7 @@ chrome.browserAction.setTitle({ title: info.name + ' v.' + info.version });
 video.onplay = function() {
 	chrome.browserAction.setBadgeText({ text: 'play' });
     //self.startedAt = Date.now();
-	if(video.reload) {
+	if (video.reload) {
 		video.load();
 		video.reload = false;
 		clearTimeout(info.reloadRadio);
@@ -53,7 +53,7 @@ video.onpause = function() {
     //self.endAt = Date.now();
 	return info.reloadRadio = setTimeout(function(){
 		video.reload = true;
-        chrome.browserAction.setBadgeText({ text: '' });
+		chrome.browserAction.setBadgeText({ text: '' });
 	}, 30 * 1000)
 };
 video.onloadstart = function() {

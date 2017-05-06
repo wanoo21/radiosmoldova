@@ -9,3 +9,5 @@ gen
 # Created by .ignore support plugin (hsz.mobi)
 _dist/
 node_modules/
+radio-online-*/**
+dist-server/

@@ -1,10 +1,10 @@
 {
 	"manifest_version": 2,
 	"version": "1.7.1",
-	"name": "Radio Moldova si Romania",
-	"short_name": "MD radio stations",
-	"description": "Asculta online toate posturile Radio din Republica Moldova si Romania",
-	"author": "IP",
+	"name": "Radio Moldova, Romania si Rusia",
+	"short_name": "Online Radio Stations",
+	"description": "Asculta online toate posturile Radio din Republica Moldova, Romania si Moldova",
+	"author": "Ion Prodan",
 	"homepage_url": "https://github.com/wanoo21/radiosmoldova",
 	"offline_enabled": false,
 	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://ajax.googleapis.com https://maxcdn.bootstrapcdn.com https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
@@ -13,7 +13,7 @@
 		   "16": "icons/icon-128.png"
 	  },
 	  "default_popup": "popup.html",
-	  "default_title": "Radio's Moldova and Romania"
+	  "default_title": "Radio Moldova, Romania si Rusia"
 	},
 	"icons": {
 		"128": "icons/icon-128.png",

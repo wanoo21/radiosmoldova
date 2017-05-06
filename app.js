@@ -1,13 +1,3 @@
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-66592876-1']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = 'https://ssl.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
-
 // Default Chrome Extension script
 (function(global) {
     // Number prototype for adding zero to time
@@ -20,7 +10,7 @@ _gaq.push(['_trackPageview']);
     };
 
     // Default variables
-    var $ = global.jQuery,
+    let $ = global.jQuery,
         self = this,
         panelBody = $('.panel-body'),
         listeners = panelBody.find('span.listeners'),
@@ -36,7 +26,11 @@ _gaq.push(['_trackPageview']);
         showTime = $('h5 > small'),
         btnRegion = $('.btn-region').find('button'),
         radioContainer = $('#radio-list'),
-        feedbackMaxTextLength = 20;
+        feedbackMaxTextLength = 20,
+        configs = {
+            serverName: './server',
+            trackEvents: !!global._gaq
+        }
 
     // Window from background.html
     self.background = chrome.extension.getBackgroundPage();
@@ -117,15 +111,15 @@ _gaq.push(['_trackPageview']);
     }
 
     // Add info on radio list
-    self.addBadgeInfo = function (radio) {
+    self.addBadgeInfo = (radio) => {
         if(self.background.currentRadio && radio.nameId === self.background.currentRadio.nameId)
             self.background.currentRadio.listeners = radio.listeners;
-        var badge = radioContainer.find(`a[data-name=${radio.nameId}]`).find('span.badge');
-        return (radio.listeners > 0 ? badge.text(radio.listeners).fadeIn() : badge.fadeOut(function () {
+        let badge = radioContainer.find(`a[data-name=${radio.nameId}]`).find('span.badge');
+        return (radio.listeners > 0 ? badge.text(radio.listeners).fadeIn() : badge.fadeOut(() => {
             badge.text('');
-        })).promise().done(function(){
-            var badges = radioContainer.find('span.badge:not(:empty)'), _totalListeners = 0,  _totalposts = 0;
-            $(badges).each(function (k, badge) {
+        })).promise().done(() => {
+            let badges = radioContainer.find('span.badge:not(:empty)'), _totalListeners = 0,  _totalposts = 0;
+            $(badges).each((k, badge) => {
                 _totalListeners += Number(badge.innerText);
                 _totalposts++
             });
@@ -140,17 +134,23 @@ _gaq.push(['_trackPageview']);
         setTimeout(() => {
             feedbackBadge.find('.badge i.glyphicon-heart').removeClass('liked');
         }, 800);
-        feedbackBadge.find('span.likes-count').text(self.feedbacks.find((f) => { return f.key == key }).likes)
+        feedbackBadge.find('span.likes-count').text(self.feedbacks.find(f => f.key === key ).likes)
     };
 
     // Set stats on firebase
-    self.setStat = function(obj) {
+    self.setStat = (obj) => {
         obj = obj || {};
         obj.date = new Date().getTime();
         obj.id = self.background.currentRadio.id || null;
         obj.nameId = self.background.currentRadio.nameId;
         return self.getFirebaseData(obj)
     };
+
+    self.trackEvents = (value, type) => {
+        if (configs.trackEvents) {
+            _gaq.push(['_trackEvent', value, type])
+        }
+    }
 
     // Default play functions
     self.videoPlay = function() {
@@ -159,8 +159,9 @@ _gaq.push(['_trackPageview']);
         radioTitle.text(self.background.currentRadio.name);
         range.val(self.background.video.volume * 100);
         range.attr('data-volume', range.val());
-        _gaq.push(['_trackEvent', self.background.currentRadio.name, 'played']);
+        self.trackEvents(self.background.currentRadio.name, 'played')
     };
+
     // Default pause function
     self.videoPause = function() {
         panelBody.removeClass('playing');
@@ -217,15 +218,11 @@ _gaq.push(['_trackPageview']);
         $(self.video).on('waiting', self.videoBuffering)
     };
     // Filter listener
-    filter.on('keyup', function(){
+    filter.on('keyup', () => {
         self.checkAndShowRadioContainer();
         var regex = new RegExp(this.value, 'ig');
-        radioContainer.find('a').hide().filter(function() {
-            return regex.test(this.text);
-        }).show()
-    }).dblclick(function(){
-        this.select()
-    });
+        radioContainer.find('a').hide().filter(() => regex.test(this.text)).show()
+    }).dblclick(() => this.select());
 
     feedbackButton.on('click', () => {
         self.fadeOutFadeIn(radioContainer, feedbackContainer, () => {
@@ -273,8 +270,8 @@ _gaq.push(['_trackPageview']);
     self.autoScrollToPlayedRadio = () => {
         var radioActive = $("a.list-group-item.active");
         return radioActive.length && radioContainer.animate({
-                scrollTop: radioActive.offset().top - (radioContainer.height() + 27)
-            });
+            scrollTop: radioActive.offset().top - (radioContainer.height() + 27)
+        });
     };
 
     self.addFeedbacksInHtml = () => {
@@ -288,8 +285,8 @@ _gaq.push(['_trackPageview']);
                 var $this = $(e.target);
                 var key = $this.data('key'),
                     likes = self.feedbacks.filter((feedBack) => {
-                            return feedBack.key == key
-                        })[0].likes || 0;
+                        return feedBack.key == key
+                    })[0].likes || 0;
                 self.background.feedbacks.child(key).update({
                     likes: likes += 1
                 });
@@ -300,21 +297,21 @@ _gaq.push(['_trackPageview']);
 
     // Basic log message
     self.log = function(txt, type) {
-        if(type == 'error')
+        if (type == 'error')
             self.background.errors.push({ radio: self.background.currentRadio || null, error: txt });
         return console[type || 'info'](txt)
     };
     // Change dynamically title of icon
-    self.setActionTitle = function(title) {
-        chrome.browserAction.setTitle({
-            title: title
-        });
-        return self;
-    };
+    // self.setActionTitle = function(title) {
+    //     chrome.browserAction.setTitle({
+    //         title
+    //     });
+    //     return self;
+    // };
     // Get radio list function
     self.getRadioList = function(region) {
         self.background.region = region;
-        return $.getJSON('radiolist-' + region + '.json');
+        return $.getJSON(`${configs.serverName}/radiolist-${self.background.region}.json`);
     };
 
     self.getNameId = function(name) {
@@ -369,7 +366,7 @@ _gaq.push(['_trackPageview']);
                     self.startListenFirebase();
                     // Put firebase data in DOM
                     self.getFirebaseData();
-                    _gaq.push(['_trackEvent', region, 'region']);
+                    self.trackEvents(region, 'region')
                     // Make current radio active
                     if(!!self.background.currentRadio) {
                         var currentRadioList = radioContainer.find('a[data-name=' + self.background.currentRadio.nameId + ']');
