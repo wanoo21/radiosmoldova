@@ -56,9 +56,8 @@
         });
         // Listen added feedbacks
         self.background.feedbacks.on('child_added', function (feedback) {
-            if (feedback.val().text == '') return;
-            if (self.feedbacks.some((f) => { return f.key === feedback.key()})) return;
-            self.feedbacks.push($.extend(feedback.val(), { key: feedback.key() }));
+            if (feedback.val().text == '' || self.feedbacks.some(f => f.key === feedback.key())) return;
+            self.feedbacks.push($.extend(true, feedback.val(), { key: feedback.key() }));
             return self.addFeedbacksInHtml();
         });
         // Listen changed feedbacks
@@ -96,9 +95,6 @@
                 })
             }
         });
-        // self.background.feedbacks.once('value', (snapchat) => {
-        //     self.feedbacks.concat(snapchat.val());
-        // })
     };
     
 

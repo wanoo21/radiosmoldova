@@ -1,18 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="radio">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <title>Radio Online for Chrome browser</title>
+  <title ng-bind="ngMeta.title"></title>
+  <meta name="author" content="{{ngMeta.author}}" />
+  <meta name="description" content="{{ngMeta.description}}" />
+  <!--<base href="/server/">-->
 </head>
 <body>
-  <div class="container">
-    <h1>Hi, there's radio online</h1>
-  </div>
-<!-- inject:js -->
-<!-- endinject -->
+  <div class="container" ng-view></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-route.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-meta/0.3.9/ngMeta.min.js"></script>
+  <script src="./app.js"></script>
+  <!-- inject:js -->
+  <!-- endinject -->
 </body>
 </html>
