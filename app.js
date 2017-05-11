@@ -214,11 +214,11 @@
         $(self.video).on('waiting', self.videoBuffering)
     };
     // Filter listener
-    filter.on('keyup', () => {
+    filter.on('keyup', function() {
         self.checkAndShowRadioContainer();
         var regex = new RegExp(this.value, 'ig');
-        radioContainer.find('a').hide().filter(() => regex.test(this.text)).show()
-    }).dblclick(() => this.select());
+        radioContainer.find('a').hide().filter(function() { return regex.test(this.text) }).show()
+    }).dblclick(function() { this.select() });
 
     feedbackButton.on('click', () => {
         self.fadeOutFadeIn(radioContainer, feedbackContainer, () => {
@@ -348,8 +348,9 @@
             var list = '';
             // Generate dynamically list on html
             $.when($.each(radioList, function(k, v) {
-                //if (!self.background.radioKeys)
-                // self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
+                if (v.disable) return;
+                // if (!self.background.radioKeys)
+                //     self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
                 self.radioList[k].nameId = self.getNameId(v.name);
                 self.radioList[k].id = k;
                 list += `<a href=# class="list-group-item" data-name="${self.getNameId(v.name)}" data-id=${k}>${v.name}<span class="badge" title="Ascultatori momentan" style="display: none"></span></a>`

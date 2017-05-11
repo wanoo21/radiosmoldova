@@ -32,10 +32,6 @@
 		"url": "http://live.maestrofm.md:8000/maestro"
 	},
 	{
-		"name": "Radio Nunta",
-		"url": "http://live.radionunta.com:9098/;"
-	},
-	{
 		"name": "Radio Alla",
 		"url": "http://air-online2.radioalla.md/radioalla.mp3"
 	},
@@ -57,7 +53,7 @@
 	},
 	{
 		"name": "Radio Stil",
-		"url": "http://air-online2.radiostil.md/radiostil.mp3"
+		"url": "http://217.26.172.239/stil"
 	},
 	{
 		"name": "Radio ZUM",
@@ -84,16 +80,13 @@
 		"url": "http://217.26.167.180:8081/broadwave.mp3?src=1&kbps=128"
 	},
 	{
-		"name": "Radio 21",
-		"url": "http://astreaming.radio21.ro:8000/radio21_mp3_64k"
-	},
-	{
-		"name": "Radio Sport Moldova",
-		"url": "http://95.65.21.154:8082/broadwave.mp3?src=1&kbps=128"
+		"name": "Virgin Radio (Radio 21)",
+		"url": "http://astreaming.virginradio.ro:8000/virgin_aacp_64k"
 	},
 	{
 		"name": "Discovery FM",
-		"url": "http://178.168.18.200:8080/;"
+		"url": "http://37.233.26.246:8080",
+		"disable": true
 	},
 	{
 		"name": "Русское Радио",
@@ -109,7 +102,8 @@
 	},
 	{
 		"name": "Radio Chisinau",
-		"url": "http://95.65.9.170:8001/"
+		"url": "http://95.65.9.170:8001/",
+		"disable": true
 	},
 	{
 		"name": "Radio Moldova Tineret",
@@ -121,7 +115,8 @@
 	},
 	{
 		"name": "Vocea Basarabiei",
-		"url": "http://arhiva.voceabasarabiei.net:8000/vb_radio"
+		"url": "http://arhiva.voceabasarabiei.net:8000/vb_radio",
+		"disable": true
 	},
 	{
 		"name": "Radio Logos",
@@ -129,6 +124,7 @@
 	},
 	{
 		"name": "Radio BEAT",
-		"url": "http://radiobeat.md:9998/;stream.mp3"
+		"url": "http://radiobeat.md:9998/;stream.mp3",
+		"disable": true
 	}
 ]
