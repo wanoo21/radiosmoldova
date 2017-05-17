@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="radio">
+<html lang="ro" ng-app="radio">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title ng-bind="ngMeta.title"></title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <title ng-bind="ngMeta.title"></title>
+  <link rel="stylesheet" href="./css/app.css">
   <meta name="author" content="{{ngMeta.author}}" />
   <meta name="description" content="{{ngMeta.description}}" />
   <!--<base href="/server/">-->
 </head>
+
 <body>
   <div class="container" ng-view></div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular.min.js"></script>
@@ -20,4 +23,5 @@
   <!-- inject:js -->
   <!-- endinject -->
 </body>
+
 </html>

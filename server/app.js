@@ -1,26 +1,25 @@
-"use strict";
 // https://github.com/vinaygopinath/ngMeta
 class mainCtrl {
-  constructor (ngMeta) {
+  constructor(ngMeta) {
     this.title = 1
 
     ngMeta.setTitle('Radio online pentru Chrome', '')
     ngMeta.setTag('description', 'Asculata radio online din Romania, Rusia si Republica Moldova direct din browserul tau chrome, fara intrerupere si absolut gratuit!')
   }
 
-  testFn () {
+  testFn() {
     this.title++
   }
 }
 
 class installCtrl {
-  constructor (ngMeta) {
+  constructor(ngMeta) {
     ngMeta.setTitle('Install extension for chrome browser')
   }
 }
 
 class uninstallCtrl {
-  constructor (ngMeta) {
+  constructor(ngMeta) {
     ngMeta.setTitle('We are sorry for uninstalling')
   }
 }

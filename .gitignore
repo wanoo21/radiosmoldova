@@ -11,3 +11,4 @@ _dist/
 node_modules/
 radio-online-*/**
 dist-server/
+*.zip

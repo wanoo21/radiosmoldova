@@ -1,7 +1,7 @@
 // Default Chrome Extension script
-(function(global) {
+(function (global) {
     // Number prototype for adding zero to time
-    Number.prototype.pad = function(size) {
+    Number.prototype.pad = function (size) {
         var s = String(this);
         while (s.length < (size || 2)) {
             s = "0" + s;
@@ -41,24 +41,26 @@
     self.feedbacks = [];
 
     Object.defineProperty(self, 'setTotalListeners', {
-        set(data){
+        set(data) {
             listeners.text(data.listeners);
             posts.text(data.posts)
         }
     });
     // Start listen firebase
-    self.startListenFirebase = function() {
+    self.startListenFirebase = function () {
         self.background.radioKeys = {};
         self.background.listeners.on('child_added', function (currentRadio) {
             self.background.radioKeys[currentRadio.val().nameId] = currentRadio.key();
         });
-        self.background.listeners.on('child_changed', function(changedRadio) {
+        self.background.listeners.on('child_changed', function (changedRadio) {
             return self.addBadgeInfo(changedRadio.val())
         });
         // Listen added feedbacks
         self.background.feedbacks.on('child_added', function (feedback) {
             if (feedback.val().text == '' || self.feedbacks.some(f => f.key === feedback.key())) return;
-            self.feedbacks.push($.extend(true, feedback.val(), { key: feedback.key() }));
+            self.feedbacks.push($.extend(true, feedback.val(), {
+                key: feedback.key()
+            }));
             return self.addFeedbacksInHtml();
         });
         // Listen changed feedbacks
@@ -74,19 +76,21 @@
     };
 
     // Get data from firebase and make changes
-    self.getFirebaseData = function(obj) {
+    self.getFirebaseData = function (obj) {
 
-        self.background.listeners.once('value', function(snapshot) {
+        self.background.listeners.once('value', function (snapshot) {
             let currentData = snapshot.val();
-            if(obj) {
+            if (obj) {
                 let thisRadio = currentData[self.background.radioKeys[obj.nameId]];
                 if (obj.action == 'play' || obj.action == 'choosed') {
                     thisRadio.listeners += 1;
-                } else if(!obj.action || thisRadio.listeners > 0) {
+                } else if (!obj.action || thisRadio.listeners > 0) {
                     thisRadio.listeners -= 1;
                 }
                 self.background.listeners.child(self.background.radioKeys[obj.nameId]).update(thisRadio)
-                return (obj.action == 'play' || obj.action == 'choosed') && self.background.listeners.child(self.background.radioKeys[obj.nameId]).onDisconnect().set({ listeners: --self.currentRadio.listeners })
+                return (obj.action == 'play' || obj.action == 'choosed') && self.background.listeners.child(self.background.radioKeys[obj.nameId]).onDisconnect().set({
+                    listeners: --self.currentRadio.listeners
+                })
             } else {
                 Object.keys(currentData).forEach(function (key) {
                     if (!currentData[key].nameId) {
@@ -98,10 +102,10 @@
             }
         });
     };
-    
+
 
     // Initial function
-    if(!self.background.currentRadio) {
+    if (!self.background.currentRadio) {
         playPauseButton.prop('disabled', true).text('play_arrow');
         radioTitle.text('Alege un radio din lista');
         showTime.text('');
@@ -110,18 +114,23 @@
 
     // Add info on radio list
     self.addBadgeInfo = (radio) => {
-        if(self.background.currentRadio && radio.nameId === self.background.currentRadio.nameId)
+        if (self.background.currentRadio && radio.nameId === self.background.currentRadio.nameId)
             self.background.currentRadio.listeners = radio.listeners;
         let badge = radioContainer.find(`a[data-name=${radio.nameId}]`).find('span.badge');
         return (radio.listeners > 0 ? badge.text(radio.listeners).fadeIn() : badge.fadeOut(() => {
             badge.text('');
         })).promise().done(() => {
-            let badges = radioContainer.find('span.badge:not(:empty)'), _totalListeners = 0,  _totalposts = 0;
+            let badges = radioContainer.find('span.badge:not(:empty)'),
+                _totalListeners = 0,
+                _totalposts = 0;
             $(badges).each((k, badge) => {
                 _totalListeners += Number(badge.innerText);
                 _totalposts++
             });
-            self.setTotalListeners = { listeners: _totalListeners, posts: _totalposts };
+            self.setTotalListeners = {
+                listeners: _totalListeners,
+                posts: _totalposts
+            };
         });
     };
 
@@ -132,7 +141,7 @@
         setTimeout(() => {
             feedbackBadge.find('.badge i.glyphicon-heart').removeClass('liked');
         }, 800);
-        feedbackBadge.find('span.likes-count').text(self.feedbacks.find(f => f.key === key ).likes)
+        feedbackBadge.find('span.likes-count').text(self.feedbacks.find(f => f.key === key).likes)
     };
 
     // Set stats on firebase
@@ -151,30 +160,30 @@
     }
 
     // Default play functions
-    self.videoPlay = function() {
+    self.videoPlay = function () {
         panelBody.addClass('playing');
         playPauseButton.text('pause');
-        radioTitle.text(self.background.currentRadio.name);
+        radioTitle.html(`<b>${self.background.currentRadio.name}</b>`);
         range.val(self.background.video.volume * 100);
         range.attr('data-volume', range.val());
         self.trackEvents(self.background.currentRadio.name, 'played')
     };
 
     // Default pause function
-    self.videoPause = function() {
+    self.videoPause = function () {
         panelBody.removeClass('playing');
         playPauseButton.text('play_arrow');
     };
     // Default loading start function
-    self.videoStartLoading = function() {
+    self.videoStartLoading = function () {
         panelBody.removeClass('playing');
-        radioTitle.text('Se incarca... ' + self.background.currentRadio.name);
+        radioTitle.html(`Se incarca <b>${self.background.currentRadio.name}</b>`);
         playPauseButton.prop('disabled', true);
         showTime.text('');
         self.background.currentRadio.loading = true;
     };
     // Default loading end function
-    self.videoEndLoading = function() {
+    self.videoEndLoading = function () {
         playPauseButton.prop('disabled', false);
         self.background.currentRadio.loading = false;
         // Clean filter value
@@ -183,21 +192,21 @@
         self.video.play();
     };
     // Default timeupdate function
-    self.videoTimeUpdate = function() {
+    self.videoTimeUpdate = function () {
         self.video.hours = Math.floor((self.video.currentTime / 60) / 60).pad();
         self.video.minutes = Math.floor(self.video.currentTime / 60).pad();
         self.video.seconds = Math.floor(self.video.currentTime - self.video.minutes * 60).pad();
         showTime.text(`${self.video.hours} : ${(self.video.minutes - self.video.hours * 60).pad()} : ${self.video.seconds}`)
     };
     // Default buffering function
-    self.videoBuffering = function() {
+    self.videoBuffering = function () {
         panelBody.removeClass('playing');
-        radioTitle.text('Buffering... ' + self.background.currentRadio.name)
+        radioTitle.text(`Buffering <b>${self.background.currentRadio.name}</b>`)
     };
     // Operation for video, volume, pause, play, stop, etc.
-    self.videoListeners = function() {
+    self.videoListeners = function () {
         // Alert if isset error
-        $(self.video).on('error', function(ev) {
+        $(self.video).on('error', function (ev) {
             this.load();
         });
         // Start loading video
@@ -214,11 +223,15 @@
         $(self.video).on('waiting', self.videoBuffering)
     };
     // Filter listener
-    filter.on('keyup', function() {
+    filter.on('keyup', function () {
         self.checkAndShowRadioContainer();
         var regex = new RegExp(this.value, 'ig');
-        radioContainer.find('a').hide().filter(function() { return regex.test(this.text) }).show()
-    }).dblclick(function() { this.select() });
+        radioContainer.find('a').hide().filter(function () {
+            return regex.test(this.text)
+        }).show()
+    }).dblclick(function () {
+        this.select()
+    });
 
     feedbackButton.on('click', () => {
         self.fadeOutFadeIn(radioContainer, feedbackContainer, () => {
@@ -248,14 +261,14 @@
     });
 
     // Listen range and change volume
-    range.on('input', function(){
+    range.on('input', function () {
         range.attr('data-volume', this.value);
         return self.background.video.volume = this.value / 100;
     });
 
     // Fade in/out function
     self.fadeOutFadeIn = function (fOut, fIn, callback) {
-        return fOut.fadeOut().promise().done(() => fIn.fadeIn( callback || '' ))
+        return fOut.fadeOut().promise().done(() => fIn.fadeIn(callback || ''))
     };
 
     self.checkAndShowRadioContainer = function () {
@@ -292,9 +305,12 @@
     };
 
     // Basic log message
-    self.log = function(txt, type) {
+    self.log = function (txt, type) {
         if (type == 'error')
-            self.background.errors.push({ radio: self.background.currentRadio || null, error: txt });
+            self.background.errors.push({
+                radio: self.background.currentRadio || null,
+                error: txt
+            });
         return console[type || 'info'](txt)
     };
     // Change dynamically title of icon
@@ -305,59 +321,65 @@
     //     return self;
     // };
     // Get radio list function
-    self.getRadioList = function(region) {
+    self.getRadioList = function (region) {
         self.background.region = region;
         return $.getJSON(`${configs.serverName}/radiolist-${self.background.region}.json`);
     };
 
-    self.getNameId = function(name) {
-        return name.split(' ').join('-').toLowerCase() + '-' + self.background.region;
+    self.getNameId = function (name) {
+        return name.split(' ').join('-').toLowerCase().replace(/\(|\)/gi, '') + '-' + self.background.region;
     };
 
     // Make changes if radio play on loading DOM
-    if(!!self.background.currentRadio && !self.video.paused) {
+    if (!!self.background.currentRadio && !self.video.paused) {
         self.videoPlay();
     }
 
     // Make changes if video is paused on loading DOM
-    if(self.video.paused && !!self.background.currentRadio) {
+    if (self.video.paused && !!self.background.currentRadio) {
         self.videoPause();
         self.videoTimeUpdate();
         radioTitle.text(self.background.currentRadio.name);
     }
 
     // Disable play/pause button if video is loading, DOM
-    if(!!self.background.currentRadio && self.background.currentRadio.loading) {
+    if (!!self.background.currentRadio && self.background.currentRadio.loading) {
         self.videoStartLoading();
     }
 
     // Player play/pause actions
-    playPauseButton.click(function() {
+    playPauseButton.click(function () {
         var action = self.video.paused ? 'play' : 'pause';
         self.video[action]();
-        self.setStat({ name: self.background.currentRadio.name, action: action, timeListen: self.video.currentTime })
+        self.setStat({
+            name: self.background.currentRadio.name,
+            action: action,
+            timeListen: self.video.currentTime
+        })
     });
 
     // Get all radio and put into document
-    self.setRadio = function(region) {
+    self.setRadio = function (region) {
         region = region || self.background.region || 'md';
-        btnRegion.removeClass('active').filter(function(){ return $(this).hasClass(region) }).addClass('active');
-        return self.getRadioList(region).then(function(radioList) {
+        btnRegion.removeClass('active').filter(function () {
+            return $(this).hasClass(region)
+        }).addClass('active');
+        return self.getRadioList(region).then(function (radioList) {
             // Put list into global variable
             self.radioList = radioList;
             var list = '';
             stationsLength.text(`${radioList.length} statii total.`)
             // Generate dynamically list on html
-            $.when($.each(radioList, function(k, v) {
+            $.when($.each(radioList, function (k, v) {
                 if (v.disable) return;
                 // if (!self.background.radioKeys)
                 //     self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
                 self.radioList[k].nameId = self.getNameId(v.name);
                 self.radioList[k].id = k;
                 list += `<a href=# class="list-group-item" data-name="${self.getNameId(v.name)}" data-id=${k}>${v.name}<span class="badge" title="Ascultatori momentan" style="display: none"></span></a>`
-            })).then(function(){
+            })).then(function () {
                 // Put generated html on list container
-                radioContainer.html(list).promise().done(function(){
+                radioContainer.html(list).promise().done(function () {
                     // Call video listeners
                     self.videoListeners();
                     // Start listen firebase actions
@@ -366,7 +388,7 @@
                     self.getFirebaseData();
                     self.trackEvents(region, 'region')
                     // Make current radio active
-                    if(!!self.background.currentRadio) {
+                    if (!!self.background.currentRadio) {
                         var currentRadioList = radioContainer.find('a[data-name=' + self.background.currentRadio.nameId + ']');
                         if (currentRadioList.length) {
                             currentRadioList.addClass('active');
@@ -374,13 +396,16 @@
                         }
                     }
                     // Change radio
-                    radioContainer.on('click', 'a', function(e) {
+                    radioContainer.on('click', 'a', function (e) {
                         e.preventDefault();
                         // Verify if channel is not the same
-                        if(!$(this).hasClass('active')) {
+                        if (!$(this).hasClass('active')) {
                             // Changed event
-                            if(!!self.background.currentRadio)
-                                self.setStat({ name: self.background.currentRadio.name, action: 'changed' });
+                            if (!!self.background.currentRadio)
+                                self.setStat({
+                                    name: self.background.currentRadio.name,
+                                    action: 'changed'
+                                });
                             // Make this channel active
                             $(this).parent().find('a').removeClass('active');
                             $(this).addClass('active');
@@ -388,13 +413,16 @@
                             self.background.currentRadio = self.radioList[$(this).data('id')];
                             //self.background.currentRadio.id = $(this).data('id');
                             // Stop video for change channel
-                            if(self.video.src) self.video.pause();
+                            if (self.video.src) self.video.pause();
                             // Make current url in background url
                             $(self.video).find('source')[0].src = self.background.currentRadio.url;
                             // Load video after src is changed
                             self.video.load();
                             // Choosed event
-                            self.setStat({ name: self.background.currentRadio.name, action: 'choosed' });
+                            self.setStat({
+                                name: self.background.currentRadio.name,
+                                action: 'choosed'
+                            });
                         }
                     })
                 });
@@ -410,17 +438,17 @@
     });
 
     // For reload extension
-    self.reload = function() {
+    self.reload = function () {
         return chrome.runtime.reload();
     }
-    
+
     self.refreshListeners = () => {
         return self.radioList.forEach((radio) => {
             self.background.listeners.child(self.background.radioKeys[radio.nameId]).update({
                 listeners: 0
             }, err => {
                 console.log(err || 'success')
-            }) 
+            })
         })
     }
 

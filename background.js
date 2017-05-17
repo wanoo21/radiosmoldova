@@ -26,29 +26,36 @@ chrome.runtime.onStartup.addListener(() => {
 })
 
 // Default badge color
-chrome.browserAction.setBadgeBackgroundColor({ color: '#337ab7' });
+chrome.browserAction.setBadgeBackgroundColor({
+	color: '#337ab7'
+});
 
 // get Radio
 var video = document.getElementsByTagName('video')[0];
 // Manifest info
 var info = chrome.runtime.getManifest();
 
-chrome.browserAction.setTitle({ title: info.name + ' v.' + info.version });
+chrome.browserAction.setTitle({
+	title: info.name + ' v.' + info.version
+});
 
 // Change badge
-video.onplay = function() {
-	chrome.browserAction.setBadgeText({ text: 'play' });
+video.onplay = function () {
+	chrome.browserAction.setBadgeText({
+		text: 'play'
+	});
 	if (video.reload) {
 		video.load();
 		video.reload = false;
 		clearTimeout(info.reloadRadio);
 	}
 };
-video.onpause = function() {
+video.onpause = function () {
 	// chrome.browserAction.setBadgeText({ text: 'stop' });
-	return info.reloadRadio = setTimeout(function(){	
+	return info.reloadRadio = setTimeout(function () {
 		video.reload = true;
-		chrome.browserAction.setBadgeText({ text: '' });
+		chrome.browserAction.setBadgeText({
+			text: ''
+		});
 	}, 30 * 1000)
 };
-
