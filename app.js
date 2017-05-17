@@ -27,6 +27,7 @@
         btnRegion = $('.btn-region').find('button'),
         radioContainer = $('#radio-list'),
         feedbackMaxTextLength = 30,
+        stationsLength = $('span.stations-length'),
         configs = {
             serverName: './server',
             trackEvents: !!global._gaq
@@ -74,23 +75,24 @@
 
     // Get data from firebase and make changes
     self.getFirebaseData = function(obj) {
-        self.background.listeners.once('value', function(snapshot) {
-            var currentData = snapshot.val();
-            if(obj) {
-                var thisRadio = currentData[self.background.radioKeys[obj.nameId]];
 
+        self.background.listeners.once('value', function(snapshot) {
+            let currentData = snapshot.val();
+            if(obj) {
+                let thisRadio = currentData[self.background.radioKeys[obj.nameId]];
                 if (obj.action == 'play' || obj.action == 'choosed') {
                     thisRadio.listeners += 1;
-                } else if(thisRadio.listeners > 0) {
+                } else if(!obj.action || thisRadio.listeners > 0) {
                     thisRadio.listeners -= 1;
                 }
-
-                self.background.listeners.child(self.background.radioKeys[obj.nameId]).update(thisRadio, function(err) {
-                    if(err) return self.log(err, 'error');
-                })
+                self.background.listeners.child(self.background.radioKeys[obj.nameId]).update(thisRadio)
+                return (obj.action == 'play' || obj.action == 'choosed') && self.background.listeners.child(self.background.radioKeys[obj.nameId]).onDisconnect().set({ listeners: --self.currentRadio.listeners })
             } else {
                 Object.keys(currentData).forEach(function (key) {
-                    if (!currentData[key].id || currentData[key].nameId.indexOf('-' + self.background.region) == -1) return;
+                    if (!currentData[key].nameId) {
+                        return self.background.listeners.child(key).remove()
+                    }
+                    if (currentData[key].nameId.indexOf('-' + self.background.region) == -1) return;
                     return self.addBadgeInfo(currentData[key]);
                 })
             }
@@ -136,7 +138,7 @@
     // Set stats on firebase
     self.setStat = (obj) => {
         obj = obj || {};
-        obj.date = new Date().getTime();
+        // obj.date = new Date().getTime();
         obj.id = self.background.currentRadio.id || null;
         obj.nameId = self.background.currentRadio.nameId;
         return self.getFirebaseData(obj)
@@ -196,8 +198,6 @@
     self.videoListeners = function() {
         // Alert if isset error
         $(self.video).on('error', function(ev) {
-            self.log("Error! Something went wrong", 'error', ev);
-            // Load again
             this.load();
         });
         // Start loading video
@@ -346,6 +346,7 @@
             // Put list into global variable
             self.radioList = radioList;
             var list = '';
+            stationsLength.text(`${radioList.length} statii total.`)
             // Generate dynamically list on html
             $.when($.each(radioList, function(k, v) {
                 if (v.disable) return;

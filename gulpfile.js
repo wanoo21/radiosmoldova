@@ -9,6 +9,7 @@ const package = require('./package.json')
 const exec = require('child_process').exec
 const del = require('del')
 const replace = require('gulp-string-replace')
+const serverName = 'https://radio-moldova.firebaseapp.com'
 
 let buildFolder = '_dist';
 let buildeFolderServer = 'dist-server'
@@ -25,6 +26,7 @@ gulp.task('js_uglify', () => {
         '**.js',
         '!gulpfile.js'
     ])
+        .pipe(replace(/serverName\: \'\.\/server\'/g, `serverName: '${serverName}'`))
         .pipe(jsmin())
         .pipe(gulp.dest(buildFolder))
 });
@@ -78,4 +80,6 @@ gulp.task('deploy', cb => exec('firebase deploy --only hosting', (err, stdout, s
 
 gulp.task('deleteAllFolders', () => del([`./${buildFolder}`, `./${buildeFolderServer}`]))
 
+gulp.task('build_extension', () => runSequence('extension', 'zip', 'deleteAllFolders'))
+gulp.task('build_server', () => runSequence('prepare_server', 'deploy', 'deleteAllFolders'))
 gulp.task('default', () => runSequence(['extension', 'prepare_server'], ['zip', 'deploy'], 'deleteAllFolders'));

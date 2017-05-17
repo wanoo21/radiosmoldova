@@ -1,4 +1,5 @@
 // All listeners
+let self = this;
 self._FIREBASE_URL = 'https://radio-moldova.firebaseio.com/';
 self.firebase = new Firebase(self._FIREBASE_URL);
 self.errors = self.firebase.child('errors');
@@ -6,19 +7,23 @@ self.listeners = self.firebase.child('listeners');
 self.feedbacks = self.firebase.child('feedbacks');
 
 // Set uninstall URL
-chrome.runtime.setUninstallURL('https://radio-moldova.firebaseapp.com/#!/uninstall');
+// chrome.runtime.setUninstallURL('https://radio-moldova.firebaseapp.com/#!/uninstall');
 
-// Get id when extension is first installed
-chrome.runtime.onInstalled.addListener(() => {
-	chrome.tabs.create({
-		url: 'https://radio-moldova.firebaseapp.com/#!/install'
-	})
-});
+// // Get id when extension is first installed
+// chrome.runtime.onInstalled.addListener(() => {
+// 	chrome.tabs.create({
+// 		url: 'https://radio-moldova.firebaseapp.com/#!/install'
+// 	})
+// });
 
 // Listen for updates
 chrome.runtime.onUpdateAvailable.addListener(() => {
 	return chrome.runtime.reload();
 });
+
+chrome.runtime.onStartup.addListener(() => {
+	self.startup = true
+})
 
 // Default badge color
 chrome.browserAction.setBadgeBackgroundColor({ color: '#337ab7' });
@@ -40,8 +45,8 @@ video.onplay = function() {
 	}
 };
 video.onpause = function() {
-	chrome.browserAction.setBadgeText({ text: 'stop' });
-	return info.reloadRadio = setTimeout(function(){
+	// chrome.browserAction.setBadgeText({ text: 'stop' });
+	return info.reloadRadio = setTimeout(function(){	
 		video.reload = true;
 		chrome.browserAction.setBadgeText({ text: '' });
 	}, 30 * 1000)
