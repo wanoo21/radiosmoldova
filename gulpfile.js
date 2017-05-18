@@ -5,7 +5,7 @@ const jsmin = require('gulp-jsmin')
 const zip = require('gulp-zip')
 const runSequence = require('run-sequence')
 const inject = require('gulp-inject')
-const package = require('./package.json')
+const package = require('./manifest.json')
 const exec = require('child_process').exec
 const del = require('del')
 const replace = require('gulp-string-replace')
@@ -84,7 +84,7 @@ gulp.task('extension', ['scss', 'js_uglify', 'html_min', 'icons', 'imgs'], () =>
 
 gulp.task('zip', () =>
     gulp.src(`${buildFolder}/**/*`)
-    .pipe(zip(`${package.name}-v${package.version}.zip`))
+    .pipe(zip(`${package.name.toLowerCase().replace(/, | /g, '-')}-v${package.version}.zip`))
     .pipe(gulp.dest(`./`))
 )
 

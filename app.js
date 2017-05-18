@@ -34,7 +34,8 @@
         }
 
     // Window from background.html
-    self.background = chrome.extension.getBackgroundPage();
+    self.background = chrome.extension.getBackgroundPage()
+    self.manifest = chrome.runtime.getManifest()
     // Get background video
     self.video = $(self.background.document).find('video')[0];
     // Default feedbacks array
@@ -103,6 +104,8 @@
         });
     };
 
+    // Activate tooltips
+    self.activateTooltip = () => $('[title]').tooltip()
 
     // Initial function
     if (!self.background.currentRadio) {
@@ -156,6 +159,34 @@
     self.trackEvents = (value, type) => {
         if (configs.trackEvents) {
             _gaq.push(['_trackEvent', value, type])
+        }
+    }
+
+    if (self.background.installedNow) {
+        self.trackEvents(self.manifest.version, self.background.installedNow.reason)
+        if (['update','install'].indexOf(self.background.installedNow.reason) > -1) {
+            let thanksButton = $('<button />', {
+                class: 'btn btn-info btn-sm',
+                text: 'Multumim, inchide!'
+            })
+            panelBody.popover({
+                title: self.background.installedNow.reason === 'update' ? 'Actualizare finisata' : 'Multumim pentru instalare',
+                trigger: 'manual',
+                container: 'body',
+                content: `<p>Bun venit la noua versiune <b>${self.manifest.version}</b></p>
+                        <p>Am actualizat o multime de optiuni, si am inchis multe probleme pentru ca tu sa poti asculta muzica fara intrerupere!</p>
+                        <p>Lasa-ne un feedback <a href="https://goo.gl/hJ44jD" target="_blank">aici</a> si spune si prietenilor tai despre aceasta aplicatie distribuind in Facebook si Google Plus.</p>
+                         <p class="text-center">${thanksButton[0].outerHTML}<p>
+                         `,
+                placement: 'bottom',
+                html: true
+            }).on('inserted.bs.popover', function() {
+                $('.popover-content button.btn-info').on('click', function () {
+                    panelBody.popover('destroy')
+                })
+            }).on('hidden.bs.popover', () => {
+                self.background.installedNow = null
+            }).popover('show')
         }
     }
 
@@ -287,15 +318,15 @@
         feedbackAddButton.find('span.text-max-length').text(feedbackMaxTextLength);
         return $('#radio-feedbacks').html(() => {
             return self.feedbacks.map((feedback) => {
-                return `<button type="button" data-key="${feedback.key}" title="Apasa pentru a vota" class="list-group-item feedback-item">${feedback.text} <span class="badge" title="Like-uri pentru acest feedback"><i class="glyphicon glyphicon-heart"></i> <span class="likes-count">${feedback.likes || 0}</span></span></button>`
+                return `<button type="button" data-key="${feedback.key}" title="Apasa pentru a vota" class="list-group-item feedback-item">${feedback.text} <span class="badge"><i class="glyphicon glyphicon-heart"></i> <span class="likes-count">${feedback.likes || 0}</span></span></button>`
             }).reverse().join('');
         }).promise().done(() => {
             $('#radio-feedbacks').find('button.feedback-item').unbind('click').bind('click', (e) => {
                 var $this = $(e.target);
                 var key = $this.data('key'),
-                    likes = self.feedbacks.filter((feedBack) => {
-                        return feedBack.key == key
-                    })[0].likes || 0;
+                    likes = self.feedbacks.find(feedBack => {
+                        return feedBack.key === key
+                    }).likes || 0;
                 self.background.feedbacks.child(key).update({
                     likes: likes += 1
                 });
@@ -313,13 +344,7 @@
             });
         return console[type || 'info'](txt)
     };
-    // Change dynamically title of icon
-    // self.setActionTitle = function(title) {
-    //     chrome.browserAction.setTitle({
-    //         title
-    //     });
-    //     return self;
-    // };
+
     // Get radio list function
     self.getRadioList = function (region) {
         self.background.region = region;
@@ -387,6 +412,7 @@
                     // Put firebase data in DOM
                     self.getFirebaseData();
                     self.trackEvents(region, 'region')
+                    self.activateTooltip()
                     // Make current radio active
                     if (!!self.background.currentRadio) {
                         var currentRadioList = radioContainer.find('a[data-name=' + self.background.currentRadio.nameId + ']');
@@ -443,12 +469,14 @@
     }
 
     self.refreshListeners = () => {
-        return self.radioList.forEach((radio) => {
-            self.background.listeners.child(self.background.radioKeys[radio.nameId]).update({
-                listeners: 0
-            }, err => {
-                console.log(err || 'success')
-            })
+        return self.radioList.forEach(radio => {
+            if (self.background.radioKeys[radio.nameId]) {
+                self.background.listeners.child(self.background.radioKeys[radio.nameId]).update({
+                    listeners: 0
+                }, err => {
+                    console.log(err || 'success')
+                })
+            }
         })
     }
 

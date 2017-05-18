@@ -16,6 +16,12 @@ body {
     margin: 0;
     border: none;
     .panel-heading {
+      display: flex;
+      button.play_pause {
+        i {
+          font-size: 23px;
+        }
+      }
       h5 {
         display: flex;
         span.radio-title {
@@ -40,12 +46,6 @@ body {
       }
       &:not(.playing) {
         background-image: none;
-      }
-      .input-group {
-        margin-bottom: 5px;
-        .feedback-btn {
-          padding: 9px 12px;
-        }
       }
       input[type=range] {
         &:before {
@@ -74,6 +74,19 @@ body {
           border-radius: 50%;
           -webkit-appearance: none;
           cursor: pointer;
+        }
+      }
+      .input-group {
+        margin-bottom: 5px;
+        .input-group-btn {
+          button {
+            &.btn-danger {
+              padding: 6px 8px;
+            }
+            .fa {
+              padding: 3px 0;
+            }
+          }
         }
       }
     }

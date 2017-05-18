@@ -21,8 +21,8 @@ chrome.runtime.onUpdateAvailable.addListener(() => {
 	return chrome.runtime.reload();
 });
 
-chrome.runtime.onStartup.addListener(() => {
-	self.startup = true
+chrome.runtime.onInstalled.addListener(details => {
+	self.installedNow = details
 })
 
 // Default badge color
@@ -51,8 +51,10 @@ video.onplay = function () {
 	}
 };
 video.onpause = function () {
-	// chrome.browserAction.setBadgeText({ text: 'stop' });
-	return info.reloadRadio = setTimeout(function () {
+	chrome.browserAction.setBadgeText({
+		text: 'stop'
+	});
+	info.reloadRadio = setTimeout(function () {
 		video.reload = true;
 		chrome.browserAction.setBadgeText({
 			text: ''
