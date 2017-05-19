@@ -1,0 +1,399 @@
+/*
+    Name: Minimal
+    Description: Responsive Landing Page
+    Version: 1.0
+    Author: Schintu Desing
+
+    TABLE OF CONTENTS
+    ---------------------------
+     1. General
+     2. Header
+     3. Slider
+     4. Footer
+     5. Responsive CSS
+*/
+
+
+/* ================================= */
+
+
+/* :::::::::: 1. General ::::::::::: */
+
+
+/* ================================= */
+
+html,
+body {
+	font-family: "Roboto", sans-serif!important;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	-webkit-font-smoothing: antialiased;
+}
+
+body {
+	background-color: #000000!important;
+}
+
+a,
+a:link {
+	color: rgba(255, 255, 255, 0.6);
+	font-weight: 900;
+	text-decoration: none;
+}
+
+a:hover {
+	color: rgba(255, 255, 255, 0.9);
+	text-decoration: none;
+}
+
+.left {
+	text-align: left!important;
+}
+
+.center {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+::-webkit-input-placeholder {
+	/* WebKit browsers */
+	color: #FFFFFF;
+}
+
+:-moz-placeholder {
+	/* Mozilla Firefox 4 to 18 */
+	color: #FFFFFF;
+	opacity: 1;
+}
+
+::-moz-placeholder {
+	/* Mozilla Firefox 19+ */
+	color: #FFFFFF;
+	opacity: 1;
+}
+
+:-ms-input-placeholder {
+	/* Internet Explorer 10+ */
+	color: #FFFFFF;
+}
+
+
+/* ================================= */
+
+
+/* :::::::::: 2. Header :::::::::::: */
+
+
+/* ================================= */
+
+.welcome {
+	float: left;
+	width: 100%;
+	margin-top: 30px;
+}
+
+.welcome .logo {
+	float: left;
+}
+
+.social-icons {
+	float: right;
+}
+
+.social-icons li {
+	list-style: none;
+	text-align: center;
+	padding-top: 8px;
+	border: 1px solid #ffffff;
+	border-radius: 50%;
+	float: left;
+	width: 35px;
+	height: 35px;
+	margin-left: 15px;
+	opacity: 0.5;
+}
+
+.social-icons li:hover {
+	opacity: 0.9;
+}
+
+.social-icons li a {
+	color: #ffffff!important;
+}
+
+.social-icons li i {
+	font-size: 19px;
+}
+
+
+/* ================================= */
+
+
+/* :::::: 3. Slider ::::::: */
+
+
+/* ================================= */
+
+#slider.container {
+	position: relative;
+	height: calc(99% - 92px);
+	vertical-align: middle;
+}
+
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-container-horizontal>.swiper-pagination-bullets {
+	top: 80px;
+}
+
+#slider .right-container {
+	text-align: right;
+	float: left;
+	margin: 20px 0 0 50px;
+}
+
+#slider .title {
+	text-align: left;
+	color: #ffffff;
+	font-size: 60px;
+	font-weight: 900;
+	line-height: 1.1em;
+}
+
+#slider .title span {
+	color: #337ab7;
+}
+
+#slider h3 {
+	color: #FFFFFF;
+	font-size: 18px;
+	font-weight: 400;
+	text-align: left;
+}
+
+
+/* :::::: Mouse Scroller ::::::: */
+
+#slider .scroller {
+	margin: 20px auto 0 auto;
+	font-size: 15px;
+	float: left;
+	color: rgba(255, 255, 255, 0.6);
+	font-weight: 900;
+	width: 150px;
+	text-align: center;
+}
+
+#slider .scroller a,
+#slider .scroller a:link {
+	color: rgba(255, 255, 255, 0.6);
+	font-weight: 900;
+	text-decoration: none;
+}
+
+#slider .scroller a:hover {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+#slider .scroller span {
+	margin: 40px auto 10px auto;
+	width: 25px;
+	height: 40px;
+	text-align: center;
+	border: 2px solid #ffffff;
+	display: block;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
+#slider .scroller span.scroll-down {
+	display: block;
+	width: 4px;
+	height: 7px;
+	background: #fff;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+	margin: 10% auto auto auto;
+	-webkit-animation: scroll-inner 1s;
+	animation: scroll-inner 1s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease;
+	animation-timing-function: ease
+}
+
+@-webkit-keyframes scroll-inner {
+	from {
+		margin-top: 15%;
+	}
+	to {
+		margin-top: 50%;
+	}
+}
+
+@keyframes scroll-inner {
+	from {
+		margin-top: 15%;
+	}
+	to {
+		margin-top: 50%;
+	}
+}
+
+@-webkit-keyframes scroll-mouse {
+	from {
+		margin-top: 0;
+	}
+	to {
+		margin-top: 15px;
+	}
+}
+
+@keyframes scroll-mouse {
+	from {
+		margin-top: 0;
+	}
+	to {
+		margin-top: 15px;
+	}
+}
+
+#thank-you.container {
+	position: relative;
+	height: 100%;
+}
+
+#thank-you div {
+	top: 20%;
+	position: relative;
+}
+
+#thank-you h2 {
+	text-align: center;
+	color: #ffffff;
+	font-size: 60px;
+	font-weight: 900;
+	line-height: 1.3em;
+}
+
+#thank-you span {
+	color: #337ab7;
+}
+
+
+/* ================================= */
+
+
+/* :::::: 4. Footer ::::::: */
+
+
+/* ================================= */
+
+#footer {
+	min-height: 50px;
+	position: relative;
+	background-color: rgba(0, 0, 0, 0.3);
+	width: 100%;
+	bottom: 0;
+}
+
+#footer .social-icons {
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+	width: 205px;
+}
+
+#footer .social-icons li {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+#footer .social-icons ul {
+	padding: 0;
+}
+
+/* :::::: 5. Responsive CSS ::::::: */
+
+
+/* ================================= */
+
+@media only screen and (max-width: 1366px) {}
+
+@media only screen and (max-width: 990px) {
+	#slider .title {
+		font-size: 50px;
+		line-height: 1.1em;
+	}
+	#slider .image {}
+}
+
+@media only screen and (max-width: 768px) {
+	#slider .title,
+	#thank-you h2 {
+		font-size: 50px;
+		line-height: 1.1em;
+	}
+	#slider.container {
+		height: auto;
+	}
+}
+
+@media only screen and (max-width: 736px) {}
+
+@media only screen and (max-width: 667px) {
+	.swiper-slide {
+		display: block!important;
+		height: 100%;
+	}
+	#slider.container {
+		height: auto;
+	}
+	#slider .right-container {
+		margin: 20px 0;
+		float: none;
+	}
+	#slider .scroller {
+		width: 99%;
+	}
+	#slider .title,
+	#slider h3 {
+		text-align: center;
+	}
+}
+
+@media only screen and (max-width: 568px) {
+	#slider .title,
+	#thank-you h2 {
+		font-size: 40px;
+		line-height: 1em;
+	}
+	.email-form h4 {
+		font-size: 18px!important;
+	}
+	.newsletter input {
+		width: 70%;
+		height: 40px;
+		margin-bottom: 15px;
+		-webkit-border--radius: 30px;
+		-moz-border-radius: 30px;
+		border-radius: 30px;
+	}
+	.newsletter button {
+		height: 40px;
+		-webkit-border-radius: 30px;
+		-moz-border-radius: 30px;
+		border-radius: 30px;
+	}
+}
+
+@media only screen and (max-width: 414px) {}
+
+@media only screen and (max-width: 320px) {}

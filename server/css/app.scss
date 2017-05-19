@@ -1,7 +1,292 @@
+@import './g-fonts';
+@import './vegas.min';
+@import './style';
+@import './swiper';
+
+// http://www.stefanoschintu.com/minimal-html/app_launch_bg_slider/index.html
 $primary-color: #337ab7;
 $primary-border: #2e6da4;
-
-body {
-  background-color: $primary-color;
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+  display: none !important;
 }
 
+#slider {
+  .swiper-slide {
+    justify-content: flex-start;
+    .radio-player {
+      max-width: 300px;
+      display: inline-block;
+		  margin: 80px 0 30px 0;
+      font-size: 14px;
+      border: 2px solid rgba(white, .3);
+      box-shadow: 0px 0px 10px 0px #204d74;
+      text-align: left;
+      a, a:link {
+        font-weight: inherit;
+        &:not(.active) {
+          color: inherit;
+        }
+      }
+      .panel-heading {
+        display: flex;
+        button.play_pause {
+          i {
+            font-size: 23px;
+          }
+        }
+        h5 {
+          display: flex;
+          span.radio-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: inline-block;
+            flex: 1;
+          }
+          small {
+            color: inherit;
+            margin-right: -15px;
+            margin-top: 2px;
+            margin-left: 4px;
+          }
+        }
+      }
+      .panel-body {
+        &.playing {
+          background: url('/images/equalizer.gif') -24px 26px no-repeat;
+          background-size: 113%;
+        }
+        &:not(.playing) {
+          background-image: none;
+        }
+        .volume-container {
+          display: flex;
+          margin-bottom: -2px;
+          margin-top: -2px;
+          justify-content: space-between;
+          align-items: center;
+          input {
+            width: auto;
+            flex: 1 1 100%;
+          }
+          .volume {
+            color: #337ab7;
+            flex: 1 1 100%;
+            margin-left: 5px;
+            max-width: 13%;
+            text-align: right;
+          }
+        }
+        .input-group {
+          margin-bottom: 5px;
+          .input-group-btn {
+            button {
+              &.btn-danger {
+                padding: 6px 8px;
+              }
+              .fa {
+                padding: 3px 0;
+              }
+            }
+          }
+        }
+        .additional-info {
+          font-size: smaller;
+          margin: 0;
+        }
+      }
+      .btn-region {
+        button.btn-primary {
+          border-radius: 0;
+        }
+      }
+      .list-group {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 287px;
+        border-radius: 0 0 4px 4px;
+        margin-bottom: 0;
+        a:not(.active) {
+          background-color: #f5f5f5;
+        }
+      }
+    }
+  }
+}
+
+@keyframes rotateFall {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+    animation-timing-function: ease-out;
+  }
+  40% {
+    transform: rotateZ(17deg);
+  }
+  60% {
+    transform: rotateZ(16deg);
+  }
+  100% {
+    transform: translateY(100%) rotateZ(17deg);
+  }
+}
+
+@keyframes rotateOutNewspaper {
+  to {
+    transform: translateZ(-3000px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.ng-enter {
+  animation: slideInRight .5s both ease-in-out;
+  animation-delay: .3s;
+}
+
+.ng-leave {
+  position: absolute;
+  animation: rotateOutNewspaper .3s both ease-in-out;
+}
+
+// Styling Cross-Browser Compatible Range Inputs with Sass
+// Github: https://github.com/darlanrod/input-range-sass
+// Author: Darlan Rod https://github.com/darlanrod
+// Version 1.4.1
+// MIT License
+
+$track-color: #fff !default;
+$thumb-color: #337ab7 !default;
+
+$thumb-radius: 50% !default;
+$thumb-height: 17px !default;
+$thumb-width: 17px !default;
+$thumb-shadow-size: 0px !default;
+$thumb-shadow-blur: 0px !default;
+$thumb-shadow-color: rgba(0, 0, 0, .2) !default;
+$thumb-border-width: 1px !default;
+$thumb-border-color: #eceff1 !default;
+
+$track-width: 70% !default;
+$track-height: 15px !default;
+$track-shadow-size: 0 !default;
+$track-shadow-blur: 0 !default;
+$track-shadow-color: rgba(0, 0, 0, .2) !default;
+$track-border-width: 0 !default;
+$track-border-color: #cfd8dc !default;
+
+$track-radius: 0% !default;
+$contrast: 0% !default;
+
+@mixin shadow($shadow-size, $shadow-blur, $shadow-color) {
+  box-shadow: $shadow-size $shadow-size $shadow-blur $shadow-color, 0 0 $shadow-size lighten($shadow-color, 5%);
+}
+
+@mixin track {
+  cursor: pointer;
+  height: $track-height;
+  transition: all .2s ease;
+  width: $track-width;
+}
+
+@mixin thumb {
+  @include shadow($thumb-shadow-size, $thumb-shadow-blur, $thumb-shadow-color);
+  background: $thumb-color;
+  border: $thumb-border-width solid $thumb-border-color;
+  border-radius: $thumb-radius;
+  cursor: pointer;
+  height: $thumb-height;
+  width: $thumb-width;
+}
+
+[type='range'] {
+  -webkit-appearance: none;
+  margin: 0;
+  width: $track-width;
+
+  &:focus {
+    outline: 0;
+
+    &::-webkit-slider-runnable-track {
+      background: lighten($track-color, $contrast);
+    }
+
+    &::-ms-fill-lower {
+      background: $track-color;
+    }
+
+    &::-ms-fill-upper {
+      background: lighten($track-color, $contrast);
+    }
+  }
+
+  &::-webkit-slider-runnable-track {
+    @include track;
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: $track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius;
+  }
+
+  &::-webkit-slider-thumb {
+    @include thumb;
+    -webkit-appearance: none;
+    margin-top: ((-$track-border-width * 2 + $track-height) / 2) - ($thumb-height / 2);
+  }
+
+  &::-moz-range-track {
+    @include track;
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: $track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius;
+  }
+
+  &::-moz-range-thumb {
+    @include thumb;
+  }
+
+  &::-ms-track {
+    @include track;
+    background: transparent;
+    border-color: transparent;
+    border-width: ($thumb-height / 2) 0;
+    color: transparent;
+  }
+
+  &::-ms-fill-lower {
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: darken($track-color, $contrast);
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius * 2;
+  }
+
+  &::-ms-fill-upper {
+    @include shadow($track-shadow-size, $track-shadow-blur, $track-shadow-color);
+    background: $track-color;
+    border: $track-border-width solid $track-border-color;
+    border-radius: $track-radius * 2;
+  }
+
+  &::-ms-thumb {
+    @include thumb;
+    margin-top: 0;
+  }
+}

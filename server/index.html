@@ -2,25 +2,66 @@
 <html lang="ro" ng-app="radio">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title ng-bind="ngMeta.title"></title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="./css/app.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="author" content="{{ngMeta.author}}" />
   <meta name="description" content="{{ngMeta.description}}" />
-  <!--<base href="/server/">-->
+  <base href="/">
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- Favicons -->
+  <link rel="shortcut icon" href="/favicon.ico">
 </head>
 
-<body>
-  <div class="container" ng-view></div>
+<body ng-cloak>
+  <header id="header">
+    <div class="container">
+      <div class="welcome">
+        <div class="logo animated fadeInDown">
+          <route-link to="/">
+            <img src="images/logo.png" alt="Radio online logo">
+          </route-link>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="social-icons">
+          <ul class="animated fadeInDownBig">
+            <li><a href=""><i class="fa fa-fw fa-facebook" aria-hidden="true"></i></a></li>
+            <li><a href=""><i class="fa fa-fw fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href=""><i class="fa fa-fw fa-instagram" aria-hidden="true"></i></a></li>
+            <li><a href=""><i class="fa fa-snapchat-ghost" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+        <!-- /Social Icons -->
+
+      </div>
+    </div>
+  </header>
+  <div id="slider" class="container">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <radio-player class="radio-player">Player-ul se icnarca ...</radio-player>
+          <div class="right-container" ng-view></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-animate.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-route.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-meta/0.3.9/ngMeta.min.js"></script>
-  <script src="./app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.4.0/vegas.min.js"></script>
   <!-- inject:js -->
+  <script src="/js/app.js"></script>
   <!-- endinject -->
 </body>
 

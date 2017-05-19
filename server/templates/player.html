@@ -1,0 +1,37 @@
+<div class="panel panel-primary">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <div class="panel-heading clearfix">
+    <button class="material-icons btn btn-primary btn-sm play_pause col-xs-2" tabindex="-1"></button>
+    <h5 class="col-xs-10">
+      <span class="radio-title"></span>
+      <small>00 : 00 : 00</small>
+    </h5>
+  </div>
+  <div class="panel-body">
+    <div class="volume-container">
+      <input type="range" name="volume" id="volume" title="Volume"/>
+      <div class="volume">0%</div>
+    </div>
+    <div class="input-group">
+      <input type="search" autofocus class="form-control search" placeholder="Cauta posturi" />
+      <span class="input-group-btn">
+                <!--<button class="btn btn-primary" title="Partajeaza in facebook" type="button"><span class="fa fa-facebook"></span></button>-->
+      <!--<button class="btn btn-danger" title="Partajeaza in Google plus" type="button"><span class="fa fa-google-plus"></span></button>-->
+      <button class="btn btn-primary feedback-btn" title="Lasa un feedback" type="button"><span class="fa fa-comments-o"></span></button>
+      </span>
+    </div>
+    <!-- /input-group -->
+    <p class="additional-info">
+        <span class="listeners">0</span> online cu <span class="posts">0</span> statii active. <span class="pull-right stations-length"> <!-- <a href="https://radio-moldova.firebaseapp.com/#!/reports" target="_blank">Raporteaza</a> --></span>
+    </p>
+  </div>
+  <div class="btn-group btn-group-justified btn-region">
+    <div class="btn-group">
+      <button data-region="md" class="btn btn-primary md">Moldova</button>
+    </div>
+    <div class="btn-group">
+      <button data-region="ro" class="btn btn-primary ro">Romania</button>
+    </div>
+  </div>
+  <div class="list-group list" id="radio-list"></div>
+</div>
