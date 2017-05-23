@@ -7,14 +7,14 @@ self.listeners = self.firebase.child('listeners');
 self.feedbacks = self.firebase.child('feedbacks');
 
 // Set uninstall URL
-// chrome.runtime.setUninstallURL('https://radio-moldova.firebaseapp.com/#!/uninstall');
+chrome.runtime.setUninstallURL('https://radio-moldova.firebaseapp.com/uninstall');
 
 // // Get id when extension is first installed
-// chrome.runtime.onInstalled.addListener(() => {
-// 	chrome.tabs.create({
-// 		url: 'https://radio-moldova.firebaseapp.com/#!/install'
-// 	})
-// });
+chrome.runtime.onInstalled.addListener(() => {
+	chrome.tabs.create({
+		url: 'https://radio-moldova.firebaseapp.com/?action=install'
+	})
+});
 
 // Listen for updates
 chrome.runtime.onUpdateAvailable.addListener(() => {

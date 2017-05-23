@@ -1,46 +1,70 @@
 // https://github.com/vinaygopinath/ngMeta
 class mainCtrl {
-  constructor(ngMeta) {
-    ngMeta.setTitle('Radio online pentru Chrome', '')
+  constructor(ngMeta, $location) {
+    ngMeta.setTitle('Radio online din Romania si Rep. Moldova', '')
     ngMeta.setTag('description', 'Asculata radio online din Romania, Rusia si Republica Moldova direct din browserul tau chrome, fara intrerupere si absolut gratuit!')
+
+    this.isChrome = !!window.chrome
+    this.appInstalled = !!(this.isChrome && chrome.app.isInstalled)
+
+    if ($location.$$search.action) {
+      this.trackEvents($location.$$search.action, 'actions')
+    }
   }
 
-  gotToFooter(e) {
-    e.preventDefault()
-    $('html, body').animate({
-      scrollTop: $('#footer').offset().top
-    }, 800)
+  installApp() {
+    return chrome.webstore.install('https://chrome.google.com/webstore/detail/hhnllbiimihbjlmcfbbddfcmpgpeklfk', this.successInstall.bind(this), this.failureInstall.bind(this))
   }
-}
 
-class installCtrl {
-  constructor(ngMeta) {
-    ngMeta.setTitle('Install extension for chrome browser')
+  successInstall() {
+    this.trackEvents('inlineInstall', 'actions')
   }
+
+  failureInstall(e) {
+    this.trackEvents('failureInstall', e)
+  }
+
+  trackEvents(value, type) {
+    if (window._gaq) {
+      _gaq.push(['_trackEvent', value, type])
+    }
+  }
+
+  // gotToFooter(e) {
+  //   e.preventDefault()
+  //   $('html, body').animate({
+  //     scrollTop: $('#footer').offset().top
+  //   }, 800)
+  // }
 }
 
 class uninstallCtrl {
   constructor(ngMeta) {
-    ngMeta.setTitle('We are sorry for uninstalling')
+    ngMeta.setTitle('Ne pare rau pentru asta!')
+
+    this.form = {
+      reason: 'others',
+      reasonMessage: '',
+      submitted: false
+    }
+  }
+
+  formSubmit(e) {
+    e.preventDefault()
+    this.trackEvents(this.form.reason == 'others' ? this.form.reasonMessage : this.form.reason, 'uninstallReason')
+    this.form.submitted = true;
+  }
+
+  trackEvents(value, type) {
+    if (window._gaq) {
+      _gaq.push(['_trackEvent', value, type])
+    }
   }
 }
 
 const radio = angular.module('radio', ['ngRoute', 'ngMeta', 'ngAnimate'])
 radio.controller('mainCtrl', mainCtrl)
-radio.controller('installCtrl', installCtrl)
 radio.controller('uninstallCtrl', uninstallCtrl)
-
-radio.directive('routeLink', () => {
-  return {
-    restrict: 'E',
-    template: `<a href="{{to}}" ng-transclude></a>`,
-    transclude: true,
-    replace: true,
-    scope: {
-      to: '@'
-    }
-  }
-})
 
 radio.directive('radioPlayer', (ngMeta) => {
   return {
@@ -95,9 +119,9 @@ radio.directive('radioPlayer', (ngMeta) => {
       self.audioPlay = function () {
         panelBody.addClass('playing');
         playPauseButton.text('pause');
+        // scope.$apply(() => ngMeta.setTitle(`Asculta ${self.currentRadio.name} non-stop!`))
         radioTitle.html(`<b>${self.currentRadio.name}</b>`);
         range.val(self.audio.volume * 100);
-        ngMeta.setTitle(`${self.currentRadio.name} asculti acum!`)
         range.next('.volume').text(`${range.val()}%`);
         self.trackEvents(self.currentRadio.name, 'played')
       };
@@ -242,7 +266,6 @@ radio.directive('radioPlayer', (ngMeta) => {
                   // Make current url in background url
                   self.audio.src = self.currentRadio.url;
                   // Load video after src is changed
-                  console.dir(self.audio)
                   self.audio.load();
                 }
               })
@@ -271,10 +294,10 @@ radio.config(['$routeProvider', '$locationProvider', 'ngMetaProvider', ($routePr
     templateUrl: './templates/home.html',
     controller: 'mainCtrl',
     controllerAs: 'main'
-  }).when('/install', {
-    templateUrl: './templates/install.html',
-    controller: 'installCtrl',
-    controllerAs: 'install'
+  // }).when('/install', {
+  //   templateUrl: './templates/install.html',
+  //   controller: 'installCtrl',
+  //   controllerAs: 'install'
   }).when('/uninstall', {
     templateUrl: './templates/uninstall.html',
     controller: 'uninstallCtrl',
@@ -285,19 +308,51 @@ radio.config(['$routeProvider', '$locationProvider', 'ngMetaProvider', ($routePr
 
   ngMetaProvider.useTitleSuffix(true)
   ngMetaProvider.setDefaultTitleSuffix(' | Radio online')
-  ngMetaProvider.setDefaultTag('author', 'Ion Prodan');
+  // ngMetaProvider.setDefaultTag('author', 'Ion Prodan');
 }])
 
 radio.run(['ngMeta', (ngMeta) => {
   ngMeta.init()
   // Start vegas in background
   $("#example, body").vegas({
-    slides: [{
+    slides: [
+      {
         src: "/images/slider/bg-1.jpg"
       },
       {
         src: "/images/slider/bg-2.jpg"
+      },
+      {
+        src: "https://images.alphacoders.com/453/thumb-1920-45373.jpg"
+      },
+      {
+        src: "https://images3.alphacoders.com/587/thumb-1920-58757.jpg"
+      },
+      {
+        src: "https://images2.alphacoders.com/222/thumb-1920-22.jpg"
+      },
+      {
+        src: "https://images.alphacoders.com/554/thumb-1920-554935.jpg"
+      },
+      {
+        src: "https://images2.alphacoders.com/701/thumb-1920-70172.jpg"
+      },
+      {
+        src: "https://images.alphacoders.com/314/thumb-1920-31493.jpg"
+      },
+      {
+        src: "https://images7.alphacoders.com/431/thumb-1920-431427.jpg"
+      },
+      {
+        src: "https://images4.alphacoders.com/174/thumb-1920-174928.jpg"
+      },
+      {
+        src: "https://images5.alphacoders.com/332/thumb-1920-332138.jpg"
+      },
+      {
+        src: "https://images2.alphacoders.com/522/thumb-1920-522310.jpg"
       }
-    ]
+    ],
+    overlay: '/images/08.png'
   });
 }]);

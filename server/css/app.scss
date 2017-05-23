@@ -20,6 +20,7 @@ $primary-border: #2e6da4;
     justify-content: flex-start;
     .radio-player {
       max-width: 300px;
+      flex: 1 1 100%;
       display: inline-block;
 		  margin: 80px 0 30px 0;
       font-size: 14px;
@@ -116,6 +117,42 @@ $primary-border: #2e6da4;
         }
       }
     }
+
+    .right-container {
+      text-align: left;
+      color: white;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.36);
+
+      .uninstall-feedback {
+        input[type="text"] {
+          background: transparent;
+          border: 0;
+          width: 100%;
+          border-bottom: 1px solid #ccc;
+          padding: 5px 7px;
+        }
+
+        .submit-button {
+          margin-top: .5em;
+          text-align: right;
+
+          button {
+            background: #337ab7;
+            border: 1px solid #5dadf3;
+            padding: 5px 7px;
+            font-size: medium;
+            border-radius: 2px;
+            color: rgb(183, 208, 230);
+            transition: all .2s ease-in-out;
+
+            &:hover {
+              color: rgb(228, 233, 239);
+              box-shadow: 0 2px 10px darken(#337ab7, 10);
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -163,7 +200,7 @@ $primary-border: #2e6da4;
 
 .ng-leave {
   position: absolute;
-  animation: rotateOutNewspaper .3s both ease-in-out;
+  animation: rotateFall .3s both ease-in-out;
 }
 
 // Styling Cross-Browser Compatible Range Inputs with Sass

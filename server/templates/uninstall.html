@@ -1,2 +1,37 @@
-<div class="title">Invite your <span>friends</span> for a crazy and fun night!</div>
-<h3>no more lonely nights with yourself and the cat.<br> Choose what you're in the mood for and find a night partner</h3>
+<h1 class="title">Ne pare rau pentru <span>dezinstalare!</span></h1>
+<h2 ng-if="!uninstall.form.submitted">Ne poti spune care e cauza?</h2>
+<h2 ng-if="uninstall.form.submitted">Iti multumim pentru feedback, e foarte important pentru noi!</h2>
+<h3 ng-if="uninstall.form.submitted">Te invitam sa deschizi postul radio preferat chiar din stanga acestui text! Daca ai dezinstalat aceasta extensia din greseala sau daca doresti s-o instalezi din nou, intra pe <a href="/">prima pagina</a>!</h3>
+<form ng-submit="uninstall.formSubmit($event)" class="uninstall-feedback" ng-if="!uninstall.form.submitted">
+  <div class="respons">
+    <label>
+      <input type="radio" required ng-model="uninstall.form.reason" name="reason" value="has_errors"> Statiile radio preferate nu functioneaza!
+    </label>
+  </div>
+  <div class="respons">
+    <label>
+      <input type="radio" required ng-model="uninstall.form.reason" name="reason" value="dont_accept_permissions"> Nu accept permisiunile pentru extensie!
+    </label>
+  </div>
+  <div class="respons">
+    <label>
+      <input type="radio" required ng-model="uninstall.form.reason" name="reason" value="dont_install_this_extension"> Nu am instalat aceasta aplicatie!
+    </label>
+  </div>
+  <div class="respons">
+    <label>
+      <input type="radio" required ng-model="uninstall.form.reason" name="reason" value="dont_listen_radio_anymore"> Nu mai ascult radio online!
+    </label>
+  </div>
+  <div class="respons">
+    <label>
+      <input type="radio" required ng-model="uninstall.form.reason" name="reason" value="others"> Altele!
+    </label>
+  </div>
+  <div class="respons" ng-if="uninstall.form.reason == 'others'">
+    <input type="text" ng-model="uninstall.form.reasonMessage" required placeholder="Te rugam sa ne scrii aici care e cauza desinstalarii">
+  </div>
+  <div class="respons submit-button">
+    <button type="submit">Trimite raspunsul</button>
+  </div>
+</form>

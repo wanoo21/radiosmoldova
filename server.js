@@ -10,7 +10,7 @@ app.use(serveStatic(path.join(__dirname, 'server')))
 // Redirect all requests to index.html
 app.use((req, res) => {
     res.writeHead(200, {'Content-type': 'text/html'})
-    res.end(fs.readFileSync(path.join(__dirname, 'server/index.html')))
+    fs.createReadStream(path.join(__dirname, 'server/index.html')).pipe(res)
 })
 
 // Start server

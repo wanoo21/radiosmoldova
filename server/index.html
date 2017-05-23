@@ -2,22 +2,39 @@
 <html lang="ro" ng-app="radio">
 
 <head>
-  <title ng-bind="ngMeta.title"></title>
+  <title ng-bind="ngMeta.title">Radio online din Romania si Rep. Moldova</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="HandheldFriendly" content="True">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#337ab7">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="author" content="{{ngMeta.author}}" />
-  <meta name="description" content="{{ngMeta.description}}" />
+  <meta name="author" content="Ion Prodan" />
+  <meta name="description" content="Cu ajutorul aplicatiei noastre poti asculta toate statiile Radio din Republica Moldova si Romania absolut Gratuit!" />
+  <meta property="og:locale" content="ro_RO"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Radio online din Romania si Republica Moldova"/>
+  <meta property="og:description" content="Cu ajutorul aplicatiei noastre poti asculta toate statiile Radio din Republica Moldova si Romania absolut Gratuit!"/>
+  <meta property="og:url" content="https://radio-moldova.firebaseapp.com/"/>
+  <meta property="og:site_name" content="Handmade Moldova"/>
+  <meta property="fb:app_id" content="426667434149100"/>
+  <meta property="og:image" content="https://lh3.googleusercontent.com/hpECvhviYiHdMO7wE6fDRXMhHI1Yn_mjIuOeCh8Jkdp9lpdjzkmM1j_Ap0tgwfMeIhYDYTeU=s640-h400-e365-rw"/>
+  <meta property="og:image:width" content="640"/>
+  <meta property="og:image:height" content="400"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:description" content="Cu ajutorul aplicatiei noastre poti asculta toate statiile Radio din Republica Moldova si Romania absolut Gratuit!"/>
+  <meta name="twitter:title" content="Radio online din Romania si Republica Moldova"/>
+  <meta name="twitter:site" content="@ipwanciu"/>
+  <meta name="twitter:image" content="https://lh3.googleusercontent.com/hpECvhviYiHdMO7wE6fDRXMhHI1Yn_mjIuOeCh8Jkdp9lpdjzkmM1j_Ap0tgwfMeIhYDYTeU=s640-h400-e365-rw"/>
+  <meta name="twitter:creator" content="@ipwanciu"/>
   <base href="/">
   <!-- CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/app.css">
+  <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/hhnllbiimihbjlmcfbbddfcmpgpeklfk">
   <!-- Favicons -->
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/images/icon-16.png">
 </head>
 
 <body ng-cloak>
@@ -25,19 +42,20 @@
     <div class="container">
       <div class="welcome">
         <div class="logo animated fadeInDown">
-          <route-link to="/">
-            <img src="images/logo.png" alt="Radio online logo">
-          </route-link>
+          <a href="/">
+            <img src="/images/icon-48.png" alt="Radio online logo">
+          </a>
         </div>
 
         <!-- Social Icons -->
         <div class="social-icons">
-          <ul class="animated fadeInDownBig">
-            <li><a href=""><i class="fa fa-fw fa-facebook" aria-hidden="true"></i></a></li>
-            <li><a href=""><i class="fa fa-fw fa-twitter" aria-hidden="true"></i></a></li>
-            <li><a href=""><i class="fa fa-fw fa-instagram" aria-hidden="true"></i></a></li>
-            <li><a href=""><i class="fa fa-snapchat-ghost" aria-hidden="true"></i></a></li>
+          <ul>
+            <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://radio-moldova.firebaseapp.com/"><i class="fa fa-fw fa-facebook" aria-hidden="true"></i></a></li>
+            <li><a target="_blank" href="https://plus.google.com/share?url=https://radio-moldova.firebaseapp.com/"><i class="fa fa-fw fa-google-plus" aria-hidden="true"></i></a></li>
+            <li><a target="_blank" href="https://twitter.com/home?status=Asculta radio online din Romania si Rep. Moldova https://radio-moldova.firebaseapp.com/ @ipwanciu"><i class="fa fa-fw fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://radio-moldova.firebaseapp.com/&title=Radio online din Romania si Rep. Moldova&summary=&source="><i class="fa fa-fw fa-linkedin" aria-hidden="true"></i></a></li>
           </ul>
+
         </div>
         <!-- /Social Icons -->
 
@@ -48,7 +66,7 @@
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide">
-          <radio-player class="radio-player">Player-ul se icnarca ...</radio-player>
+          <radio-player class="radio-player">Player-ul se incarca ...</radio-player>
           <div class="right-container" ng-view></div>
         </div>
       </div>
@@ -60,8 +78,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-meta/0.3.9/ngMeta.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vegas/2.4.0/vegas.min.js"></script>
-  <!-- inject:js -->
   <script src="/js/app.js"></script>
+  <!-- inject:js -->
   <!-- endinject -->
 </body>
 
