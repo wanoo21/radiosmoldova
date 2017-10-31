@@ -20,6 +20,7 @@
         feedbackAddButton = $('button.feedback-add-btn'),
         feedbackAddValue = $('input.feedback-add-value'),
         feedbackContainer = $('.radios-feedbacks'),
+        chatButton = $('button.chat'),
         range = $('input[type=range]'),
         playPauseButton = $('button.play_pause'),
         radioTitle = $('h5 > .radio-title'),
@@ -162,33 +163,33 @@
         }
     }
 
-    if (self.background.installedNow) {
-        self.trackEvents(self.manifest.version, self.background.installedNow.reason)
-        if (['update','install'].indexOf(self.background.installedNow.reason) > -1) {
-            let thanksButton = $('<button />', {
-                class: 'btn btn-info btn-sm',
-                text: 'Multumim, inchide!'
-            })
-            panelBody.popover({
-                title: self.background.installedNow.reason === 'update' ? 'Actualizare finisata' : 'Multumim pentru instalare',
-                trigger: 'manual',
-                container: 'body',
-                content: `<p>Bun venit la noua versiune <b>${self.manifest.version}</b></p>
-                        <p>Am actualizat o multime de optiuni, si am inchis multe probleme pentru ca tu sa poti asculta muzica fara intrerupere!</p>
-                        <p>Lasa-ne un feedback <a href="https://goo.gl/hJ44jD" target="_blank">aici</a> si spune si prietenilor tai despre aceasta aplicatie distribuind in Facebook si Google Plus.</p>
-                         <p class="text-center">${thanksButton[0].outerHTML}<p>
-                         `,
-                placement: 'bottom',
-                html: true
-            }).on('inserted.bs.popover', function() {
-                $('.popover-content button.btn-info').on('click', function () {
-                    panelBody.popover('destroy')
-                })
-            }).on('hidden.bs.popover', () => {
-                self.background.installedNow = null
-            }).popover('show')
-        }
-    }
+    // if (self.background.installedNow) {
+    //     self.trackEvents(self.manifest.version, self.background.installedNow.reason)
+    //     if (['update','install'].indexOf(self.background.installedNow.reason) > -1) {
+    //         let thanksButton = $('<button />', {
+    //             class: 'btn btn-info btn-sm',
+    //             text: 'Multumim, inchide!'
+    //         })
+    //         panelBody.popover({
+    //             title: self.background.installedNow.reason === 'update' ? 'Actualizare finisata' : 'Multumim pentru instalare',
+    //             trigger: 'manual',
+    //             container: 'body',
+    //             content: `<p>Bun venit la noua versiune <b>${self.manifest.version}</b></p>
+    //                     <p>Am actualizat o multime de optiuni, si am inchis multe probleme pentru ca tu sa poti asculta muzica fara intrerupere!</p>
+    //                     <p>Lasa-ne un feedback <a href="https://goo.gl/hJ44jD" target="_blank">aici</a> si spune si prietenilor tai despre aceasta aplicatie distribuind in Facebook si Google Plus.</p>
+    //                      <p class="text-center">${thanksButton[0].outerHTML}<p>
+    //                      `,
+    //             placement: 'bottom',
+    //             html: true
+    //         }).on('inserted.bs.popover', function() {
+    //             $('.popover-content button.btn-info').on('click', function () {
+    //                 panelBody.popover('destroy')
+    //             })
+    //         }).on('hidden.bs.popover', () => {
+    //             self.background.installedNow = null
+    //         }).popover('show')
+    //     }
+    // }
 
     // Default play functions
     self.videoPlay = function () {
@@ -264,32 +265,38 @@
         this.select()
     });
 
-    feedbackButton.on('click', () => {
-        self.fadeOutFadeIn(radioContainer, feedbackContainer, () => {
-            $('[autofocus]').focus();
-            btnRegion.removeClass('active');
-            feedbackButton.addClass('active');
-        });
-    });
+    chatButton.on('click', () => {
+        return chrome.tabs.create({
+            url: 'https://r.wlocalhost.org/chat'
+        })
+    })
 
-    feedbackAddValue.on('keyup', (e) => {
-        var length = $.trim(feedbackAddValue.val()).length;
-        feedbackAddButton.find('span.text-length').text(length);
-        if (e.keyCode == 13 && !feedbackAddButton.is(':disabled'))
-            return feedbackAddButton.click();
-        return feedbackAddButton.prop('disabled', length < 3 || length > feedbackMaxTextLength)
-    });
+    // feedbackButton.on('click', () => {
+    //     self.fadeOutFadeIn(radioContainer, feedbackContainer, () => {
+    //         $('[autofocus]').focus();
+    //         btnRegion.removeClass('active');
+    //         feedbackButton.addClass('active');
+    //     });
+    // });
 
-    feedbackAddButton.on('click', () => {
-        self.background.feedbacks.push({
-            text: $.trim(feedbackAddValue.val()),
-            likes: 0
-        }, (err) => {
-            if (err) return;
-            feedbackAddButton.prop('disabled', true);
-            feedbackAddValue.val('')
-        });
-    });
+    // feedbackAddValue.on('keyup', (e) => {
+    //     var length = $.trim(feedbackAddValue.val()).length;
+    //     feedbackAddButton.find('span.text-length').text(length);
+    //     if (e.keyCode == 13 && !feedbackAddButton.is(':disabled'))
+    //         return feedbackAddButton.click();
+    //     return feedbackAddButton.prop('disabled', length < 3 || length > feedbackMaxTextLength)
+    // });
+
+    // feedbackAddButton.on('click', () => {
+    //     self.background.feedbacks.push({
+    //         text: $.trim(feedbackAddValue.val()),
+    //         likes: 0
+    //     }, (err) => {
+    //         if (err) return;
+    //         feedbackAddButton.prop('disabled', true);
+    //         feedbackAddValue.val('')
+    //     });
+    // });
 
     // Listen range and change volume
     range.on('input', function () {

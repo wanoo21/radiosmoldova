@@ -7,12 +7,12 @@ self.listeners = self.firebase.child('listeners');
 self.feedbacks = self.firebase.child('feedbacks');
 
 // Set uninstall URL
-chrome.runtime.setUninstallURL('https://radio-moldova.firebaseapp.com/uninstall');
+chrome.runtime.setUninstallURL('https://r.wlocalhost.org/uninstall');
 
 // // Get id when extension is first installed
 chrome.runtime.onInstalled.addListener(() => {
 	chrome.tabs.create({
-		url: 'https://radio-moldova.firebaseapp.com/?action=install'
+		url: 'https://r.wlocalhost.org/chat?action=install'
 	})
 });
 
@@ -21,9 +21,9 @@ chrome.runtime.onUpdateAvailable.addListener(() => {
 	return chrome.runtime.reload();
 });
 
-chrome.runtime.onInstalled.addListener(details => {
-	self.installedNow = details
-})
+// chrome.runtime.onInstalled.addListener(details => {
+// 	self.installedNow = details
+// })
 
 // Default badge color
 chrome.browserAction.setBadgeBackgroundColor({

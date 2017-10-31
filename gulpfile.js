@@ -9,7 +9,7 @@ const package = require('./manifest.json')
 const exec = require('child_process').exec
 const del = require('del')
 const replace = require('gulp-string-replace')
-const serverName = 'https://radio-moldova.firebaseapp.com'
+const serverName = 'https://r.wlocalhost.org'
 
 let buildFolder = '_dist';
 let buildeFolderServer = 'dist-server'
