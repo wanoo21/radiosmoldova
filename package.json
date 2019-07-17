@@ -24,15 +24,15 @@
     "gulp-htmlmin": "^2.0.0",
     "gulp-inject": "^4.2.0",
     "gulp-jsmin": "^0.1.5",
-    "gulp-sass": "^2.3.2",
+    "gulp-sass": "^4.0.2",
+    "gulp-string-replace": "^0.4.0",
     "gulp-uglifyjs": "^0.6.2",
     "gulp-zip": "^3.2.0",
-    "run-sequence": "^1.2.2",
-    "gulp-string-replace": "^0.4.0"
+    "run-sequence": "^1.2.2"
   },
   "dependencies": {
     "connect": "^3.5.0",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.19.1",
     "serve-static": "^1.11.1"
   }
 }

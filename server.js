@@ -1,19 +1,19 @@
-const connect = require('connect')
-const serveStatic = require('serve-static')
-const fs = require('fs')
-const path = require('path')
-const app = connect()
+const connect = require('connect');
+const serveStatic = require('serve-static');
+const fs = require('fs');
+const path = require('path');
+const app = connect();
 
 // Use static folders
-app.use(serveStatic(path.join(__dirname, 'server')))
+app.use(serveStatic(path.join(__dirname, 'server')));
 
 // Redirect all requests to index.html
 app.use((req, res) => {
-    res.writeHead(200, {'Content-type': 'text/html'})
-    fs.createReadStream(path.join(__dirname, 'server/index.html')).pipe(res)
-})
+  res.writeHead(200, { 'Content-type': 'text/html' });
+  fs.createReadStream(path.join(__dirname, 'server/index.html')).pipe(res);
+});
 
 // Start server
 app.listen(8000, function() {
-    console.log('Server running on port %s.', 8000);
+  console.log('Server running on port %s.', 8000);
 });

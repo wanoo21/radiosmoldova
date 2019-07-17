@@ -1,28 +1,28 @@
 {
-	"manifest_version": 2,
-	"version": "1.7.6",
-	"name": "Radio Moldova, Romania si Rusia",
-	"short_name": "Online Radio Stations",
-	"description": "Asculta online toate posturile Radio din Republica Moldova, Romania si Moldova",
-	"author": "Ion Prodan",
-	"homepage_url": "https://github.com/wanoo21/radiosmoldova",
-	"offline_enabled": false,
-	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://ajax.googleapis.com https://maxcdn.bootstrapcdn.com https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
-	"browser_action": {
-	  "default_icon": {
-		   "16": "icons/icon-128.png"
-	  },
-	  "default_popup": "popup.html",
-	  "default_title": "Radio Moldova, Romania si Rusia"
-	},
-	"icons": {
-		"128": "icons/icon-128.png",
-		"48": "icons/icon-48.png",
-		"16": "icons/icon-16.png"
-	},
-	"background": {
-		"page": "background.html"
-	},
-	"permissions": ["tabs"],
-	"update_url": "https://clients2.google.com/service/update2/crx"
+  "manifest_version": 2,
+  "version": "1.8.0",
+  "name": "Radio Moldova si Romania",
+  "short_name": "Online Radio Stations",
+  "description": "Asculta online toate posturile Radio din Republica Moldova si Romania",
+  "author": "Ion Prodan",
+  "homepage_url": "https://github.com/wanoo21/radiosmoldova",
+  "offline_enabled": false,
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://ajax.googleapis.com https://maxcdn.bootstrapcdn.com https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/icon-128.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Radio Moldova, Romania si Rusia"
+  },
+  "icons": {
+    "128": "icons/icon-128.png",
+    "48": "icons/icon-48.png",
+    "16": "icons/icon-16.png"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "permissions": ["tabs"],
+  "update_url": "https://clients2.google.com/service/update2/crx"
 }
