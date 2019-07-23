@@ -1,10 +1,10 @@
 {
   "name": "radio-online",
   "version": "1.7.2",
-  "description": "Asculta online toate posturile Radio din republica Moldova. Aplicatie pentru Google Chrome, o poti instala de [aici](https://chrome.google.com/webstore/detail/radios-moldova/hhepcbepkfgppibjhlncbinbkmigjjbf).",
+  "description": "Asculta online toate posturile Radio din republica Moldova.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon --watch ./server --inspect ./server.js",
+    "dev": "nodemon --watch ./server ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

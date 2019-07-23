@@ -12,6 +12,7 @@
   // Default variables
   let $ = global.jQuery,
     self = this,
+    panelHeading = $('.panel-heading'),
     panelBody = $('.panel-body'),
     listeners = panelBody.find('span.listeners'),
     posts = panelBody.find('span.posts'),
@@ -21,7 +22,7 @@
     // feedbackAddValue = $('input.feedback-add-value'),
     feedbackContainer = $('.radios-feedbacks'),
     // chatButton = $('button.chat'),
-    range = $('input[type=range]'),
+    range = $('ip-slider'),
     playPauseButton = $('button.play_pause'),
     radioTitle = $('h5 > .radio-title'),
     showTime = $('h5 > small'),
@@ -42,12 +43,12 @@
   // Default feedbacks array
   self.feedbacks = [];
 
-  Object.defineProperty(self, 'setTotalListeners', {
-    set(data) {
-      listeners.text(data.listeners);
-      posts.text(data.posts);
-    }
-  });
+  // Object.defineProperty(self, 'setTotalListeners', {
+  //   set(data) {
+  //     listeners.text(data.listeners);
+  //     posts.text(data.posts);
+  //   }
+  // });
   // Start listen firebase
   self.startListenFirebase = function() {
     self.background.radioKeys = {};
@@ -122,13 +123,17 @@
 
   // Activate tooltips
   self.activateTooltip = () => $('[title]').tooltip();
+  range.attr('value', self.background.video.volume * 100);
 
   // Initial function
   if (!self.background.currentRadio) {
-    playPauseButton.prop('disabled', true).text('play_arrow');
+    playPauseButton
+      .prop('disabled', true)
+      .find('i')
+      .text('play_arrow');
     radioTitle.text('Alege un radio din lista');
-    showTime.text('');
-    range.attr('data-volume', range.val());
+    // showTime.text('');
+    range.prop('disabled', true);
   }
 
   // Add info on radio list
@@ -140,7 +145,7 @@
       self.background.currentRadio.listeners = radio.listeners;
     let badge = radioContainer
       .find(`a[data-name=${radio.nameId}]`)
-      .find('span.badge');
+      .find('span.badge:not(.icon)');
     return (radio.listeners > 0
       ? badge.text(radio.listeners).fadeIn()
       : badge.fadeOut(() => {
@@ -190,60 +195,40 @@
     }
   };
 
-  // if (self.background.installedNow) {
-  //     self.trackEvents(self.manifest.version, self.background.installedNow.reason)
-  //     if (['update','install'].indexOf(self.background.installedNow.reason) > -1) {
-  //         let thanksButton = $('<button />', {
-  //             class: 'btn btn-info btn-sm',
-  //             text: 'Multumim, inchide!'
-  //         })
-  //         panelBody.popover({
-  //             title: self.background.installedNow.reason === 'update' ? 'Actualizare finisata' : 'Multumim pentru instalare',
-  //             trigger: 'manual',
-  //             container: 'body',
-  //             content: `<p>Bun venit la noua versiune <b>${self.manifest.version}</b></p>
-  //                     <p>Am actualizat o multime de optiuni, si am inchis multe probleme pentru ca tu sa poti asculta muzica fara intrerupere!</p>
-  //                     <p>Lasa-ne un feedback <a href="https://goo.gl/hJ44jD" target="_blank">aici</a> si spune si prietenilor tai despre aceasta aplicatie distribuind in Facebook si Google Plus.</p>
-  //                      <p class="text-center">${thanksButton[0].outerHTML}<p>
-  //                      `,
-  //             placement: 'bottom',
-  //             html: true
-  //         }).on('inserted.bs.popover', function() {
-  //             $('.popover-content button.btn-info').on('click', function () {
-  //                 panelBody.popover('destroy')
-  //             })
-  //         }).on('hidden.bs.popover', () => {
-  //             self.background.installedNow = null
-  //         }).popover('show')
-  //     }
-  // }
-
   // Default play functions
   self.videoPlay = function() {
     panelBody.addClass('playing');
-    playPauseButton.text('pause');
-    radioTitle.html(`<b>${self.background.currentRadio.name}</b>`);
-    range.val(self.background.video.volume * 100);
-    range.attr('data-volume', range.val());
+    panelHeading.addClass('playing');
+    playPauseButton.find('i').text('stop');
+    radioTitle.text(self.background.currentRadio.name);
+    range.prop('disabled', false);
+    range.attr('value', self.background.video.volume * 100);
     self.trackEvents(self.background.currentRadio.name, 'played');
   };
 
   // Default pause function
   self.videoPause = function() {
     panelBody.removeClass('playing');
-    playPauseButton.text('play_arrow');
+    panelHeading.removeClass('playing');
+    playPauseButton.find('i').text('play_arrow');
   };
   // Default loading start function
   self.videoStartLoading = function() {
     panelBody.removeClass('playing');
-    radioTitle.html(`Se incarca <b>${self.background.currentRadio.name}</b>`);
+    panelHeading.removeClass('playing');
+    radioTitle.text(self.background.currentRadio.name);
     playPauseButton.prop('disabled', true);
-    showTime.text('');
+    playPauseButton
+      .find('i')
+      .addClass('rotate')
+      .text('loop');
+    // showTime.text('');
     self.background.currentRadio.loading = true;
   };
   // Default loading end function
   self.videoEndLoading = function() {
     playPauseButton.prop('disabled', false);
+    playPauseButton.find('i').removeClass('rotate');
     self.background.currentRadio.loading = false;
     // Clean filter value
     filter.val('');
@@ -257,17 +242,18 @@
     self.video.seconds = Math.floor(
       self.video.currentTime - self.video.minutes * 60
     ).pad();
-    showTime.text(
-      `${self.video.hours} : ${(
-        self.video.minutes -
-        self.video.hours * 60
-      ).pad()} : ${self.video.seconds}`
-    );
+    const { hours, minutes, seconds } = self.video;
+    showTime.text(`${hours}:${(minutes - hours * 60).pad()}:${seconds}`);
   };
   // Default buffering function
   self.videoBuffering = function() {
     panelBody.removeClass('playing');
-    radioTitle.text(`Buffering <b>${self.background.currentRadio.name}</b>`);
+    panelHeading.removeClass('playing');
+    playPauseButton
+      .find('i')
+      .addClass('rotate')
+      .text('loop');
+    // radioTitle.text(`Buffering <b>${self.background.currentRadio.name}</b>`);
   };
   // Operation for video, volume, pause, play, stop, etc.
   self.videoListeners = function() {
@@ -305,43 +291,9 @@
       this.select();
     });
 
-  // chatButton.on('click', () => {
-  //   return chrome.tabs.create({
-  //     url: 'https://r.wlocalhost.org/chat'
-  //   });
-  // });
-
-  // feedbackButton.on('click', () => {
-  //     self.fadeOutFadeIn(radioContainer, feedbackContainer, () => {
-  //         $('[autofocus]').focus();
-  //         btnRegion.removeClass('active');
-  //         feedbackButton.addClass('active');
-  //     });
-  // });
-
-  // feedbackAddValue.on('keyup', (e) => {
-  //     var length = $.trim(feedbackAddValue.val()).length;
-  //     feedbackAddButton.find('span.text-length').text(length);
-  //     if (e.keyCode == 13 && !feedbackAddButton.is(':disabled'))
-  //         return feedbackAddButton.click();
-  //     return feedbackAddButton.prop('disabled', length < 3 || length > feedbackMaxTextLength)
-  // });
-
-  // feedbackAddButton.on('click', () => {
-  //     self.background.feedbacks.push({
-  //         text: $.trim(feedbackAddValue.val()),
-  //         likes: 0
-  //     }, (err) => {
-  //         if (err) return;
-  //         feedbackAddButton.prop('disabled', true);
-  //         feedbackAddValue.val('')
-  //     });
-  // });
-
   // Listen range and change volume
   range.on('input', function() {
-    range.attr('data-volume', this.value);
-    return (self.background.video.volume = this.value / 100);
+    self.background.video.volume = this.value / 100;
   });
 
   // Fade in/out function
@@ -408,19 +360,35 @@
   // Basic log message
   self.log = function(txt, type) {
     if (type == 'error')
-      self.background.errors.push({
-        radio: self.background.currentRadio || null,
-        error: txt
-      });
-    return console[type || 'info'](txt);
+      // self.background.errors.push({
+      //   radio: self.background.currentRadio || null,
+      //   error: txt
+      // });
+      return console[type || 'info'](txt);
   };
 
   // Get radio list function
   self.getRadioList = function(region) {
     self.background.region = region;
-    return $.getJSON(
-      `${configs.serverName}/radiolist-${self.background.region}.json`
-    );
+    return new Promise(function(resolve, reject) {
+      if (!sessionStorage.getItem(`radiolist-${self.background.region}`)) {
+        return $.getJSON(
+          `${configs.serverName}/radiolist-${self.background.region}.json`
+        ).then(function(radiolist) {
+          sessionStorage.setItem(
+            `radiolist-${self.background.region}`,
+            JSON.stringify(radiolist)
+          );
+          return resolve(radiolist);
+        }, reject);
+      } else {
+        return resolve(
+          JSON.parse(
+            sessionStorage.getItem(`radiolist-${self.background.region}`)
+          )
+        );
+      }
+    });
   };
 
   self.getNameId = function(name) {
@@ -489,7 +457,7 @@
             v.name
           )}" data-id=${k}>${
             v.name
-          }<span class="badge" title="Ascultatori momentan" style="display: none"></span></a>`;
+          }<i class="material-icons favorite">favorite</i></a>`;
         })
       ).then(function() {
         // Put generated html on list container
