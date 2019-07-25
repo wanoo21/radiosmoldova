@@ -63,7 +63,6 @@
     radioTitle.text(self.background.currentRadio.name);
     range.prop('disabled', false);
     range.attr('value', self.background.video.volume * 100);
-    self.trackEvents(self.background.currentRadio.name, 'played');
   };
 
   // Default pause function
@@ -91,11 +90,9 @@
   // Default loading end function
   self.videoEndLoading = function() {
     playPauseButton.prop('disabled', false);
-    self.background.currentRadio.loading = false;
-    // Clean filter value
     filter.val('');
     radioContainer.find('a').show();
-    self.video.play();
+    self.background.currentRadio.loading = false;
   };
   // Default timeupdate function
   self.videoTimeUpdate = function() {
@@ -126,12 +123,19 @@
       self.trackEvents(self.background.currentRadio.name, 'error');
     });
     $(self.video).on('loadstart', self.videoStartLoading);
-    $(self.video).on('loadeddata', self.videoEndLoading);
+    $(self.video).on('loadeddata', () => {
+      self.videoEndLoading();
+      self.trackEvents(self.background.currentRadio.name, 'played');
+      self.video.play();
+    });
     $(self.video).on('play', self.videoPlay);
     $(self.video).on('pause', self.videoPause);
     $(self.video).on('timeupdate', self.videoTimeUpdate);
-    $(self.video).on('waiting', self.videoBuffering);
-    $(self.video).on('playing', self.videoPlay);
+    $(self.video).on('waiting', self.videoStartLoading);
+    $(self.video).on('playing', () => {
+      self.videoEndLoading();
+      self.videoPlay();
+    });
     // $(self.video).on('suspend', self.videoPause);
   };
   // Filter listener
