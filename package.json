@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon --watch ./server ./server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp"
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,9 @@
   "homepage": "https://github.com/wanoo21/radiosmoldova#readme",
   "devDependencies": {
     "del": "^2.2.2",
-    "gulp": "^3.9.1",
-    "gulp-htmlmin": "^2.0.0",
-    "gulp-inject": "^4.2.0",
+    "gulp": "^4.0.2",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-inject": "^4.3.2",
     "gulp-jsmin": "^0.1.5",
     "gulp-sass": "^4.0.2",
     "gulp-string-replace": "^0.4.0",
@@ -31,8 +32,8 @@
     "run-sequence": "^1.2.2"
   },
   "dependencies": {
-    "connect": "^3.5.0",
+    "connect": "^3.7.0",
     "nodemon": "^1.19.1",
-    "serve-static": "^1.11.1"
+    "serve-static": "^1.14.1"
   }
 }

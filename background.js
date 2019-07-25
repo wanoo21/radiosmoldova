@@ -1,10 +1,10 @@
 // All listeners
-let self = this;
-self._FIREBASE_URL = 'https://radio-moldova.firebaseio.com/';
-self.firebase = new Firebase(self._FIREBASE_URL);
-self.errors = self.firebase.child('errors');
-self.listeners = self.firebase.child('listeners');
-self.feedbacks = self.firebase.child('feedbacks');
+// let self = this;
+// self._FIREBASE_URL = 'https://radio-moldova.firebaseio.com/';
+// self.firebase = new Firebase(self._FIREBASE_URL);
+// self.errors = self.firebase.child('errors');
+// self.listeners = self.firebase.child('listeners');
+// self.feedbacks = self.firebase.child('feedbacks');
 
 // Set uninstall URL
 // chrome.runtime.setUninstallURL('https://r.wlocalhost.org/uninstall');
@@ -18,7 +18,7 @@ self.feedbacks = self.firebase.child('feedbacks');
 
 // Listen for updates
 chrome.runtime.onUpdateAvailable.addListener(() => {
-	return chrome.runtime.reload();
+  return chrome.runtime.reload();
 });
 
 // chrome.runtime.onInstalled.addListener(details => {
@@ -27,37 +27,25 @@ chrome.runtime.onUpdateAvailable.addListener(() => {
 
 // Default badge color
 chrome.browserAction.setBadgeBackgroundColor({
-	color: '#337ab7'
+  color: '#fff'
 });
 
-// get Radio
-var video = document.getElementsByTagName('video')[0];
-// Manifest info
-var info = chrome.runtime.getManifest();
+this.video = document.createElement('video');
+this.video.volume = 0.3;
+const info = chrome.runtime.getManifest();
 
 chrome.browserAction.setTitle({
-	title: info.name + ' v.' + info.version
+  title: info.name + ' v.' + info.version
 });
 
 // Change badge
-video.onplay = function () {
-	chrome.browserAction.setBadgeText({
-		text: 'play'
-	});
-	if (video.reload) {
-		video.load();
-		video.reload = false;
-		clearTimeout(info.reloadRadio);
-	}
+video.onplay = function() {
+  chrome.browserAction.setBadgeText({
+    text: '🎧'
+  });
 };
-video.onpause = function () {
-	chrome.browserAction.setBadgeText({
-		text: 'stop'
-	});
-	info.reloadRadio = setTimeout(function () {
-		video.reload = true;
-		chrome.browserAction.setBadgeText({
-			text: ''
-		});
-	}, 30 * 1000)
+video.onpause = function() {
+  chrome.browserAction.setBadgeText({
+    text: ''
+  });
 };

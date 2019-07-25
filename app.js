@@ -14,22 +14,13 @@
     self = this,
     panelHeading = $('.panel-heading'),
     panelBody = $('.panel-body'),
-    listeners = panelBody.find('span.listeners'),
-    posts = panelBody.find('span.posts'),
     filter = $('input[type=search]'),
-    feedbackButton = $('button.feedback-btn'),
-    feedbackAddButton = $('button.feedback-add-btn'),
-    // feedbackAddValue = $('input.feedback-add-value'),
-    feedbackContainer = $('.radios-feedbacks'),
-    // chatButton = $('button.chat'),
     range = $('ip-slider'),
     playPauseButton = $('button.play_pause'),
     radioTitle = $('h5 > .radio-title'),
     showTime = $('h5 > small'),
     btnRegion = $('.btn-region').find('button'),
     radioContainer = $('#radio-list'),
-    feedbackMaxTextLength = 30,
-    stationsLength = $('span.stations-length'),
     configs = {
       serverName: './server',
       trackEvents: !!global._gaq
@@ -38,88 +29,7 @@
   // Window from background.html
   self.background = chrome.extension.getBackgroundPage();
   self.manifest = chrome.runtime.getManifest();
-  // Get background video
-  self.video = $(self.background.document).find('video')[0];
-  // Default feedbacks array
-  self.feedbacks = [];
-
-  // Object.defineProperty(self, 'setTotalListeners', {
-  //   set(data) {
-  //     listeners.text(data.listeners);
-  //     posts.text(data.posts);
-  //   }
-  // });
-  // Start listen firebase
-  self.startListenFirebase = function() {
-    self.background.radioKeys = {};
-    self.background.listeners.on('child_added', function(currentRadio) {
-      self.background.radioKeys[currentRadio.val().nameId] = currentRadio.key();
-    });
-    self.background.listeners.on('child_changed', function(changedRadio) {
-      return self.addBadgeInfo(changedRadio.val());
-    });
-    // Listen added feedbacks
-    self.background.feedbacks.on('child_added', function(feedback) {
-      if (
-        feedback.val().text == '' ||
-        self.feedbacks.some(f => f.key === feedback.key())
-      )
-        return;
-      self.feedbacks.push(
-        $.extend(true, feedback.val(), {
-          key: feedback.key()
-        })
-      );
-      return self.addFeedbacksInHtml();
-    });
-    // Listen changed feedbacks
-    self.background.feedbacks.on('child_changed', function(feedback) {
-      if (feedback.val().text == '') return;
-      self.feedbacks = self.feedbacks.map(f => {
-        if (f.key == feedback.key()) f.likes = feedback.val().likes;
-        return f;
-      });
-      return self.addFeedbacksbadgeInfo(feedback.key());
-    });
-  };
-
-  // Get data from firebase and make changes
-  self.getFirebaseData = function(obj) {
-    self.background.listeners.once('value', function(snapshot) {
-      let currentData = snapshot.val();
-      if (obj) {
-        let thisRadio = currentData[self.background.radioKeys[obj.nameId]];
-        if (obj.action == 'play' || obj.action == 'choosed') {
-          thisRadio.listeners += 1;
-        } else if (!obj.action || thisRadio.listeners > 0) {
-          thisRadio.listeners -= 1;
-        }
-        self.background.listeners
-          .child(self.background.radioKeys[obj.nameId])
-          .update(thisRadio);
-        return (
-          (obj.action == 'play' || obj.action == 'choosed') &&
-          self.background.listeners
-            .child(self.background.radioKeys[obj.nameId])
-            .onDisconnect()
-            .set({
-              listeners: --self.currentRadio.listeners
-            })
-        );
-      } else {
-        Object.keys(currentData).forEach(function(key) {
-          if (!currentData[key].nameId) {
-            return self.background.listeners.child(key).remove();
-          }
-          if (
-            currentData[key].nameId.indexOf('-' + self.background.region) == -1
-          )
-            return;
-          return self.addBadgeInfo(currentData[key]);
-        });
-      }
-    });
-  };
+  self.video = self.background.video;
 
   // Activate tooltips
   self.activateTooltip = () => $('[title]').tooltip();
@@ -136,60 +46,7 @@
     range.prop('disabled', true);
   }
 
-  // Add info on radio list
-  self.addBadgeInfo = radio => {
-    if (
-      self.background.currentRadio &&
-      radio.nameId === self.background.currentRadio.nameId
-    )
-      self.background.currentRadio.listeners = radio.listeners;
-    let badge = radioContainer
-      .find(`a[data-name=${radio.nameId}]`)
-      .find('span.badge:not(.icon)');
-    return (radio.listeners > 0
-      ? badge.text(radio.listeners).fadeIn()
-      : badge.fadeOut(() => {
-          badge.text('');
-        })
-    )
-      .promise()
-      .done(() => {
-        let badges = radioContainer.find('span.badge:not(:empty)'),
-          _totalListeners = 0,
-          _totalposts = 0;
-        $(badges).each((k, badge) => {
-          _totalListeners += Number(badge.innerText);
-          _totalposts++;
-        });
-        self.setTotalListeners = {
-          listeners: _totalListeners,
-          posts: _totalposts
-        };
-      });
-  };
-
-  self.addFeedbacksbadgeInfo = key => {
-    var feedbackBadge = $(`#radio-feedbacks`).find(`button[data-key=${key}]`);
-    if (!feedbackBadge.length) return;
-    feedbackBadge.find('.badge i.glyphicon-heart').addClass('liked');
-    setTimeout(() => {
-      feedbackBadge.find('.badge i.glyphicon-heart').removeClass('liked');
-    }, 800);
-    feedbackBadge
-      .find('span.likes-count')
-      .text(self.feedbacks.find(f => f.key === key).likes);
-  };
-
-  // Set stats on firebase
-  self.setStat = obj => {
-    obj = obj || {};
-    // obj.date = new Date().getTime();
-    obj.id = self.background.currentRadio.id || null;
-    obj.nameId = self.background.currentRadio.nameId;
-    return self.getFirebaseData(obj);
-  };
-
-  self.trackEvents = (value, type) => {
+  self.trackEvents = function(value, type) {
     if (configs.trackEvents) {
       _gaq.push(['_trackEvent', value, type]);
     }
@@ -199,7 +56,10 @@
   self.videoPlay = function() {
     panelBody.addClass('playing');
     panelHeading.addClass('playing');
-    playPauseButton.find('i').text('stop');
+    playPauseButton
+      .find('i')
+      .removeClass('rotate')
+      .text('stop');
     radioTitle.text(self.background.currentRadio.name);
     range.prop('disabled', false);
     range.attr('value', self.background.video.volume * 100);
@@ -210,7 +70,10 @@
   self.videoPause = function() {
     panelBody.removeClass('playing');
     panelHeading.removeClass('playing');
-    playPauseButton.find('i').text('play_arrow');
+    playPauseButton
+      .find('i')
+      .removeClass('rotate')
+      .text('play_arrow');
   };
   // Default loading start function
   self.videoStartLoading = function() {
@@ -228,7 +91,6 @@
   // Default loading end function
   self.videoEndLoading = function() {
     playPauseButton.prop('disabled', false);
-    playPauseButton.find('i').removeClass('rotate');
     self.background.currentRadio.loading = false;
     // Clean filter value
     filter.val('');
@@ -258,26 +120,23 @@
   // Operation for video, volume, pause, play, stop, etc.
   self.videoListeners = function() {
     // Alert if isset error
-    $(self.video).on('error', function(ev) {
-      this.load();
+    $(self.video).on('error', function() {
+      self.videoPause();
+      radioTitle.text('Sorry, acest post nu merge.');
+      self.trackEvents(self.background.currentRadio.name, 'error');
     });
-    // Start loading video
     $(self.video).on('loadstart', self.videoStartLoading);
-    // Start when data is loaded
     $(self.video).on('loadeddata', self.videoEndLoading);
-    // Make changes when player begin play
     $(self.video).on('play', self.videoPlay);
-    // Make changes when player is paused
     $(self.video).on('pause', self.videoPause);
-    // Progress video
     $(self.video).on('timeupdate', self.videoTimeUpdate);
-    // Start when video is buffering
     $(self.video).on('waiting', self.videoBuffering);
+    $(self.video).on('playing', self.videoPlay);
+    // $(self.video).on('suspend', self.videoPause);
   };
   // Filter listener
   filter
     .on('keyup', function() {
-      self.checkAndShowRadioContainer();
       var regex = new RegExp(this.value, 'ig');
       radioContainer
         .find('a')
@@ -296,65 +155,13 @@
     self.background.video.volume = this.value / 100;
   });
 
-  // Fade in/out function
-  self.fadeOutFadeIn = function(fOut, fIn, callback) {
-    return fOut
-      .fadeOut()
-      .promise()
-      .done(() => fIn.fadeIn(callback || ''));
-  };
-
-  self.checkAndShowRadioContainer = function() {
-    if (!radioContainer.is('visible'))
-      self.fadeOutFadeIn(feedbackContainer, radioContainer, () =>
-        feedbackButton.removeClass('active')
-      );
-  };
-
-  self.autoScrollToPlayedRadio = () => {
+  self.autoScrollToPlayedRadio = function() {
     var radioActive = $('a.list-group-item.active');
-    return (
-      radioActive.length &&
-      radioContainer.animate({
+    if (radioActive.length) {
+      return radioContainer.animate({
         scrollTop: radioActive.offset().top - (radioContainer.height() + 27)
-      })
-    );
-  };
-
-  self.addFeedbacksInHtml = () => {
-    feedbackAddButton.find('span.text-max-length').text(feedbackMaxTextLength);
-    return $('#radio-feedbacks')
-      .html(() => {
-        return self.feedbacks
-          .map(feedback => {
-            return `<button type="button" data-key="${
-              feedback.key
-            }" title="Apasa pentru a vota" class="list-group-item feedback-item">${
-              feedback.text
-            } <span class="badge"><i class="glyphicon glyphicon-heart"></i> <span class="likes-count">${feedback.likes ||
-              0}</span></span></button>`;
-          })
-          .reverse()
-          .join('');
-      })
-      .promise()
-      .done(() => {
-        $('#radio-feedbacks')
-          .find('button.feedback-item')
-          .unbind('click')
-          .bind('click', e => {
-            var $this = $(e.target);
-            var key = $this.data('key'),
-              likes =
-                self.feedbacks.find(feedBack => {
-                  return feedBack.key === key;
-                }).likes || 0;
-            self.background.feedbacks.child(key).update({
-              likes: (likes += 1)
-            });
-            // return self.addFeedbacksbadgeInfo(key);
-          });
       });
+    }
   };
 
   // Basic log message
@@ -422,13 +229,7 @@
 
   // Player play/pause actions
   playPauseButton.click(function() {
-    var action = self.video.paused ? 'play' : 'pause';
-    self.video[action]();
-    self.setStat({
-      name: self.background.currentRadio.name,
-      action: action,
-      timeListen: self.video.currentTime
-    });
+    self.video[self.video.paused ? 'play' : 'pause']();
   });
 
   // Get all radio and put into document
@@ -440,17 +241,14 @@
         return $(this).hasClass(region);
       })
       .addClass('active');
-    return self.getRadioList(region).then(function(radioList) {
+    return self.getRadioList(region).then(async function(radioList) {
       // Put list into global variable
       self.radioList = radioList;
       var list = '';
-      stationsLength.text(`${radioList.length} statii total.`);
       // Generate dynamically list on html
-      $.when(
+      await $.when(
         $.each(radioList, function(k, v) {
           if (v.disable) return;
-          // if (!self.background.radioKeys)
-          //     self.background.listeners.push({ id: k, name: v.name, listeners: 0, nameId: self.getNameId(v.name) });
           self.radioList[k].nameId = self.getNameId(v.name);
           self.radioList[k].id = k;
           list += `<a href=# class="list-group-item" data-name="${self.getNameId(
@@ -459,73 +257,59 @@
             v.name
           }<i class="material-icons favorite">favorite</i></a>`;
         })
-      ).then(function() {
-        // Put generated html on list container
-        radioContainer
-          .html(list)
+      );
+      // Put generated html on list container
+      if (radioContainer.find('a').length) {
+        await radioContainer
+          .fadeOut(300)
           .promise()
-          .done(function() {
-            // Call video listeners
-            self.videoListeners();
-            // Start listen firebase actions
-            self.startListenFirebase();
-            // Put firebase data in DOM
-            self.getFirebaseData();
-            self.trackEvents(region, 'region');
-            self.activateTooltip();
-            // Make current radio active
-            if (!!self.background.currentRadio) {
-              var currentRadioList = radioContainer.find(
-                'a[data-name=' + self.background.currentRadio.nameId + ']'
-              );
-              if (currentRadioList.length) {
-                currentRadioList.addClass('active');
-                self.autoScrollToPlayedRadio();
-              }
+          .done(() => Promise.resolve());
+      }
+
+      radioContainer
+        .html(list)
+        .promise()
+        .done(function() {
+          radioContainer.fadeIn(300);
+          // Call video listeners
+          self.videoListeners();
+          self.trackEvents(region, 'region');
+          self.activateTooltip();
+          // Make current radio active
+          if (!!self.background.currentRadio) {
+            var currentRadioList = radioContainer.find(
+              'a[data-name=' + self.background.currentRadio.nameId + ']'
+            );
+            if (currentRadioList.length) {
+              currentRadioList.addClass('active');
+              self.autoScrollToPlayedRadio();
             }
-            // Change radio
-            radioContainer.on('click', 'a', function(e) {
-              e.preventDefault();
-              // Verify if channel is not the same
-              if (!$(this).hasClass('active')) {
-                // Changed event
-                if (!!self.background.currentRadio)
-                  self.setStat({
-                    name: self.background.currentRadio.name,
-                    action: 'changed'
-                  });
-                // Make this channel active
-                $(this)
-                  .parent()
-                  .find('a')
-                  .removeClass('active');
-                $(this).addClass('active');
-                // Change background global current radio
-                self.background.currentRadio =
-                  self.radioList[$(this).data('id')];
-                //self.background.currentRadio.id = $(this).data('id');
-                // Stop video for change channel
-                if (self.video.src) self.video.pause();
-                // Make current url in background url
-                $(self.video).find('source')[0].src =
-                  self.background.currentRadio.url;
-                // Load video after src is changed
-                self.video.load();
-                // Choosed event
-                self.setStat({
-                  name: self.background.currentRadio.name,
-                  action: 'choosed'
-                });
-              }
-            });
+          }
+          // Change radio
+          radioContainer.on('click', 'a', function(e) {
+            e.preventDefault();
+            // Verify if channel is not the same
+            if (!$(this).hasClass('active')) {
+              // Make this channel active
+              radioContainer.find('a').removeClass('active');
+              $(this).addClass('active');
+              // Change background global current radio
+              self.background.currentRadio = self.radioList[$(this).data('id')];
+              // Stop video for change channel
+              if (self.video.src) self.video.pause();
+              // Make current url in background url
+              self.video.src = self.background.currentRadio.url;
+              // Load video after src is changed
+              self.video.load();
+            }
           });
-      });
+        });
     });
   };
 
+  self.autoScrollToPlayedRadio();
   self.setRadio();
   btnRegion.on('click', function() {
-    self.checkAndShowRadioContainer();
     if ($(this).hasClass('active')) return self.autoScrollToPlayedRadio();
     return self.setRadio($(this).data('region'));
   });
@@ -533,22 +317,5 @@
   // For reload extension
   self.reload = function() {
     return chrome.runtime.reload();
-  };
-
-  self.refreshListeners = () => {
-    return self.radioList.forEach(radio => {
-      if (self.background.radioKeys[radio.nameId]) {
-        self.background.listeners
-          .child(self.background.radioKeys[radio.nameId])
-          .update(
-            {
-              listeners: 0
-            },
-            err => {
-              console.log(err || 'success');
-            }
-          );
-      }
-    });
   };
 })(window);

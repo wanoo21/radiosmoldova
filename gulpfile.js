@@ -38,7 +38,6 @@ gulp.task('scss:watch', () => {
         })
       )
       .pipe(gulp.dest(require('path').dirname(event.path)));
-    console.info(`Compile ${event.path}`);
   });
 });
 
@@ -80,8 +79,7 @@ gulp.task('imgs', () => {
 
 gulp.task(
   'extension',
-  ['scss', 'js_uglify', 'html_min', 'icons', 'imgs'],
-  () => {
+  gulp.parallel('scss', 'js_uglify', 'html_min', 'icons', 'imgs', function() {
     return gulp
       .src([
         `!${buildFolder}`,
@@ -95,7 +93,7 @@ gulp.task(
         '!.*'
       ])
       .pipe(gulp.dest(buildFolder));
-  }
+  })
 );
 
 gulp.task('zip', () =>
