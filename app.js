@@ -1,4 +1,18 @@
-// Default Chrome Extension script
+function Storage() {
+  return {
+    get(key) {
+      return new Promise(function(res) {
+        chrome.storage.sync.get([key], result => res(result[key] || []));
+      });
+    },
+    set(key, value) {
+      return new Promise(function(res) {
+        chrome.storage.sync.set({ [key]: value }, res);
+      });
+    }
+  };
+}
+
 (function(global) {
   // Number prototype for adding zero to time
   Number.prototype.pad = function(size) {
@@ -20,7 +34,9 @@
     radioTitle = $('h5 > .radio-title'),
     showTime = $('h5 > small'),
     btnRegion = $('.btn-region').find('button'),
+    favButton = $('button.fav-btn'),
     radioContainer = $('#radio-list'),
+    storageKey = 'favorite-radio',
     configs = {
       serverName: './server',
       trackEvents: !!global._gaq
@@ -30,6 +46,11 @@
   self.background = chrome.extension.getBackgroundPage();
   self.manifest = chrome.runtime.getManifest();
   self.video = self.background.video;
+
+  (async function() {
+    this.favorites = await Storage().get(storageKey);
+    // favButton.append(`<span class="badge">${this.favorites.length}</span>`);
+  })();
 
   // Activate tooltips
   self.activateTooltip = () => $('[title]').tooltip();
@@ -181,6 +202,9 @@
   // Get radio list function
   self.getRadioList = function(region) {
     self.background.region = region;
+    if (region === 'favorite') {
+      return Storage().get(storageKey);
+    }
     return new Promise(function(resolve, reject) {
       if (!sessionStorage.getItem(`radiolist-${self.background.region}`)) {
         return $.getJSON(
@@ -212,6 +236,19 @@
       '-' +
       self.background.region
     );
+  };
+
+  self.addToFavorite = async function(ev) {
+    ev.stopImmediatePropagation();
+    const nameId = $(ev.target)
+      .parent()
+      .data('name');
+    const radio = self.radioList.find(r => r.nameId === nameId);
+    const favorites = await Storage().get(storageKey);
+    if (!favorites.some(r => r.nameId === nameId)) {
+      favorites.push(radio);
+      await Storage().set(storageKey, favorites);
+    }
   };
 
   // Make changes if radio play on loading DOM
@@ -269,6 +306,8 @@
           .promise()
           .done(() => Promise.resolve());
       }
+
+      radioContainer.on('click', 'i.favorite', ev => self.addToFavorite(ev));
 
       radioContainer
         .html(list)
