@@ -96,33 +96,42 @@ body {
     .btn-region {
       button.btn-primary {
         border-radius: 0;
-      }
-    }
-    .radios-feedbacks {
-      height: 287px;
-      flex-direction: column;
-      display: flex;
-      .list-group {
-        flex: 1;
-        .list-group-item {
-          border-radius: 0;
-          .badge i.glyphicon-heart.liked {
-            animation: heart 0.8s ease-in;
-            transform-origin: center;
-          }
+        background-color: $primary;
+        border-color: darken($color: $primary, $amount: 2);
+
+        &.active {
+          background-color: darken($color: $primary, $amount: 2);
         }
+
+        i.material-icons {
+          font-size: 20px;
+        }
+        // color: $secondary;
       }
     }
     .list-group {
-      scroll-snap-type: y proximity;
       overflow-y: auto;
       overflow-x: hidden;
+      &.empty {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: $secondary;
+        padding: 1rem;
+        h2,
+        h3 {
+          font-weight: 300;
+          text-align: center;
+        }
+      }
+      // background: linear-gradient(to bottom right, $primary, $secondary);
       &:not(#radio-feedbacks) {
         height: 287px;
       }
       margin-bottom: 0;
       a {
-        scroll-snap-align: start;
+        transition: all 500ms ease-in-out;
         &:hover {
           .favorite {
             opacity: 1;
@@ -131,12 +140,15 @@ body {
         }
         .favorite {
           opacity: 0;
-          color: $primary;
+          color: $secondary;
           float: right;
         }
-      }
-      a:not(.active) {
-        background-color: #f5f5f5;
+        &:not(.active) {
+          background-color: transparent;
+        }
+        &.active {
+          background-color: $primary;
+        }
       }
     }
   }

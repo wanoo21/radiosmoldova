@@ -34,7 +34,7 @@ function Storage() {
     radioTitle = $('h5 > .radio-title'),
     showTime = $('h5 > small'),
     btnRegion = $('.btn-region').find('button'),
-    favButton = $('button.fav-btn'),
+    // favButton = $('.btn-region').find('button.favorite'),
     radioContainer = $('#radio-list'),
     storageKey = 'favorite-radio',
     configs = {
@@ -226,7 +226,7 @@ function Storage() {
     });
   };
 
-  self.getNameId = function(name) {
+  self.getNameId = function(name, region) {
     return (
       name
         .split(' ')
@@ -234,7 +234,7 @@ function Storage() {
         .toLowerCase()
         .replace(/\(|\)/gi, '') +
       '-' +
-      self.background.region
+      region
     );
   };
 
@@ -246,9 +246,26 @@ function Storage() {
     const radio = self.radioList.find(r => r.nameId === nameId);
     const favorites = await Storage().get(storageKey);
     if (!favorites.some(r => r.nameId === nameId)) {
-      favorites.push(radio);
+      favorites.push({ ...radio, region: self.background.region });
+      console.log({ ...radio, region: self.background.region });
       await Storage().set(storageKey, favorites);
     }
+  };
+
+  self.deleteFromFavorite = async function(ev) {
+    console.log(ev);
+    ev.stopImmediatePropagation();
+    const nameId = $(ev.target)
+      .parent()
+      .data('name');
+    console.log(nameId);
+    let favorites = await Storage().get(storageKey);
+    favorites = favorites.filter(r => r.nameId !== nameId);
+    console.log(favorites);
+    await Storage().set(storageKey, favorites);
+    $(ev.target)
+      .parent()
+      .remove();
   };
 
   // Make changes if radio play on loading DOM
@@ -290,13 +307,14 @@ function Storage() {
       await $.when(
         $.each(radioList, function(k, v) {
           if (v.disable) return;
-          self.radioList[k].nameId = self.getNameId(v.name);
+          const nameId = self.getNameId(v.name, v.region || region);
+          self.radioList[k].nameId = nameId;
           self.radioList[k].id = k;
-          list += `<a href=# class="list-group-item" data-name="${self.getNameId(
+          list += `<a href=# class="list-group-item" data-name="${nameId}" data-id=${k}>${
             v.name
-          )}" data-id=${k}>${
-            v.name
-          }<i class="material-icons favorite">favorite</i></a>`;
+          }<i class="material-icons favorite">${
+            region === 'favorite' ? 'delete' : 'favorite'
+          }</i></a>`;
         })
       );
       // Put generated html on list container
@@ -307,7 +325,17 @@ function Storage() {
           .done(() => Promise.resolve());
       }
 
-      radioContainer.on('click', 'i.favorite', ev => self.addToFavorite(ev));
+      if (radioList.length) {
+        radioContainer.on('click', 'i.favorite', ev => {
+          return self.background.region !== 'favorite'
+            ? self.addToFavorite(ev)
+            : self.deleteFromFavorite(ev);
+        });
+      } else if (!radioList.length && region === 'favorite') {
+        list = '<h2>Nimic inca!</h2><h3>Posturile favorite apar aici.</h3>';
+      }
+
+      radioContainer.toggleClass('empty', !radioList.length);
 
       radioContainer
         .html(list)
