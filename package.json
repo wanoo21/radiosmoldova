@@ -20,7 +20,7 @@
   "homepage": "https://github.com/wanoo21/radiosmoldova#readme",
   "devDependencies": {
     "del": "^2.2.2",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-htmlmin": "^2.0.0",
     "gulp-inject": "^4.2.0",
     "gulp-jsmin": "^0.1.5",
