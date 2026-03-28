@@ -1,19 +1,39 @@
-import { cp, mkdir, rm, copyFile } from "node:fs/promises";
+import { cp, mkdir, rm, copyFile, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 
 const root = resolve(process.cwd());
-const dist = resolve(root, "dist");
+
+function getArg(name, fallback) {
+  const hit = process.argv.find((arg) => arg.startsWith(`--${name}=`));
+  return hit ? hit.split("=")[1] : fallback;
+}
+
+const target = getArg("target", "chrome").toLowerCase();
+const outDir = getArg("out", target === "chrome" ? "dist" : `dist-${target}`);
+const dist = resolve(root, outDir);
 
 async function copy(src, dest) {
   await mkdir(dirname(dest), { recursive: true });
   await copyFile(src, dest);
 }
 
+async function writeManifest(targetName) {
+  const manifestPath = resolve(root, "manifest.json");
+  const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+
+  // update_url is Chrome Web Store specific. Remove for non-Chrome stores.
+  if (targetName !== "chrome") {
+    delete manifest.update_url;
+  }
+
+  await writeFile(resolve(dist, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+}
+
 async function main() {
   await rm(dist, { recursive: true, force: true });
   await mkdir(dist, { recursive: true });
 
-  await copy(resolve(root, "manifest.json"), resolve(dist, "manifest.json"));
+  await writeManifest(target);
   await cp(resolve(root, "icons"), resolve(dist, "icons"), { recursive: true });
   await cp(resolve(root, "_locales"), resolve(dist, "_locales"), { recursive: true });
   await cp(resolve(root, "src"), resolve(dist, "src"), { recursive: true });
@@ -32,7 +52,7 @@ async function main() {
     resolve(dist, "data/radiolist-ua.json"),
   );
 
-  console.log("Built dist/ for Chrome load unpacked.");
+  console.log(`Built ${outDir}/ for ${target}.`);
 }
 
 main().catch((error) => {

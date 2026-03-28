@@ -4,8 +4,14 @@
   "description": "Asculta online toate posturile Radio din republica Moldova.",
   "main": "src/sw/background.js",
   "scripts": {
-    "build:dist": "node scripts/build-dist.mjs",
+    "build:dist": "node scripts/build-dist.mjs --target=chrome --out=dist",
+    "build:dist:edge": "node scripts/build-dist.mjs --target=edge --out=dist-edge",
+    "build:dist:opera": "node scripts/build-dist.mjs --target=opera --out=dist-opera",
+    "build:all": "npm run build:dist && npm run build:dist:edge && npm run build:dist:opera",
     "build:zip": "npm run build:dist && VERSION=$(node -e \"console.log(JSON.parse(require('fs').readFileSync('manifest.json','utf8')).version)\") && (cd dist && zip -r \"../radio-mru-v${VERSION}.zip\" .)",
+    "build:zip:edge": "npm run build:dist:edge && VERSION=$(node -e \"console.log(JSON.parse(require('fs').readFileSync('manifest.json','utf8')).version)\") && (cd dist-edge && zip -r \"../radio-mru-edge-v${VERSION}.zip\" .)",
+    "build:zip:opera": "npm run build:dist:opera && VERSION=$(node -e \"console.log(JSON.parse(require('fs').readFileSync('manifest.json','utf8')).version)\") && (cd dist-opera && zip -r \"../radio-mru-opera-v${VERSION}.zip\" .)",
+    "build:zip:all": "npm run build:zip && npm run build:zip:edge && npm run build:zip:opera",
     "dev": "npm run build:dist",
     "stations:refresh": "node scripts/refresh-stations.mjs",
     "stations:refresh:apply": "node scripts/refresh-stations.mjs --apply",
@@ -18,9 +24,17 @@
     "type": "git",
     "url": "git+https://github.com/wanoo21/radiosmoldova.git"
   },
-  "keywords": [],
-  "author": "Prodan Ion",
-  "license": "ISC",
+  "keywords": [
+    "radio",
+    "moldova",
+    "romania",
+    "ukraine"
+  ],
+  "author": {
+    "name": "Prodan Ion",
+    "website": "https://iprodan.dev"
+  },
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/wanoo21/radiosmoldova/issues"
   },

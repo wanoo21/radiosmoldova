@@ -26,7 +26,7 @@ Aplicatia ofera player rapid in popup, cautare live, favorite, control de volum 
 
 ## Development
 
-### Build pentru load unpacked
+### Build pentru load unpacked (Chrome)
 
 ```bash
 npm run build:dist
@@ -34,13 +34,45 @@ npm run build:dist
 
 Rezultatul este in folderul `dist/`.
 
+### Build pentru Edge / Opera
+
+```bash
+npm run build:dist:edge
+npm run build:dist:opera
+```
+
+Rezultatele sunt in:
+
+- `dist-edge/`
+- `dist-opera/`
+
+### Build toate target-urile
+
+```bash
+npm run build:all
+```
+
+Genereaza toate folderele de distributie: `dist/`, `dist-edge/`, `dist-opera/`.
+
 ### Build ZIP pentru publish
 
 ```bash
 npm run build:zip
+npm run build:zip:edge
+npm run build:zip:opera
 ```
 
-Genereaza `radio-mru-v<versiune>.zip` in root-ul proiectului.
+Sau totul dintr-o comanda:
+
+```bash
+npm run build:zip:all
+```
+
+Arhive generate:
+
+- `radio-mru-v<versiune>.zip`
+- `radio-mru-edge-v<versiune>.zip`
+- `radio-mru-opera-v<versiune>.zip`
 
 ## Management statii
 
@@ -77,6 +109,11 @@ Poti limita pe tara cu `--only=md`, `--only=ro`, `--only=ua` si numarul de propu
 3. Activeaza **Developer mode**
 4. Click pe **Load unpacked**
 5. Selecteaza folderul `dist/`
+
+### Instalare locala Edge / Opera
+
+- Edge: `edge://extensions` + load din `dist-edge/`
+- Opera: `opera://extensions` + load din `dist-opera/`
 
 ## Feedback
 

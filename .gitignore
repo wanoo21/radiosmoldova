@@ -8,5 +8,8 @@ out
 gen
 # Created by .ignore support plugin (hsz.mobi)
 dist/
+dist-edge/
+dist-opera/
+
 node_modules/
 *.zip
