@@ -1,0 +1,363 @@
+[
+  {
+    "name": "Antena Satelor",
+    "url": "http://stream2.srr.ro:8042/;"
+  },
+  {
+    "name": "Digi FM",
+    "url": "http://edge76.rdsnet.ro:84/digifm/digifm.mp3"
+  },
+  {
+    "name": "Europa FM",
+    "url": "http://astreaming.europafm.ro:8000/europafm_aacp48k"
+  },
+  {
+    "name": "Pro FM",
+    "url": "http://edge126.rdsnet.ro:84/profm/profm.mp3"
+  },
+  {
+    "name": "Kiss FM",
+    "url": "https://live.kissfm.ro/kissfm.aacp"
+  },
+  {
+    "name": "Radio ZU",
+    "url": "http://zuicast.digitalag.ro:9420/zu"
+  },
+  {
+    "name": "Radio Prahova",
+    "url": "https://streamx.rph.ro:8100/relay;"
+  },
+  {
+    "name": "Radio Funky",
+    "url": "http://live.radiofunky.ro:8888/;*.mp3"
+  },
+  {
+    "name": "Radio Popular",
+    "url": "http://live.radiopopular.ro:8888/;*.mp3"
+  },
+  {
+    "name": "Romania Actualitati",
+    "url": "http://89.238.227.6:8002/;*.mp3"
+  },
+  {
+    "name": "Itsy Bitsy",
+    "url": "http://live.itsybitsy.ro:8000/itsybitsy"
+  },
+  {
+    "name": "Dance Station",
+    "url": "http://80.86.106.35:80/;*.mp3",
+    "disable": true
+  },
+  {
+    "name": "Radio X Net",
+    "url": "http://asculta.radioxnet.ro:8888/;*.mp3"
+  },
+  {
+    "name": "Radio Voces Campi",
+    "url": "http://vocescampi.ro:8001/;"
+  },
+  {
+    "name": "RFI Romania",
+    "url": "http://asculta.rfi.ro:9128/live.aac"
+  },
+  {
+    "name": "Radio Traditional",
+    "url": "http://asculta.radiotraditional.ro:7000/;*.mp3",
+    "disable": true
+  },
+  {
+    "name": "Super FM",
+    "url": "https://live.superfm.ro/stream.mp3"
+  },
+  {
+    "name": "ROCK FM",
+    "url": "http://live.rockfm.ro:9128/rockfm.aacp",
+    "disable": true
+  },
+  {
+    "name": "Radio Petrecaretzu",
+    "url": "http://radiopetrecaretzu.zapto.org:8383/;*.mp3"
+  },
+  {
+    "name": "Magic FM",
+    "url": "https://live.magicfm.ro/magicfm.aacp"
+  },
+  {
+    "name": "Radio Guerrilla",
+    "url": "http://live.guerrillaradio.ro:8010/guerrilla.aac"
+  },
+  {
+    "name": "Alt Radio",
+    "url": "http://asculta.altradio.ro:8557/;",
+    "disable": true
+  },
+  {
+    "name": "Virgin Radio (Radio 21)",
+    "url": "http://astreaming.virginradio.ro:8000/virgin_aacp_64k"
+  },
+  {
+    "name": "Imago FM",
+    "url": "http://136.243.111.186:8000/stream",
+    "disable": true
+  },
+  {
+    "name": "Radio Cafe",
+    "url": "http://live.playradio.org:9090/CafeHD"
+  },
+  {
+    "name": "Radio Romania Cultural",
+    "url": "http://stream2.srr.ro:8012/;"
+  },
+  {
+    "name": "Radio Tananana",
+    "url": "http://live.tananana.ro:8010/stream-48.aac?1459586094241.aac",
+    "disable": true
+  },
+  {
+    "name": "Rock Zone",
+    "url": "http://86.125.12.62:8004/;",
+    "disable": true
+  },
+  {
+    "name": "One FM",
+    "url": "http://live.onefm.ro:9128/onefm.aacp",
+    "disable": true
+  },
+  {
+    "name": "Radio 7",
+    "url": "http://80.86.106.32:8000/radio7.mp3"
+  },
+  {
+    "name": "Go FM",
+    "url": "http://live.gofm.ro:9128/;"
+  },
+  {
+    "name": "Pro DJ Radio",
+    "url": "http://live.prodjradio.net:8042/;"
+  },
+  {
+    "name": "Radio Drums",
+    "url": "http://radio.drums.ro:8000/;",
+    "disable": true
+  },
+  {
+    "name": "Radio Viva FM",
+    "url": "http://live.vivafmiasi.ro:8000/stream",
+    "disable": true
+  },
+  {
+    "name": "Romantic FM",
+    "url": "http://zuicast.digitalag.ro:9420/romanticfm"
+  },
+  {
+    "name": "Dance FM",
+    "url": "https://edge126.rcs-rds.ro/profm/dancefm.mp3"
+  },
+  {
+    "name": "Radio Ideea",
+    "url": "http://live.radiodeea.ro:8090/;*.mp3",
+    "disable": true
+  },
+  {
+    "name": "Radio Taraf",
+    "url": "http://asculta.radiotaraf.com:7100/;*.mp3"
+  },
+  {
+    "name": "Radio Crazy",
+    "url": "http://live.crazyradio.ro:8024/stream/;*.mp3"
+  },
+  {
+    "name": "Radio Romania Muzical",
+    "url": "http://stream2.srr.ro:8022/;*.mp3"
+  },
+  {
+    "name": "West City Radio",
+    "url": "http://live.westcityradio.ro:8000/mp3"
+  },
+  {
+    "name": "Radio Hot",
+    "url": "http://mp3.radiohot.ro:8000/;*.mp3"
+  },
+  {
+    "name": "Impact FM",
+    "url": "http://live.radioimpactfm.ro:8010/;stream.mp3",
+    "disable": true
+  },
+  {
+    "name": "C FM",
+    "url": "http://playradio.longmusic.com:9090/CFM",
+    "disable": true
+  },
+  {
+    "name": "KPTV",
+    "url": "http://s3.viastreaming.net:7180/;*.mp3",
+    "disable": true
+  },
+  {
+    "name": "HIT Radio",
+    "url": "http://live02.radiohit.ro:8000/hit.mp3"
+  },
+  {
+    "name": "Radio Bandit",
+    "url": "http://live.radiobandit.ro:8000/320.mp3"
+  },
+  {
+    "name": "Radio Teer",
+    "url": "http://RadioTeen.RoStreaMinG.CoM:9990/;*.mp3",
+    "disable": true
+  },
+  {
+    "name": "Radio Zuper",
+    "url": "http://live.radiozuper.ro:8080/;*.mp3",
+    "disable": true
+  },
+  {
+    "name": "Radio Mega",
+    "url": "http://asculta.radiomega.ro:8000/;*.mp3",
+    "disable": true
+  },
+  {
+    "name": "Vibe FM",
+    "url": "https://astreaming.vibefm.ro:8443/vibe_ro64"
+  },
+  {
+    "name": "Gold FM",
+    "url": "http://80.86.106.110:8000/;?.mp3"
+  },
+  {
+    "name": "One FM",
+    "url": "http://80.86.106.143:9128/onefm.aacp",
+    "disable": true
+  },
+  {
+    "name": "Radio Iasi",
+    "url": "http://89.238.227.6:8202/;stream/1"
+  },
+  {
+    "name": "Radio Iasi",
+    "url": "http://89.238.227.6:8202/;stream/1"
+  },
+  {
+    "name": "Radio Musical",
+    "url": "http://stream2.srr.ro:8022/;stream/1"
+  },
+  {
+    "name": "Radio Simplu",
+    "url": "http://asculta.radiosimplu.ro:7500/;stream/1"
+  },
+  {
+    "name": "Smart FM",
+    "url": "http://live.smartradio.ro:9128/live"
+  },
+  {
+    "name": "Bucuresti FM",
+    "url": "http://89.238.227.6:8032/;stream/1"
+  },
+  {
+    "name": "Radio Impuls",
+    "url": "https://live.radio-impuls.ro/stream"
+  },
+  {
+    "name": "Radio Oltenia",
+    "url": "http://stream2.srr.ro:8370/;stream/1"
+  },
+  {
+    "name": "Radio Sun FM",
+    "url": "http://asculta.radiosun.ro:8000/sunfm",
+    "disable": true
+  },
+  {
+    "name": "Radio GaGa",
+    "url": "http://rc.radiogaga.ro:8000/live"
+  },
+  {
+    "name": "Radio Inferno",
+    "url": "http://radioinferno.no-ip.org:7200/;?.mp3",
+    "disable": true
+  },
+  {
+    "name": "National FM",
+    "url": "http://live2.nationalfm.ro:8001/;"
+  },
+  {
+    "name": "Radio Cluj",
+    "url": "http://89.238.227.6:8384/;stream/1"
+  },
+  {
+    "name": "Radio Lipova",
+    "url": "http://radiolipova.radiolipova.net:1717/;?.mp3",
+    "disable": true
+  },
+  {
+    "name": "Radio Renasterea",
+    "url": "https://cast1.asurahosting.com/proxy/arhiepis/stream"
+  },
+  {
+    "name": "Radio Vis",
+    "url": "http://89.39.189.44:8000/;?.mp3"
+  },
+  {
+    "name": "Radio RRI",
+    "url": "http://stream2.srr.ro:8062/;stream/1"
+  },
+  {
+    "name": "Radio Romania Actualități",
+    "url": "http://89.238.227.6:8006/;"
+  },
+  {
+    "name": "Dance FM 89.5 Bucharest",
+    "url": "http://edge126.rdsnet.ro:84/profm/dancefm.mp3"
+  },
+  {
+    "name": "Deep House Radio - Bucharest Romania",
+    "url": "http://live.dancemusic.ro:7000/stream"
+  },
+  {
+    "name": "Radio Manele FM",
+    "url": "http://a.fmradiomanele.ro:8054/;"
+  },
+  {
+    "name": "Play 90's",
+    "url": "http://live.playradio.org:9090/90HD"
+  },
+  {
+    "name": "Radio Cafe Romania",
+    "url": "http://live.radiocafe.ro:8048/live.aac"
+  },
+  {
+    "name": "Lautaru Populara",
+    "url": "http://live.radiolautaru.ro:9000/;stream.nsv"
+  },
+  {
+    "name": "GoldFM",
+    "url": "http://80.86.106.110:8002/"
+  },
+  {
+    "name": "eteatru",
+    "url": "http://stream2.srr.ro:8078/eteatru.mp3"
+  },
+  {
+    "name": "Radio Tequila Dance Romania",
+    "url": "http://dance.radiotequila.ro:7000/;stream.nsv"
+  },
+  {
+    "name": "Europa FM Romania",
+    "url": "https://astreaming.edi.ro:8443/EuropaFM_aac"
+  },
+  {
+    "name": "Gherla FM",
+    "url": "http://89.39.189.52:8000/;"
+  },
+  {
+    "name": "Chill FM Romania",
+    "url": "http://edge126.rdsnet.ro:84/profm/chillfm.mp3"
+  },
+  {
+    "name": "Radio Trinitas",
+    "url": "http://81.196.25.70:8000/"
+  },
+  {
+    "name": "Radio 1 Manele",
+    "url": "http://radio1manele.no-ip.org:8000/;"
+  }
+]

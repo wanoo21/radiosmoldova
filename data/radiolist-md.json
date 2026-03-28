@@ -1,0 +1,201 @@
+[
+  {
+    "name": "Sputnik Radio",
+    "url": "http://nfw.video.ria.ru/flv/audio.aspx?ID=68862011&type=mp3"
+  },
+  {
+    "name": "Radio Noroc",
+    "url": "http://live.noroc.tv:8000/radionoroc.mp3",
+    "disable": true
+  },
+  {
+    "name": "Jurnal FM",
+    "url": "https://audio.jurnalfm.md/hq"
+  },
+  {
+    "name": "HIT FM",
+    "url": "https://radio3.dixi.md/listen/hit_fm_russkoe_hitovoe/hitfm_ruhit128.aac"
+  },
+  {
+    "name": "Radio Plai",
+    "url": "http://stream.radioplai.md:8000/live"
+  },
+  {
+    "name": "Retro FM",
+    "url": "http://retroserver.streamr.ru:8043/retro128"
+  },
+  {
+    "name": "Muz FM Moldova",
+    "url": "http://live.muzfm.md:8000/muzfm"
+  },
+  {
+    "name": "Maestro FM",
+    "url": "http://live.maestrofm.md:8000/maestro",
+    "disable": true
+  },
+  {
+    "name": "Radio Alla",
+    "url": "http://air-online2.radioalla.md/radioalla.mp3",
+    "disable": true
+  },
+  {
+    "name": "Micul Samaritean",
+    "url": "https://s5.radio.co/sfff7b7e97/listen"
+  },
+  {
+    "name": "Megapolis FM",
+    "url": "https://megapolisfm.md:8443/886"
+  },
+  {
+    "name": "Radio Moldova",
+    "url": "https://www.radio.md/stream/radiomoldovanews"
+  },
+  {
+    "name": "Aquarelle FM",
+    "url": "http://93.115.137.75:8000/aquarellefm.mp3"
+  },
+  {
+    "name": "Radio Stil",
+    "url": "http://217.26.172.239/stil",
+    "disable": true
+  },
+  {
+    "name": "Radio ZUM",
+    "url": "https://streams.radiozum.md/listen/zum2/ZUM2"
+  },
+  {
+    "name": "Radio 7",
+    "url": "http://87.255.90.94:8000/128",
+    "disable": true
+  },
+  {
+    "name": "Kiss FM",
+    "url": "http://89.28.66.205:8000/;",
+    "disable": true
+  },
+  {
+    "name": "Radio Sanatatea",
+    "url": "http://radiosanatatea.dyndns.org:8000/;",
+    "disable": true
+  },
+  {
+    "name": "Pro FM Chisinau",
+    "url": "http://m.protv.md:8000/profm-128.mp3",
+    "disable": true
+  },
+  {
+    "name": "Europa Plus",
+    "url": "http://217.26.167.180:8081/broadwave.mp3?src=1&kbps=128"
+  },
+  {
+    "name": "Virgin Radio (Radio 21)",
+    "url": "http://astreaming.virginradio.ro:8000/virgin_aacp_64k"
+  },
+  {
+    "name": "Discovery FM",
+    "url": "http://37.233.26.246:8080",
+    "disable": true
+  },
+  {
+    "name": "Русское Радио",
+    "url": "http://89.28.86.142:7030/live",
+    "disable": true
+  },
+  {
+    "name": "Radio Moldova Muzical",
+    "url": "http://radiolive.trm.md:8000/RM-muzical-256"
+  },
+  {
+    "name": "Publika FM",
+    "url": "http://live.maestrofm.md:8000/publikafm",
+    "disable": true
+  },
+  {
+    "name": "Radio Chisinau",
+    "url": "http://95.65.9.170:8001/",
+    "disable": true
+  },
+  {
+    "name": "Radio Moldova Tineret",
+    "url": "http://radiolive.trm.md:8000/RM-tineret-128"
+  },
+  {
+    "name": "Univers FM",
+    "url": "http://188.94.87.202:8000/;stream.mp3",
+    "disable": true
+  },
+  {
+    "name": "Vocea Basarabiei",
+    "url": "http://arhiva.voceabasarabiei.net:8000/vb_radio",
+    "disable": true
+  },
+  {
+    "name": "Radio Logos",
+    "url": "http://asculta.logos.md:10000/live"
+  },
+  {
+    "name": "Radio BEAT",
+    "url": "http://radiobeat.md:9998/;stream.mp3",
+    "disable": true
+  },
+  {
+    "name": "LOVE PRO Dj Radio Chisinau",
+    "url": "http://live.prodjradio.net:8000/;"
+  },
+  {
+    "name": "Kiss FM Moldova",
+    "url": "https://live.kissfm.md/kissfm.chisinau"
+  },
+  {
+    "name": "Dance Fm Moldova",
+    "url": "http://37.233.41.76:8000/dancefm"
+  },
+  {
+    "name": "Radio Noroc Moldova",
+    "url": "https://stream.noroc.tv/radionoroc_aac"
+  },
+  {
+    "name": "Radio DAR",
+    "url": "http://188.138.191.214/RadioDar"
+  },
+  {
+    "name": "Radio Studentus",
+    "url": "http://radiolive.studentus.md:8000/live"
+  },
+  {
+    "name": "Eco FM",
+    "url": "http://188.138.204.98:8080/ecoFM"
+  },
+  {
+    "name": "Radio Record Moldova",
+    "url": "http://212.56.220.74:8000/RecordMD"
+  },
+  {
+    "name": "Radio RFI Moldova",
+    "url": "https://asculta.radiorfi.ro/live.mp3"
+  },
+  {
+    "name": "Retro FM Moldova",
+    "url": "https://efir.retrofm.md:8000/retro"
+  },
+  {
+    "name": "Love Radio Moldova",
+    "url": "http://37.233.41.76:8000/lovefm"
+  },
+  {
+    "name": "imago.fm",
+    "url": "http://109.233.192.78:8000/_a"
+  },
+  {
+    "name": "Drive FM",
+    "url": "http://109.185.236.241:8000/DriveFM"
+  },
+  {
+    "name": "Crucial Velocity Radio",
+    "url": "http://ais-sa2.cdnstream1.com/1369_128"
+  },
+  {
+    "name": "Hit FM Hot Hits",
+    "url": "https://radio3.dixi.md/listen/hit_fm_hot_hits/hitfm_hothits128.aac"
+  }
+]

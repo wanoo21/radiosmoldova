@@ -1,19 +1,18 @@
 {
-  "manifest_version": 2,
-  "version": "1.9.0",
-  "name": "Radio Moldova si Romania",
-  "short_name": "Radio Moldova si Romania",
-  "description": "Asculta online toate posturile Radio din Republica Moldova si Romania",
+  "manifest_version": 3,
+  "version": "3.0.0",
+  "default_locale": "en",
+  "name": "__MSG_extName__",
+  "short_name": "__MSG_extShortName__",
+  "description": "__MSG_extDescription__",
   "author": "Ion Prodan",
   "homepage_url": "https://github.com/wanoo21/radiosmoldova",
-  "offline_enabled": false,
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://ajax.googleapis.com https://maxcdn.bootstrapcdn.com https://unpkg.com; object-src 'self'",
-  "browser_action": {
+  "action": {
     "default_icon": {
       "16": "icons/icon-16.png"
     },
-    "default_popup": "popup.html",
-    "default_title": "Radio Moldova si Romania"
+    "default_popup": "src/popup/popup.html",
+    "default_title": "__MSG_defaultTitle__"
   },
   "icons": {
     "128": "icons/icon-128.png",
@@ -23,9 +22,13 @@
     "16": "icons/icon-16.png"
   },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": true
+    "service_worker": "src/sw/background.js",
+    "type": "module"
   },
-  "permissions": ["storage"],
+  "permissions": ["storage", "offscreen"],
+  "host_permissions": ["<all_urls>"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
   "update_url": "https://clients2.google.com/service/update2/crx"
 }

@@ -1,0 +1,59 @@
+{
+  "extName": {
+    "message": "Радіо Молдова, Румунія та Україна"
+  },
+  "extShortName": {
+    "message": "Радіо MRU"
+  },
+  "extDescription": {
+    "message": "Слухайте онлайн радіостанції з Молдови, Румунії та України."
+  },
+  "defaultTitle": {
+    "message": "Радіо Молдова, Румунія та Україна"
+  },
+  "popupSelectStation": {
+    "message": "Виберіть станцію зі списку"
+  },
+  "statusIdle": {
+    "message": "Неактивно"
+  },
+  "statusPlaying": {
+    "message": "Відтворення"
+  },
+  "statusLoading": {
+    "message": "Завантаження..."
+  },
+  "statusPaused": {
+    "message": "Пауза"
+  },
+  "statusPlaybackError": {
+    "message": "Помилка відтворення"
+  },
+  "searchLabel": {
+    "message": "Пошук радіостанцій"
+  },
+  "searchPlaceholder": {
+    "message": "Пошук станцій"
+  },
+  "searchHint": {
+    "message": "Введіть текст для фільтра. Натисніть Slash для фокуса та Escape для очищення."
+  },
+  "favoriteTabAria": {
+    "message": "Улюблені станції"
+  },
+  "regionMoldova": {
+    "message": "Молдова"
+  },
+  "regionRomania": {
+    "message": "Румунія"
+  },
+  "regionUkraine": {
+    "message": "Україна"
+  },
+  "playPauseAria": {
+    "message": "Відтворити або призупинити"
+  },
+  "favoriteActionTitle": {
+    "message": "Улюблене"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "extName": {
+    "message": "Radio Moldova, Romania and Ukraine"
+  },
+  "extShortName": {
+    "message": "Radio MRU"
+  },
+  "extDescription": {
+    "message": "Listen online to radio stations from Moldova, Romania and Ukraine."
+  },
+  "defaultTitle": {
+    "message": "Radio Moldova, Romania and Ukraine"
+  },
+  "popupSelectStation": {
+    "message": "Choose a station from the list"
+  },
+  "statusIdle": {
+    "message": "Idle"
+  },
+  "statusPlaying": {
+    "message": "Playing"
+  },
+  "statusLoading": {
+    "message": "Loading..."
+  },
+  "statusPaused": {
+    "message": "Paused"
+  },
+  "statusPlaybackError": {
+    "message": "Playback error"
+  },
+  "searchLabel": {
+    "message": "Search radio stations"
+  },
+  "searchPlaceholder": {
+    "message": "Search stations"
+  },
+  "searchHint": {
+    "message": "Type to filter stations. Press Slash to focus and Escape to clear."
+  },
+  "favoriteTabAria": {
+    "message": "Favorite stations"
+  },
+  "regionMoldova": {
+    "message": "Moldova"
+  },
+  "regionRomania": {
+    "message": "Romania"
+  },
+  "regionUkraine": {
+    "message": "Ukraine"
+  },
+  "playPauseAria": {
+    "message": "Play or pause"
+  },
+  "favoriteActionTitle": {
+    "message": "Favorite"
+  }
+}
