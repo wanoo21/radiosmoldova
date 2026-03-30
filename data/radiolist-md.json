@@ -1,7 +1,8 @@
 [
   {
     "name": "Sputnik Radio",
-    "url": "http://nfw.video.ria.ru/flv/audio.aspx?ID=68862011&type=mp3"
+    "url": "http://nfw.video.ria.ru/flv/audio.aspx?ID=68862011&type=mp3",
+    "disable": true
   },
   {
     "name": "Radio Noroc",

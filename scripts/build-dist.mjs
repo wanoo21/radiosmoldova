@@ -26,7 +26,23 @@ async function writeManifest(targetName) {
     delete manifest.update_url;
   }
 
-  await writeFile(resolve(dist, "manifest.json"), `${JSON.stringify(manifest, null, 2)}\n`);
+  // Opera validator can reject __MSG_*__ tokens in short_name during upload.
+  // Use literal branding values for Opera package manifests.
+  if (targetName === "opera") {
+    manifest.name = "Radio Moldova, Romania and Ukraine";
+    manifest.short_name = "Radio MRU";
+    manifest.description =
+      "Listen online to radio stations from Moldova, Romania and Ukraine.";
+    if (manifest.action) {
+      manifest.action.default_title = "Radio Moldova, Romania and Ukraine";
+    }
+    // manifest.default_locale = "en";
+  }
+
+  await writeFile(
+    resolve(dist, "manifest.json"),
+    `${JSON.stringify(manifest, null, 2)}\n`,
+  );
 }
 
 async function main() {
@@ -35,7 +51,9 @@ async function main() {
 
   await writeManifest(target);
   await cp(resolve(root, "icons"), resolve(dist, "icons"), { recursive: true });
-  await cp(resolve(root, "_locales"), resolve(dist, "_locales"), { recursive: true });
+  await cp(resolve(root, "_locales"), resolve(dist, "_locales"), {
+    recursive: true,
+  });
   await cp(resolve(root, "src"), resolve(dist, "src"), { recursive: true });
 
   await mkdir(resolve(dist, "data"), { recursive: true });

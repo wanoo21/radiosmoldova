@@ -11,9 +11,30 @@ let stationSwitchController = null;
 const OFFSCREEN_URL = "src/offscreen/offscreen.html";
 const MESSAGE_TIMEOUT_MS = 5000;
 const OFFSCREEN_RETRIES = 4;
+const DEFAULT_ACTION_TITLE = "Radio Moldova, Romania and Ukraine";
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function updateActionBadge() {
+  if (state.isPlaying) {
+    // Keep badge minimal: symbol only, no visible background fill.
+    chrome.action.setBadgeBackgroundColor({ color: "#7c3aed" });
+    if (typeof chrome.action.setBadgeTextColor === "function") {
+      chrome.action.setBadgeTextColor({ color: "#ffffff" });
+    }
+    chrome.action.setBadgeText({ text: "🎧" });
+    chrome.action.setTitle({
+      title: state.currentStation?.name
+        ? `Playing: ${state.currentStation.name}`
+        : "Playing",
+    });
+    return;
+  }
+
+  chrome.action.setBadgeText({ text: "" });
+  chrome.action.setTitle({ title: DEFAULT_ACTION_TITLE });
 }
 
 function abortError() {
@@ -30,7 +51,10 @@ function withTimeout(promise, timeoutMs, label) {
   return Promise.race([
     promise,
     new Promise((_, reject) => {
-      setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs}ms`)), timeoutMs);
+      setTimeout(
+        () => reject(new Error(`${label} timed out after ${timeoutMs}ms`)),
+        timeoutMs,
+      );
     }),
   ]);
 }
@@ -132,6 +156,7 @@ async function setState(patch, persist = false) {
   if (persist) {
     await savePersistedState(state);
   }
+  updateActionBadge();
   broadcastState();
 }
 
@@ -170,7 +195,10 @@ chrome.runtime.onStartup.addListener(() => {
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   // Offscreen -> SW events
   if (message.channel === CHANNEL.AUDIO && message.type) {
-    if (message.type === TYPE.AUDIO_LOADSTART || message.type === TYPE.AUDIO_WAITING) {
+    if (
+      message.type === TYPE.AUDIO_LOADSTART ||
+      message.type === TYPE.AUDIO_WAITING
+    ) {
       setState({ isLoading: true, lastError: null });
       return false;
     }
@@ -187,7 +215,11 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       return false;
     }
     if (message.type === TYPE.AUDIO_ERROR) {
-      setState({ isPlaying: false, isLoading: false, lastError: message.lastError || "Audio error" });
+      setState({
+        isPlaying: false,
+        isLoading: false,
+        lastError: message.lastError || "Audio error",
+      });
       return false;
     }
     return false;
@@ -223,13 +255,18 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
               isLoading: !!audioState.snapshot.isLoading,
               currentTime: Number(audioState.snapshot.currentTime || 0),
               volume: Number(audioState.snapshot.volume ?? state.volume),
-              currentStation: audioState.snapshot.currentStation || state.currentStation,
+              currentStation:
+                audioState.snapshot.currentStation || state.currentStation,
             },
             false,
           );
         }
         // Consistency recovery: if user expected playback, ensure it resumes.
-        if (state.shouldBePlaying && state.currentStation?.url && !state.isPlaying) {
+        if (
+          state.shouldBePlaying &&
+          state.currentStation?.url &&
+          !state.isPlaying
+        ) {
           await sendToOffscreen(TYPE.AUDIO_PLAY);
         }
         safeSendResponse({ ok: true, state });
@@ -307,24 +344,29 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
       default:
         safeSendResponse({ ok: false, error: "Unknown popup message type." });
     }
-  })().catch(async (error) => {
-    if (error?.name === "AbortError" || /request aborted/i.test(String(error?.message || ""))) {
-      safeSendResponse({ ok: false, error: "Request aborted" });
-      return;
-    }
-    try {
-      await setState({
-        isLoading: false,
-        isPlaying: false,
-        lastError: error.message || "Unknown background error.",
-      });
-    } catch {
-      // Ignore secondary state update errors and still respond.
-    }
-    safeSendResponse({ ok: false, error: error.message });
-  }).finally(() => {
-    clearTimeout(responseGuard);
-  });
+  })()
+    .catch(async (error) => {
+      if (
+        error?.name === "AbortError" ||
+        /request aborted/i.test(String(error?.message || ""))
+      ) {
+        safeSendResponse({ ok: false, error: "Request aborted" });
+        return;
+      }
+      try {
+        await setState({
+          isLoading: false,
+          isPlaying: false,
+          lastError: error.message || "Unknown background error.",
+        });
+      } catch {
+        // Ignore secondary state update errors and still respond.
+      }
+      safeSendResponse({ ok: false, error: error.message });
+    })
+    .finally(() => {
+      clearTimeout(responseGuard);
+    });
 
   return true;
 });
