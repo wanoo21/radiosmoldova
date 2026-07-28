@@ -6,8 +6,7 @@
   },
   {
     "name": "Radio Noroc",
-    "url": "http://live.noroc.tv:8000/radionoroc.mp3",
-    "disable": true
+    "url": "http://live.noroc.tv:8000/radionoroc.mp3"
   },
   {
     "name": "Jurnal FM",
@@ -113,8 +112,7 @@
   },
   {
     "name": "Radio Chisinau",
-    "url": "http://95.65.9.170:8001/",
-    "disable": true
+    "url": "https://radiochisinau.md/hls/RChisinau.m3u8"
   },
   {
     "name": "Radio Moldova Tineret",
@@ -198,5 +196,65 @@
   {
     "name": "Hit FM Hot Hits",
     "url": "https://radio3.dixi.md/listen/hit_fm_hot_hits/hitfm_hothits128.aac"
+  },
+  {
+    "name": "Hit FM Best Hits",
+    "url": "https://radio3.dixi.md/listen/hit_fm_best_hits/hitfm_besthits128.aac"
+  },
+  {
+    "name": "Hit FM Dance",
+    "url": "https://radio4.dixi.md/listen/hit_fm_dance_hits/hitfmdancehits128.aac"
+  },
+  {
+    "name": "Radio ROKS Moldova",
+    "url": "https://stream.dixi.md:9443/Roks"
+  },
+  {
+    "name": "Hit Fm Drive Mode",
+    "url": "https://radio7.dixi.md/listen/hit_fm_drive_mode/hitfmdrivemode128.aac"
+  },
+  {
+    "name": "Hit FM Summer Hits",
+    "url": "https://radio4.dixi.md/listen/hit_fm_summer_hits/hitfmsummerhits128.aac"
+  },
+  {
+    "name": "Radio ZUM4",
+    "url": "https://streams.radiozum.md/listen/zum4/ZUM4"
+  },
+  {
+    "name": "Hit FM 2000s HITS",
+    "url": "https://radio3.dixi.md/listen/hit_fm_2000s_hits/hitfm2000hit128.aac"
+  },
+  {
+    "name": "Sex Sound Radio",
+    "url": "https://sexsoundradio.com:8000/radio.mp3"
+  },
+  {
+    "name": "Radio Fresh MD",
+    "url": "https://stream-151.zeno.fm/ttofovumhg1vv?zs=3vmFlLhiROOIFik2GUoxgw"
+  },
+  {
+    "name": "Smile FM",
+    "url": "https://sonicssl.namehost.ro/8050/;"
+  },
+  {
+    "name": "Master Class FM (MD)",
+    "url": "https://listen3.myradio24.com/master1"
+  },
+  {
+    "name": "Focul din Vatră",
+    "url": "https://aiciascult.eu/radio"
+  },
+  {
+    "name": "Glowwave-FM",
+    "url": "https://commandcenter.tail5a820f.ts.net/stream"
+  },
+  {
+    "name": "DeepNova Radio - DanceNova",
+    "url": "https://a3.asurahosting.com/listen/dance_house_hits/radio-192.mp3%20(320kbps%20MP3)"
+  },
+  {
+    "name": "Haliz Gagauz Radiosu - GRT",
+    "url": "http://s02.radio-tochka.com:8020/radio?type=.mp3"
   }
 ]

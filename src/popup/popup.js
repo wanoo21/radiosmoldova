@@ -177,6 +177,7 @@ async function loadRegionStations(region) {
   const url = chrome.runtime.getURL(`data/radiolist-${region}.json`);
   const response = await fetch(url);
   const data = await response.json();
+  console.log(data);
   stationList = data.filter((item) => !!item.url && item.disable !== true);
   stationRenderKey = "";
   renderStationsIfNeeded();

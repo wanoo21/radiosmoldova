@@ -71,8 +71,7 @@
   },
   {
     "name": "ROCK FM",
-    "url": "http://live.rockfm.ro:9128/rockfm.aacp",
-    "disable": true
+    "url": "https://live.rockfm.ro/rockfm.aacp#W"
   },
   {
     "name": "Radio Petrecaretzu",
@@ -285,8 +284,7 @@
   },
   {
     "name": "Radio Lipova",
-    "url": "http://radiolipova.radiolipova.net:1717/;?.mp3",
-    "disable": true
+    "url": "http://asculta.radiolipova.ro:1717/stream"
   },
   {
     "name": "Radio Renasterea",
@@ -359,5 +357,65 @@
   {
     "name": "Radio 1 Manele",
     "url": "http://radio1manele.no-ip.org:8000/;"
+  },
+  {
+    "name": "Radio Pro Manele",
+    "url": "http://radiopromanele.zapto.org:8000/;"
+  },
+  {
+    "name": "Radio Manele Premium",
+    "url": "http://88.198.70.25:8894/;"
+  },
+  {
+    "name": "Radio Timișoara",
+    "url": "http://89.238.227.6:8354/"
+  },
+  {
+    "name": "One FM Dance",
+    "url": "https://live.onefm.ro/onefm.aacp"
+  },
+  {
+    "name": "Realitatea FM",
+    "url": "https://shout.realitatea.net:8001/rfmweb"
+  },
+  {
+    "name": "Digi24FM",
+    "url": "https://edge76.rcs-rds.ro/digifm/digi24fm.mp3"
+  },
+  {
+    "name": "Focus FM",
+    "url": "http://live.focusfm.ro:8000/focusfmhigh.ogg.m3u"
+  },
+  {
+    "name": "Radio Gold FM",
+    "url": "http://80.86.106.110:8002/;"
+  },
+  {
+    "name": "Virgin Radio Romania",
+    "url": "https://astreaming.edi.ro:8443/VirginRadio_aac"
+  },
+  {
+    "name": "Rock Fm Hard Rock",
+    "url": "https://live.rockfm.ro/hard.rock"
+  },
+  {
+    "name": "Radio România Iași",
+    "url": "http://89.238.227.6:8202/"
+  },
+  {
+    "name": "EuropaFM",
+    "url": "http://astreaming.edi.ro:8000/EuropaFM_aac"
+  },
+  {
+    "name": "RADIO Petrecere",
+    "url": "https://ssl.servereradio.ro/8123/stream"
+  },
+  {
+    "name": "Doina",
+    "url": "http://89.43.138.116:8000/radiodoina.mp3"
+  },
+  {
+    "name": "DeeaRadio",
+    "url": "http://radiocdn.nxthost.com/radio-deea"
   }
 ]

@@ -118,5 +118,69 @@
   {
     "name": "Deep House Sunset Mix🇺🇦",
     "url": "http://prmstrm.1.fm:8000/deephouse"
+  },
+  {
+    "name": "Radio ROKS New Rock",
+    "url": "http://online.radioroks.ua/RadioROKS_NewRock_HD"
+  },
+  {
+    "name": "RadioRelax Instrumental HD",
+    "url": "https://online.radiorelax.ua/RadioRelax_Instrumental_HD"
+  },
+  {
+    "name": "Kiss FM",
+    "url": "https://online.kissfm.ua/KissFM_HD"
+  },
+  {
+    "name": "Radio ROKS Ukrainian",
+    "url": "http://online.radioroks.ua/RadioROKS_Ukr_HD"
+  },
+  {
+    "name": "Blues & Rock Radio",
+    "url": "http://stream.laut.fm/bluesrock"
+  },
+  {
+    "name": "Hit FM (Best)",
+    "url": "http://online.hitfm.ua/HitFM_Best"
+  },
+  {
+    "name": "Країна FM 100.0",
+    "url": "http://live.radioec.com.ua:8000/kiev"
+  },
+  {
+    "name": "Армія FM 94.6",
+    "url": "http://212.26.132.129:8000/ArmyFM"
+  },
+  {
+    "name": "NRJ Ukraine",
+    "url": "https://cast.mediaonline.net.ua/nrj320"
+  },
+  {
+    "name": "True Black Metal Radio",
+    "url": "http://trueblackmetalradio.com:666/radio"
+  },
+  {
+    "name": "Люкс 104.7",
+    "url": "http://icecast.luxnet.ua/luxlviv"
+  },
+  {
+    "name": "Єдині новини 24 - BREAKING - LIVE",
+    "url": "https://online-news.radioplayer.ua/RadioNews"
+  },
+  {
+    "name": "Radio ROKS Classic Rock",
+    "url": "https://online.radioroks.ua/RadioROKS_ClassicRock_HD"
+  },
+  {
+    "name": "Radio Skovoroda",
+    "url": "http://stream.radioskovoroda.com:8000/radioskovoroda"
+  },
+  {
+    "name": "Radio Maria Ukraine",
+    "url": "http://dreamsiteradiocp.com:8022/stream"
+  },
+  {
+    "name": "Українське радіо",
+    "url": "https://radio.ukr.radio/ur1-mp3-m"
   }
 ]
